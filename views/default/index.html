@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        {include="header"}
+    </head>
+    <style>
+
+        .lazy img {
+            display: block;
+        }
+
+        .lazy img {
+            border: 0;
+            width: 220px;
+            height: 280px;
+        }
+
+        .lazy img:not([src]) {
+            visibility: hidden;
+        }
+
+        /* Fixes Firefox anomaly during image load */
+        @-moz-document url-prefix() {
+            .lazy img:-moz-loading {
+                visibility: hidden;
+            }
+        }
+    </style>
+
+    <body>
+        <div class="page-wrapper">
+            <header class="header">
+                <div class="header-top">
+                    <div class="container">
+                        <div class="header-left">
+                            <div class="header-dropdown">
+                                <a href="#"><img  src="data/langs/{$ActiveLang.picture}" />&nbsp;{$ActiveLang.name}</a>
+                                <div class="header-menu">
+                                    <ul>
+                                        {loop="$LANGS"}
+                                        <li><a class="" href="{$value.url}"><img src="data/langs/{$value.picture}" />&nbsp;{$value.name}</a></li>
+                                        {/loop}
+                                    </ul>
+                                </div><!-- End .header-menu -->
+                            </div><!-- End .header-dropdown -->
+                        </div><!-- End .header-left -->
+
+
+
+                        <div class="header-right  Mobile-account ">
+                            <div class="header-dropdown">
+                                <a class="Mobile-account-button" href="javascript:;"><i class="icon-user"></i></a>
+                                <div class="header-menu">
+                                    <ul>
+                                        <!--
+                                        <li><a href="tel:{$settings.company_phone}"><i class="icon-phone"></i>
+                                        {$lang.telefon}: {$settings.company_phone}</a>
+                                        </li>
+                                        -->
+
+
+                                        {if="$user.id"}
+                                        <!--<li><a href="{#BASEURL#}user/dashboard"><i class="icon-user"></i> {$lang.hesabim}</a></li>-->
+                                        <!--
+                                        <li class="nav-item">
+                                        <a class='nav-link {if="$active_menu=='alarm'"}active{/if}' href="{#BASEURL#}user/alarm">{$lang.alarmsistemi}</a>
+                                        </li>
+                                        -->
+                                        <li  class="nav-item"><a class='nav-link' href="{#BASEURL#}user/alarm">{$lang.alarmsistemi}</a></li>
+                                        <li class="nav-item">
+                                            <a class='nav-link {if="$active_menu=='peylerim'"}active{/if}' href="{#BASEURL#}user/peylerim">{$lang.peylerim}</a>
+                                        </li>
+                                        <li  class="nav-item"><a class='nav-link {if="$active_menu=='wishlist'"}active{/if}' href="{#BASEURL#}user/wishlist">{$lang.favorilistem}</a></li>
+                                        <li class="nav-item">
+                                            <a class='nav-link {if="$active_menu=='winners'"}active{/if}' href="{#BASEURL#}user/winners">{$lang.kazandiklarim}</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class='nav-link {if="$active_menu=='selling'"}active{/if}' href="{#BASEURL#}user/selling">{$lang.satistakiurunler}</a>
+                                        </li>
+                                        <!--<li class="nav-item">
+                                            <a class='nav-link {if="$active_menu=='orders'"}active{/if}' href="{#BASEURL#}user/orders">{$lang.siparislerim}</a>
+                                        </li>-->
+                                        <li class="nav-item">
+                                            <a class='nav-link {if="$active_menu=='address'"}active{/if}' href="{#BASEURL#}user/address">{$lang.adresbilgileri}</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class='nav-link {if="$active_menu=='dashboard'"}active{/if}' href="{#BASEURL#}user/dashboard">{$lang.hesabim}</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="{#BASEURL#}user/logout">{$lang.guvenlicikis}</a>
+                                        </li>
+                                        <!--  <li><a href="{#BASEURL#}user/logout"><i class="fas fa-sign-out-alt"></i> {$lang.guvenlicikis}</a></li>-->
+                                        {else}
+                                        <li><a href="{#BASEURL#}user/login"><i class="icon-user"></i>{$lang.uyegirisi}</a></li>
+                                        <li><a href="{#BASEURL#}user/register"><i class="icon-user"></i>{$lang.uyeol}</a></li>
+                                        <li><a href="{#BASEURL#}user/wishlist"><i class="icon-heart-o"></i>{$lang.favorilistem}</a></li>
+                                        <li><a href="{#BASEURL#}user/alarm"><i class="fa fa-bell"></i>{$lang.alarmsistemi}</a></li>
+                                        {/if}
+
+                                    </ul>
+                                </div><!-- End .header-menu -->
+                            </div><!-- End .header-dropdown -->
+                        </div><!-- End .header-left -->
+
+
+
+                    </div><!-- End .container -->
+                </div><!-- End .header-top -->
+
+                <div class="header-middle sticky-header">
+                    <div class="container">
+                        <div class="header-left">
+
+
+                            <a href="{#BASEURL#}" class="logo" style="margin: 0; margin-top:0.55rem">
+                                <img src="data/uploads/{$settings.logo}" alt="{$settings.seo_title}" style="margin: 0;" >
+                            </a>
+                            <button class="mobile-menu-toggler">
+                                <span class="sr-only">Toggle mobile menu</span>
+                                <i class="icon-bars"></i>
+                            </button>
+                            <button class="mobile-menu-search mobile">
+                                <i class="icon-search"></i>
+                            </button>
+                        </div><!-- End .header-left -->
+                        <div class="header-right">
+                            <div class="header-search">
+                                <form action="{#BASEURL#}search" method="get" id="sform">
+                                    <a href="javascript:;" onclick="$('#sform').submit();" type="submit" class="search-toggle" role="button" title="Search"><i class="icon-search"></i></a>
+                                    <div class="header-search-wrapper show">
+                                        <label for="q" class="sr-only">{$lang.arama}</label>
+                                        <input type="search" class="form-control" name="q" id="q" placeholder="{$lang.aramakelimesi}" required>
+                                    </div><!-- End .header-search-wrapper -->
+                                </form>
+                            </div><!-- End .header-search -->
+                        </div>
+                    </div><!-- End .container -->
+                    <div class="menu-header">
+                        <div class="container">
+                            <nav class="main-nav">
+                                <ul class="menu sf-arrows">
+                                    <!--
+                                    <li class="mobile"><a href="tel:{s.company_phone}"><i class="icon-phone"></i>
+                                    {$lang.telefon}: {$settings.company_phone}</a>
+                                    </li>
+
+                                    {if="$user.id"}
+                                    <li class="mobile"><a href="{#BASEURL#}user/dashboard"><i class="icon-user"></i> {$lang.hesabim}</a></li>
+                                    <li class="mobile"><a href="{#BASEURL#}user/logout"><i class="fas fa-sign-out-alt"></i> {$lang.guvenlicikis}</a></li>
+                                    {else}
+                                    <li class="mobile"><a href="#signin-modal" data-toggle="modal"><i class="icon-user"></i>{$lang.uyegirisi}</a></li>
+                                    {/if}
+                                    <li class="mobile"><a href="{#BASEURL#}user/wishlist"><i class="icon-heart-o"></i>{$lang.favorilistem}</a></li>
+                                    <li class="mobile"><a href="{#BASEURL#}user/alarm"><i class="fa fa-bell"></i>{$lang.alarmsistemi}</a></li>
+                                    -->
+                                    <li class="megamenu-container">
+                                        <a href="{#BASEURL#}">{$lang.anasayfa}</a>
+                                    </li>
+                                    {$topmenuhtml}
+                                    <li><a href="{#BASEURL#}muzayede-arsivi">{$lang.muzayedearsivi}</a></li>
+                                    <li><a href="{#BASEURL#}ekspertiz-formu">{$lang.ekspertizformu}</a></li>
+                                    <li><a href="{#BASEURL#}iletisim">{$lang.iletisim}</a></li>
+
+
+
+                                </ul><!-- End .menu -->
+                            </nav><!-- End .main-nav -->
+                        </div><!-- End .header-left -->
+                    </div><!-- End .container -->
+                </div><!-- End .header-middle -->
+            </header><!-- End .header -->
+
+            <main class="main">
+                {$content}
+            </main><!-- End .main -->
+
+            <footer class="footer">
+                {include="footer"}
+            </footer><!-- End .footer -->
+
+        </div><!-- End .page-wrapper -->
+        <button id="scroll-top" title="Back to Top"><i class="icon-arrow-up"></i></button>
+
+        <!-- Mobile Menu -->
+        <div class="mobile-menu-overlay"></div><!-- End .mobil-menu-overlay -->
+
+        <div class="mobile-menu-container">
+            <div class="mobile-menu-wrapper">
+                <span class="mobile-menu-close"><i class="icon-close"></i></span>
+
+                <form action="{#BASEURL#}search" method="get" class="mobile-search">
+                    <label for="mobile-search" class="sr-only">{$lang.arama}</label>
+                    <input type="search" class="form-control" name="q" id="mobile-search" placeholder="{$lang.aramakelimesi}" required>
+                    <button class="btn btn-primary" type="submit"><i class="icon-search"></i></button>
+                </form>
+                <nav class="mobile-nav">
+                    <ul class="mobile-menu">
+                        <li class="active">
+                            <a href="{#BASEURL#}">{$lang.anasayfa}</a>
+                        </li>
+                        
+                        {$topmenuhtml}
+                        <li>
+                            <a href="{#BASEURL#}iletisim">{$lang.iletisim}</a>
+                        </li>
+                    </ul>
+                </nav><!-- End .mobile-nav -->
+
+                <div class="social-icons">
+                    <a href="#" class="social-icon" target="_blank" title="Facebook"><i class="icon-facebook-f"></i></a>
+                    <a href="#" class="social-icon" target="_blank" title="Twitter"><i class="icon-twitter"></i></a>
+                    <a href="#" class="social-icon" target="_blank" title="Instagram"><i class="icon-instagram"></i></a>
+                    <a href="#" class="social-icon" target="_blank" title="Youtube"><i class="icon-youtube"></i></a>
+                </div><!-- End .social-icons -->
+            </div><!-- End .mobile-menu-wrapper -->
+        </div><!-- End .mobile-menu-container -->
+
+        {include="loginmodal"}
+
+        {include="js"}
+        {$settings.footercode}
+    </body>
+
+</html>

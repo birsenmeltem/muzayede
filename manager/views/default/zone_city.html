@@ -1,0 +1,122 @@
+<div class="kt-subheader  kt-grid__item" id="kt_subheader">
+    <div class="kt-container  kt-container--fluid ">
+        <div class="kt-subheader__main">
+            <h3 class="kt-subheader__title">Bölge Şehirleri</h3>
+        </div>
+    </div>
+</div>
+
+<div class="kt-container  kt-container--fluid  kt-grid__item kt-grid__item--fluid">
+    {$info}
+    <div class="kt-portlet kt-portlet--mobile">
+        <div class="kt-portlet__head kt-portlet__head--lg">
+            <div class="kt-portlet__head-label">
+                <span class="kt-portlet__head-icon">
+                    <i class="kt-font-brand fa fa-truck"></i>
+                </span>
+                <h3 class="kt-portlet__head-title">
+                    {$data.zone.name} | Şehirleri Yönet
+                </h3>
+            </div>
+            <div class="kt-portlet__head-toolbar">
+                <div class="kt-portlet__head-wrapper">
+                    <a href="{#ADMINBASEURL#}cargocompanys/zones" class="btn btn-clean kt-margin-r-10">
+                        <i class="la la-arrow-left"></i>
+                        <span class="kt-hidden-mobile">Teslimat Bölgeleri</span>
+                    </a>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="kt-portlet__body">
+            <div class="kt-section__content">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="kt-section">
+                            <div class="kt-section__info">
+                                Şehir Eşleştir:
+                            </div>
+                            <form method="post">
+                                <input type="hidden" name="zone_id" value="{$data.zone.id}" />
+                                <div class="kt-section__content kt-section__content--border" id="seform">
+                                    <div class="form-group row">
+                                        <label class="col-lg-4 col-form-label">Ülke:</label>
+                                        <div class="col-lg-8">
+                                            <select class="form-control" id="country_id" name="country_id" onchange="get_citys(this.value, '#city_id','all');">
+                                                <option value="0">Seçiniz</option>
+                                                {loop="$countrys"}
+                                                <option value="{$value.id}">{$value.name}</option>
+                                                {/loop}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-lg-4 col-form-label">Şehir:</label>
+                                        <div class="col-lg-8">
+                                            <select class="form-control" name="citys[]" required id="city_id" multiple="multiple" data-actions-box="true"></select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-lg-4 col-form-label"></label>
+                                        <div class="col-lg-8 text-right">
+                                            <button type="submit" class="btn btn-sm btn-dark btn-icon-md"><i class="fas fa-plus"></i> EKLE</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="kt-section">
+                            <div class="kt-section__info">
+                                Eşleşen Şehirler:
+                            </div>
+                            <table class="table table-bordered table-head-solid table-sm" id="varyantTable">
+                                <thead>
+                                    <tr>
+                                        <th width="20%">Ülke</th>
+                                        <th>Şehir</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {loop="$data.citys"}
+                                    {if="$value.country_name"}
+                                    <tr>
+                                        <td>{$value.country_name}</td>
+                                        <td>{$value.names}</td>
+                                        <td>
+                                            <a href="{#ADMINBASEURL#}cargocompanys/zone_city_remove/{$value.id}" class="btn btn-sm btn-danger">kaldır</a>
+                                        </td>
+                                    </tr>
+                                    {/if}
+                                    {/loop}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $('#country_id').select2({
+        placeholder : 'Şehir seçiniz'
+    });
+    $('#city_id').selectpicker({
+        deselectAllText : 'Tümünü Kaldır',
+        selectAllText : 'Tümünü Seç',
+        noneSelectedText : 'Seçiniz',
+    });
+</script>
+<style type="text/css">
+    .bs-select-all,
+    .bs-deselect-all
+    {
+        background-color: #282a3c;
+        border-color: #282a3c;
+        color: #ffffff;
+    }
+</style>

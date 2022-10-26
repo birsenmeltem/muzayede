@@ -1,0 +1,51 @@
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <form method="post" onsubmit="return SaveVariants(this)">
+            <input type="hidden" name="id" value="{$data.id}" />
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Varyant Stok Düzenle</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i data-dismiss="modal" class="fa fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group row">
+                    <label class="col-lg-4 col-form-label">Varyant:</label>
+                    <div class="col-lg-8">
+                        <input type="text" class="form-control" value="{$data.name}" disabled="disabled">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-lg-4 col-form-label">Stok:</label>
+                    <div class="col-lg-8">
+                        <input type="text" class="form-control" value="{$data.stock}" name="ms[stock]">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-lg-4 col-form-label">Barkod:</label>
+                    <div class="col-lg-8">
+                        <input type="text" class="form-control" value="{$data.barcode}" name="ms[barcode]">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-lg-4 col-form-label">Stok Kodu:</label>
+                    <div class="col-lg-8">
+                        <input type="text" class="form-control" value="{$data.sku}" name="ms[sku]">
+                        <div class="help-block">Boş bırakırsanız rastgele oluşur.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+                <button type="submit" class="btn btn-success">KAYDET</button>
+            </div>
+        </form>
+    </div>
+</div>
+<script type="text/javascript">
+    function SaveVariants(form) {
+        $.post(baseURL + 'products/savemodelstock', $(form).serialize(), function() {
+            rebuildvariants('{$data.product_id}');
+            $('#ajaxModal').modal('hide');
+        });
+        return false;
+    }
+</script>

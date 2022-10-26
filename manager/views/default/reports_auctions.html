@@ -1,0 +1,365 @@
+<div class="kt-subheader  kt-grid__item" id="kt_subheader">
+    <div class="kt-container  kt-container--fluid ">
+        <div class="kt-subheader__main">
+            <h3 class="kt-subheader__title">Raporlar</h3>
+        </div>
+        <div class="kt-subheader__toolbar">
+
+        </div>
+    </div>
+</div>
+
+<div class="kt-container  kt-container--fluid  kt-grid__item kt-grid__item--fluid">
+    {$info}
+    <div class="kt-portlet kt-portlet--mobile">
+        <div class="kt-portlet__head kt-portlet__head--lg">
+            <div class="kt-portlet__head-label">
+                <span class="kt-portlet__head-icon">
+                    <i class="kt-font-brand fas fa-chart-bar"></i>
+                </span>
+                <h3 class="kt-portlet__head-title">
+                    Müzayede İstatistikleri
+                </h3>
+            </div>
+            <div class="kt-portlet__head-toolbar">
+                <div class="kt-portlet__head-wrapper">
+
+                </div>
+            </div>
+        </div>
+
+        <div class="kt-portlet__body">
+            <!--begin: Search Form -->
+
+            <div class="kt-form kt-form--label-right kt-margin-t-20 kt-margin-b-10">
+                <form method="post" class="kt-form">
+                    <div class="row align-items-center">
+                        <div class="col-xl-12 order-2 order-xl-12">
+                            <div class="row align-items-center">
+                                <div class="col-md-3 kt-margin-b-20-tablet-and-mobile">
+                                    <div class="kt-form__group">
+                                        <div class="kt-form__label">
+                                            <label>Tarih Aralığı:</label>
+                                        </div>
+                                        <div class="kt-form__control dtrange">
+                                            <input type="text" class="form-control" name="f[date]" value="{$f.date}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 kt-margin-b-20-tablet-and-mobile">
+                                    <div class="kt-form__label">
+                                        <label>Üye Arama:</label>
+                                    </div>
+                                    <div class="kt-form__control">
+                                        <div class="kt-input-icon kt-input-icon--left">
+                                            <input type="text" class="form-control" name="f[user_id]"  value="{$f.user_id}">
+                                            <span class="kt-input-icon__icon kt-input-icon__icon--left">
+                                                <span><i class="la la-search"></i></span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 kt-margin-b-20-tablet-and-mobile">
+                                    <div class="kt-form__group ">
+                                        <div class="kt-form__label">
+                                            <label>Müzayede:</label>
+                                        </div>
+                                        <div class="kt-form__control">
+                                            <select class="form-control"  name="f[auction_id]">
+                                                <option value="0">Seçiniz</option>
+                                                {loop="$auctions"}
+                                                <option value="{$value.id}" {if="$f.auction_id == $value.id"} selected {/if}>{$value.id} - {$value.name} ({$value.start_date} - {$value.end_date})</option>
+                                                {/loop}
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-2 kt-margin-t-20">
+                                    <div class="kt-form__group kt-form__group--inline">
+                                        <div class="kt-form__label">
+
+                                        </div>
+                                        <div class="kt-form__control">
+                                            <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i> ARA</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>        <!--end: Search Form -->
+        </div>
+    </div>
+
+    {if="$data.status"}
+    <div class="kt-portlet kt-portlet--mobile">
+        <div class="kt-portlet__head kt-portlet__head--lg">
+            <div class="kt-portlet__head-label">
+                <span class="kt-portlet__head-icon">
+                    <i class="kt-font-brand fas fa-chart-bar"></i>
+                </span>
+                <h3 class="kt-portlet__head-title">
+                    {$data.name} Rapor Sonucu
+                </h3>
+            </div>
+        </div>
+
+        <div class="kt-portlet__body">
+            <div class="row">
+                <div class="col-xl-6 col-lg-6 order-lg-2 order-xl-1">
+                    <div class="kt-portlet--height-fluid">
+                        <div class="kt-widget14">
+                            <div class="kt-widget14__header">
+                                <h3 class="kt-widget14__title">
+                                    Müzayede İstatistikleri
+                                </h3>
+                            </div>
+                            <div class="kt-widget14__content">
+                                <div class="kt-widget14__chart">
+                                    <div class="kt-widget14__stat"></div>
+                                    <canvas id="chart_profit_share" style="height: 140px; width: 240px;"></canvas>
+                                </div>
+                                <div class="kt-widget14__legends">
+                                    <div class="kt-widget14__legend">
+                                        <span class="kt-widget14__bullet kt-bg-success"></span>
+                                        <span class="kt-widget14__stats">Kaç Farklı Üye Pey Verdi ({$data.farkUye} Adet)</span>
+                                    </div>
+                                    <div class="kt-widget14__legend">
+                                        <span class="kt-widget14__bullet kt-bg-danger"></span>
+                                        <span class="kt-widget14__stats">Kaç Farklı Üye Ürün Kazandı ({$data.uyeBuy} Adet)</span>
+                                    </div>
+                                    <div class="kt-widget14__legend">
+                                        <span class="kt-widget14__bullet kt-bg-info"></span>
+                                        <span class="kt-widget14__stats">Kaç Farklı Üye Ürün Sattı ({$data.uyeSell} Adet)</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-6 col-lg-6 order-lg-2 order-xl-1">
+                    <div class="kt-portlet--height-fluid">
+                        <div class="kt-widget14">
+                            <div class="kt-widget14__header">
+                                <h3 class="kt-widget14__title">
+                                    Müzayede Toplam Ciro
+                                </h3>
+                            </div>
+                            <div class="kt-widget14__content">
+                                <div class="kt-widget14__chart">
+                                    <div class="kt-widget14__stat"></div>
+                                    <div id="chart_revenue_change" style="height: 150px; width: 150px;"></div>
+                                </div>
+                                <div class="kt-widget14__legends">
+                                    <div class="kt-widget14__legend">
+                                        <span class="kt-widget14__bullet kt-bg-success"></span>
+                                        <span class="kt-widget14__stats">Toplam Ciro : {$data.ciro|numbers} TL</span>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script type="text/javascript">
+                var config = {
+                    type: 'doughnut',
+                    data: {
+                        datasets: [{
+                            data: [
+                                '{$data.farkUye}','{$data.uyeBuy}','{$data.uyeSell}'
+                            ],
+                            backgroundColor: [
+                                '#34bfa3',
+                                '#fd3995',
+                                '#5d78ff',
+                                '#ffb822',
+                                '#36a3f7'
+                            ]
+                        }],
+                        labels: [
+                            'Kaç Farklı Üye Pey Verdi', 'Kaç Farklı Üye Ürün Aldı', 'Kaç Farklı Üye Ürün Sattı'
+                        ]
+                    },
+                    options: {
+                        cutoutPercentage: 75,
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        legend: {
+                            display: false,
+                            position: 'top',
+                        },
+                        title: {
+                            display: false,
+                            text: 'Technology'
+                        },
+                        animation: {
+                            animateScale: true,
+                            animateRotate: true
+                        },
+                        tooltips: {
+                            enabled: true,
+                            intersect: false,
+                            mode: 'nearest',
+                            bodySpacing: 5,
+                            yPadding: 10,
+                            xPadding: 10,
+                            caretPadding: 0,
+                            displayColors: false,
+                            backgroundColor: '#5d78ff',
+                            titleFontColor: '#ffffff',
+                            cornerRadius: 4,
+                            footerSpacing: 0,
+                            titleSpacing: 0
+                        }
+                    }
+                };
+                var ctx = $('#chart_profit_share')[0].getContext('2d');
+                var myDoughnut = new Chart(ctx, config);
+
+                Morris.Donut({
+                    element: 'chart_revenue_change',
+                    data: [{"label":"Toplam Ciro","value":"{$data.ciro|numbers}"}],
+                    colors: [
+                        '#34bfa3',
+                    ],
+                });
+            </script>
+            <hr>
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>Pey Verenler</h5>
+                    <table class="table table-striped table-bordered">
+                        <thead>
+                        <tr>
+                            <th>Son Pey Zamanı</th>
+                            <th>Üye Kullanıcı Adı</th>
+                            <th>Üye Adı Soyadı</th>
+                            <th>Telefon</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {loop="$data.peys"}
+                        <tr>
+                            <td>{$value.create_date}</td>
+                            <td>{$value.username}</td>
+                            <td>{$value.name} {$value.surname}</td>
+                            <td>{$value.phone}</td>
+                        </tr>
+                        {/loop}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-md-6">
+                    <h5>Ürün Takip Edenler</h5>
+                    <table class="table table-striped table-bordered">
+                        <thead>
+                        <tr>
+                            <th>Lot Adeti</th>
+                            <th>Üye Kullanıcı Adı</th>
+                            <th>Üye Adı Soyadı</th>
+                            <th>Telefon</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {loop="$data.follows"}
+                        <tr>
+                            <td>{$value.total}</td>
+                            <td>{$value.username}</td>
+                            <td>{$value.name} {$value.surname}</td>
+                            <td>{$value.phone}</td>
+                        </tr>
+                        {/loop}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="row">
+
+                <div class="col-md-6">
+                    <h5>Ürün Kazananlar</h5>
+                    <table class="table table-striped table-bordered">
+                        <thead>
+                        <tr>
+                            <th>Lot Adeti</th>
+                            <th>ID</th>
+                            <th>Üye Adı Soyadı</th>
+                            <th>Bakiye</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {loop="$data.buyer"}
+                        <tr>
+                            <td>{$value.total}</td>
+                            <td>{$value.id}</td>
+                            <td>{$value.name} {$value.surname}</td>
+                            <td>{$value.total_price|numbers} TL</td>
+                            <td>
+                                <a href="{#BASEURL#}crons/manuelbuyer/{$data.id}/{$value.id}" target="_blank" class="btn btn-primary btn-sm">PDF</a>
+                                <a href="javascript:;" data-a="{$data.id}" data-u="{$value.id}" data-t="0" data-invoice="true" class="btn btn-warning btn-sm">FATURA</a>
+                            </td>
+                        </tr>
+                        {/loop}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-md-6">
+                    <h5>Ürün Satanlar</h5>
+                    <table class="table table-striped table-bordered">
+                        <thead>
+                        <tr>
+                            <th>Lot Adeti</th>
+                            <th>ID</th>
+                            <th>Üye Adı Soyadı</th>
+                            <th>Bakiye</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {loop="$data.seller"}
+                        <tr>
+                            <td>{$value.total}</td>
+                            <td>{$value.id}</td>
+                            <td>{$value.name} {$value.surname}</td>
+                            <td>{$value.total_price|numbers} TL</td>
+                            <td>
+                                <a href="{#BASEURL#}crons/manuelseller/{$data.id}/{$value.id}" target="_blank" class="btn btn-primary btn-sm">PDF</a>
+                                <a href="javascript:;" data-a="{$data.id}" data-u="{$value.id}" data-t="1" data-invoice="true" class="btn btn-warning btn-sm">FATURA</a>
+                            </td>
+                        </tr>
+                        {/loop}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="kt-portlet__foot">
+            <div class="kt-form__actions">
+                <div class="row">
+                    <div class="col-lg-3"></div>
+                    <div class="col-lg-9 text-right">
+                        <a href="javascript:;" onclick="openWinBuyer('{$data.id}')" class="btn btn-warning"><i class="la la-print"></i> Ürün Alanlar PDF</a>
+                        <a href="javascript:;" onclick="openWinSeller('{$data.id}')"  class="btn btn-danger"><i class="la la-print"></i> Ürün Satanlar PDF</a>
+                        <a href="{#ADMINBASEURL#}reports/aresult_buyer?{$querystring}" target="_blank" class="btn btn-success btn-customer-export"><i class="la la-print"></i> Ürün Alanlar Liste</a>
+                        <a href="{#ADMINBASEURL#}reports/aresult_seller?{$querystring}" target="_blank" class="btn btn-info btn-customer-export"><i class="la la-print"></i> Ürün Satanlar Liste</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {/if}
+</div>
+<script type="text/javascript">
+    $('select').select2();
+    $('.dtrange').daterangepicker({
+        buttonClasses: ' btn',
+        applyClass: 'btn-primary',
+        cancelClass: 'btn-secondary'
+    }, function(start, end, label) {
+        $('.dtrange .form-control').val( start.format('DD.MM.YYYY') + ' / ' + end.format('DD.MM.YYYY'));
+    });
+
+</script>

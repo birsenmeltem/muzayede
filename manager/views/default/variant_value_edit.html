@@ -1,0 +1,26 @@
+<div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+        <form method="post" action="{#ADMINBASEURL#}products/variant_values/{$data.variant_id}">
+            {if="$data.id"}<input type="hidden" name="id" value="{$data.id}" />{/if}
+            <input type="hidden" name="s[variant_id]" value="{$data.variant_id}" />
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Seçenek Ekle / Düzenle</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i data-dismiss="modal" class="fa fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Seçenek Adı:</label>
+                    <input type="text" class="form-control" required name="s[name]" value="{$data.name}">
+                </div>
+                <div class="form-group">
+                    <label>Sıra:</label>
+                    <input type="text" class="form-control" name="s[rows]" value="{$data.rows}">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+                <button type="submit" class="btn btn-success">KAYDET</button>
+            </div>
+        </form>
+    </div>
+</div>

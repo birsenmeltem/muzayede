@@ -1,0 +1,347 @@
+<nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
+    <div class="container">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{#BASEURL#}">{$lang.anasayfa}</a></li>
+            <li class="breadcrumb-item"><a href="{#BASEURL#}user/dashboard">{$lang.hesabim}</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{$lang.kazandiklarim}</li>
+        </ol>
+    </div><!-- End .container -->
+</nav><!-- End .breadcrumb-nav -->
+
+<div class="page-content">
+    <div class="orders">
+        <div class="container">
+            <div class="row">
+                <aside class="col-md-4 desktop col-lg-3">
+                    {include="user_menu"}
+                </aside><!-- End .col-lg-3 -->
+
+                <div class="col-md-8 col-lg-9">
+
+
+                    {$info}
+                    {if="$data"}
+                    <!--<form method="post" action="{#BASEURL#}cart/addcart">-->
+                        {loop="$data"}
+
+                        <div class="sticky-content">
+                            <div class="sticky-header sheader" data-auction-id="{$value.info.id}" data-loaded="0" data-type="winner">
+
+                            <div class="inner">
+                                <h1>{$value.info.name}</h1>
+                                <div class="left cdown">
+
+                                    <div class="remaining" data-livehas="1" data-status="{$value.info.status}" data-live="{$value.info.live_url}" data-date="{$value.info.date}" data-id="{$value.info.id}">
+
+                                        <p class="auction-completed" style="display:none;"><span><strong>{$lang.tamamlandi}</strong></span> {$value.info.end_date}</p>
+                                        <p class="auction-finish-date" style="display:none;"><span><strong>{$lang.kapanis}</strong></span> {$value.info.end_date}</p>
+
+                                        <p class="auction-live-date" style="display:none;">
+                                            <a class="h-a-r-r"><span class="red">{$lang.canli}</span> {$value.info.start_live}</a>
+                                        </p>
+
+                                        <p class="auction-live-now" style="display:none;">
+                                            <a class="h-a-r-r live-now"><span class="red">{$lang.simdicanli}</span></a>
+                                        </p>
+
+                                        <p class="auction-countdown" style="display:none;">
+                                            <strong>{$lang.kalansure}</strong> <span data-countdown></span>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="right">
+                                    <div class="inner">
+                                        <a href="{$value.info.live_url}" target="_blank" title="Müzayede Listesine Git" data-tooltip="" data-auction-url=""><span class="list-btn"><i class="fas fa-list"></i></span></a>
+                                            <span class="info-btn" title="Mali Durum" data-toggle="ajaxModal" data-remote="{#BASEURL#}auctions/winner/{$value.info.id}">
+                                                <i class="fas fa-info"></i>
+                                            </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="products-list products sticky-detail">
+                            {$dataStatus=$value.info.status}
+                            {loop="$value.records"}
+                            <div class="product product-list {if="$value.lotown"}win{else}lost{/if}" data-id="{$value.id}" data-type="list">
+                                <div class="row products-in">
+                                    <div class="col-12 col-lg-3">
+                                        <figure class="product-media">
+                                            <a href="{$value.url}">
+                                                <img src="data/products/{$value.id}/{$value.picture}" alt="{$value.name}" class="product-image">
+                                            </a>
+                                        </figure><!-- End .product-media -->
+                                    </div><!-- End .col-sm-6 col-lg-3 -->
+
+                                    <div class="col-6 col-lg-3 order-lg-last">
+                                        <div class="product-list-action">
+                                            <div class="product-price">
+                                                {$lang.acilisfiyati} : {$value.sale_currency_prefix}{$value.sale_old_price|numbers_dot}{$value.sale_currency_suffix}
+                                            </div>
+                                            <div class="result">
+                                                {if="$value.pey.id"}
+                                                <div class="product-price" style="font-size: 2rem;color:#333">
+                                                    {$lang.peyiniz} : {$value.sale_currency_prefix}{$value.pey.price|numbers_dot}{$value.sale_currency_suffix}
+                                                </div><!-- End .product-price -->
+                                                <a href="#" class="btn-product btn-cart disabled lotdeactive {if="$value.lotown"}lotactive{/if}"><span>{$lang.fiyat} : {$value.sale_currency_prefix}{$value.sale_price|numbers_dot}{$value.sale_currency_suffix}</span><br><span style="font-size: 1.2rem;">{if="$value.lotown"}{$lang.lotsizde}{else}{$lang.lotsizdedegil}{/if}</span></a>
+                                                {else}
+                                                {if="$value.sale_price!='0.00'"}<a href="#" class="btn-product btn-cart disabled"><span>{$lang.fiyat} : {$value.sale_currency_prefix}{$value.sale_price|numbers_dot}{$value.sale_currency_suffix}</span></a>{/if}
+                                                {/if}
+                                                {if="$value.status  == 1 && $dataStatus == 1"}
+                                                <div class="peyDiv">
+                                                    <div class="input-group flex-nowrap number-spinner">
+                                                        <input type="text" class="form-control text-center" name="pey" >
+                                                        <span class="input-group-append">
+                                                            <button style="min-width: auto;" class="btn btn-outline-dark" data-dir="up"><i class="icon-plus"></i></button>
+                                                        </span>
+                                                    </div>
+                                                    <button type="button" class="btn btn-primary btn-rounded btn-block peysend"><i class="fa fa-gavel"></i> Pey Ver</button>
+                                                </div>
+                                                {/if}
+                                            </div>
+                                        </div><!-- End .product-list-action -->
+                                    </div><!-- End .col-sm-6 col-lg-3 -->
+
+                                    <div class="col-lg-6">
+                                        <div class="product-body product-action-inner">
+                                            <div class="product-cat">
+                                                <a>Lot : {$value.sku} > {$value.brand.name}</a>
+                                            </div><!-- End .product-cat -->
+                                            <h3 class="product-title"><a href="{$value.url}">{$value.name}</a></h3><!-- End .product-title -->
+
+                                            <div class="product-content">
+                                                <p>{$value.shortdetail}</p>
+                                            </div><!-- End .product-content -->
+                                            <div class="col-12 col-lg-12">
+                                                <div class="product-action">
+                                                    <a href="javascript:;" class="btn-product btn-wishlist {if="$value.me_follow"}active{/if}" data-addwish="{$value.id}" title="{$lang.favorilerimeekle}"><span>{$lang.favorilerimeekle}</span>&nbsp;&nbsp;:&nbsp;&nbsp; <span id="takip{$value.id}">{$value.follows}</span></a>
+
+                                                    <!--<a class="btn-product btn-quickview" title="Takip Sayısı"><span>Takip : <span id="takip{$value.id}">{$value.follows}</span></span></a>-->
+                                                    <a class="btn-product btn-pey" title="Pey Sayısı"><i class="fa fa-gavel" style="font-size: 1.8rem;margin-right: .5rem;"></i> <span>Pey : {$value.offers}</span></a>
+                                                </div><!-- End .product-action -->
+                                            </div>
+                                        </div><!-- End .product-body -->
+                                    </div><!-- End .col-lg-6 -->
+                                </div><!-- End .row -->
+                            </div>
+                            {/loop}
+
+                        </div>
+                    </div>
+
+
+                        {/loop}
+                        <!--<div class="row">
+                            <div class="col-md-12 text-right">
+                                <button type="submit" class="btn btn-success ">{$lang.odemeyap}</button>
+                            </div>
+                        </div>
+-->
+                    <!--</form>-->
+                    {else}
+                    <div class="alert alert-warning">{$lang.henuzkazanyok}</div>
+                    {/if}
+
+                </div><!-- End .col-lg-9 -->
+            </div><!-- End .row -->
+        </div><!-- End .container -->
+    </div><!-- End .dashboard -->
+</div><!-- End .page-content -->
+<style type="text/css">
+    .sticky-content {
+        width: 100%;
+        margin-bottom: 24px;
+    }
+
+    .sticky-content-helper {
+        position: fixed;
+        height: 40px;
+        background-color: white;
+        width: auto;
+        width: 100%;
+        z-index: 11;
+        top: calc(var(--header-logo-height) + var(--header-menu-height));
+    }
+
+    .sticky-header {
+        cursor: pointer;
+        width: 100%;
+        position: sticky;
+        position: -webkit-sticky;
+        top: calc(var(--header-logo-height) + var(--header-menu-height) + 40px);
+        z-index: 11;
+        background-color: white;
+        transition: background-color 0.8s ease;
+    }
+
+    .sticky-header.selected {
+        background-color: #f3f3f3;
+    }
+
+    .sticky-header:hover h1::before {
+        color: black;
+    }
+
+    .sticky-header>.inner {
+        padding: 10px 16px;
+        border-radius: 4px;
+        border: 1px solid #efefef;
+        border-radius: 4px 4px 0 0;
+        display: grid;
+        grid-template-columns: auto auto min-content;
+        grid-template-areas: "g-h g-h g-r" "g-l . g-r";
+    }
+
+    .sticky-header h1 {
+        grid-area: g-h;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        margin-bottom: 6px;
+        margin-top: 0;
+        font-size: 22px;
+    }
+
+    .sticky-header h1::before {
+        font-family: "Font Awesome 5 Free";
+        font-weight: 400;
+        content: "\f0fe";
+        text-rendering: auto;
+        -webkit-font-smoothing: antialiased;
+        margin-right: 6px;
+        color: rgb(165, 165, 165);
+    }
+
+    .sticky-header.selected h1::before {
+    font-family: "Font Awesome 5 Free";
+    font-weight: 400;
+    content: "\f146";
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    margin-right: 6px;
+    color: rgb(165, 165, 165);
+}
+
+
+
+    .sticky-header .inner .left {
+        grid-area: g-l;
+    }
+
+    .sticky-header .inner .left>p, .sticky-header .inner .left>a {
+        margin: 0;
+        display: inline-block;
+        margin-right: 20px;
+    }
+
+    .sticky-header .inner .left .remaining>p, .sticky-header .inner .left .remaining>a {
+        margin: 0;
+        display: inline-block;
+        margin-right: 20px;
+    }
+
+    .sticky-header .inner .right {
+        grid-area: g-r;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .sticky-header .inner .right .inner {
+        display: flex;
+        flex-wrap: nowrap;
+        flex-direction: row;
+    }
+
+    .sticky-header .inner .right span {
+        margin: 4px;
+        padding: 4px;
+        border-radius: 99px;
+        font-size: 12px;
+        line-height: 12px;
+        cursor: pointer;
+        min-width: 24px;
+        text-align: center;
+        display: inline-block;
+    }
+
+    .sticky-header .inner .right span.list-btn i {
+        margin: 0;
+        padding: 0;
+    }
+
+    .sticky-header .inner .right span.list-btn {
+        border: 1px solid #ccc;
+        color: #666;
+    }
+
+    .sticky-header .inner .right span.list-btn:hover {
+        background-color: #ccc;
+        color: #000;
+    }
+
+    .sticky-header .inner .right span.vinings-btn {
+        border: 1px solid green
+    }
+
+    .sticky-header .inner .right span.vinings-btn:hover {
+        background-color: green;
+        color: white;
+    }
+
+    .sticky-header .inner .right span.losings-btn {
+        border: 1px solid #B30000
+    }
+
+    .sticky-header .inner .right span.losings-btn:hover {
+        background-color: #B30000;
+        color: white;
+    }
+
+    .sticky-header .inner .right span.info-btn {
+        border: 1px solid #333
+    }
+
+    .sticky-header .inner .right span.info-btn:hover {
+        background-color: #333;
+        color: white;
+    }
+
+    .sticky-header .inner .right span.info-btn i {
+        margin: 0;
+        padding: 0;
+    }
+
+    .sticky-header .remaining {
+        display: inline-block;
+    }
+
+    .sticky-detail {
+        padding: 0 0 0 0;
+        border: 1px solid #efefef;
+        border-top: none;
+        border-radius: 0 0 4px 4px;
+        display: none;
+    }
+
+    .sticky-detail .loader {
+        margin: 0 auto;
+        width: 150px;
+        height: 150px;
+    }
+
+    .sticky-content-title {
+        display: none;
+        padding: 0 16px;
+    }
+
+    .products-list.sticky-detail {
+        padding: 0 10px;
+    }
+
+    .products-list.sticky-detail .item {
+        grid-template-columns: 180px auto 200px;
+    }
+
+</style>

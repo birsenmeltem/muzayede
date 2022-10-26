@@ -1,0 +1,43 @@
+<div class="dropdown-cart-products">
+    {if="$data.products"}
+    {loop="$data.products"}
+    <div class="product">
+        <div class="product-cart-details">
+            <h4 class="product-title">
+                <a href="{$value.url}">{$value.name}</a>
+            </h4>
+            {if="$value.variants"}
+            <span class="cart-product-info">
+                {$value.variants}
+            </span><br>
+            {/if}
+            <span class="cart-product-info">
+                <span class="cart-product-qty">{$value.quantity}</span>
+                x {$value.sale_currency_prefix}{$value.sale_price|numbers_dot}{$value.sale_currency_suffix}
+            </span>
+        </div><!-- End .product-cart-details -->
+
+        <figure class="product-image-container">
+            <a href="{$value.url}" class="product-image">
+                <img src="data/products/{$value.id}/{$value.picture}" alt="{$value.name}">
+            </a>
+        </figure>
+        <a href="javascript:;" class="btn-remove" data-quickcart-remove="true" data-sku="{$key}"><i class="icon-close"></i></a>
+    </div><!-- End .product -->
+    {/loop}
+    {else}
+    <div class="text-warning"><i class="fa fa-shopping-cart"></i> {$lang.sepetteurunyok}</div>
+    {/if}
+
+</div><!-- End .cart-product -->
+{if="$data.products"}
+<div class="dropdown-cart-total">
+    <span>{$lang.aratoplam}</span>
+    <span class="cart-total-price">{$ActiveCurrency.prefix_symbol}{$data.total|numbers_dot}{$ActiveCurrency.suffix_symbol}</span>
+</div><!-- End .dropdown-cart-total -->
+
+<div class="dropdown-cart-action">
+    <a href="{#BASEURL#}cart" class="btn btn-primary">{$lang.sepetim}</a>
+    <a href="{#BASEURL#}cart/address" class="btn btn-outline-primary-2"><span>{$lang.checkout}</span><i class="icon-long-arrow-right"></i></a>
+</div><!-- End .dropdown-cart-total -->
+{/if}

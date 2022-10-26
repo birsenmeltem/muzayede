@@ -1,0 +1,134 @@
+<nav aria-label="breadcrumb" class="breadcrumb-nav">
+    <div class="container">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{#BASEURL#}">{$lang.anasayfa}</a></li>
+            <li class="breadcrumb-item"><a href="{#BASEURL#}cart">{$lang.sepetim}</a></li>
+            <li class="breadcrumb-item"><a href="{#BASEURL#}cart/address">{$lang.adressecimi}</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{$lang.odemeyap}</li>
+        </ol>
+    </div><!-- End .container -->
+</nav><!-- End .breadcrumb-nav -->
+<div class="page-content">
+    <div class="checkout">
+        <div class="container">
+            {$info}
+            <form action="{#BASEURL#}cart/payment" method="post">
+                <div class="row">
+                    <div class="col-lg-9">
+                        <ul class="nav nav-tabs pay-tabs" id="tabs-1" role="tablist">
+                            <!--<li class="nav-item">
+                                <a class="nav-link" id="tab-kredikarti" data-toggle="tab" href="#tabkredikarti" role="tab" aria-controls="tabkredikarti" aria-selected="true">{$lang.kredikartiodeme}</a>
+                            </li>-->
+                            <li class="nav-item">
+                                <a class="nav-link active" id="tab-havale" data-toggle="tab" href="#tabhavale" role="tab" aria-controls="tabhavale" aria-selected="false">{$lang.havaleodeme}</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content paymenttab" id="tab-content-1">
+
+                            <div class="tab-pane fade " id="tabkredikarti" role="tabpanel" aria-labelledby="tab-kredikarti">
+                                <input type="hidden" name="payment[payment_type]" value="1" />
+                                <input type="hidden" name="payment[payment_bank]" value="1" />
+                                {if="$data.installments"}
+                                <label>{$lang.taksitsecenek} *</label>
+                                <select class="form-control" name="payment[installment]">
+                                    {loop="$data.installments"}
+                                    <option value="{$value.taksit}">{$value.aciklama} x {$ActiveCurrency.prefix_symbol}{$value.aylik}{$ActiveCurrency.suffix_symbol} = {$ActiveCurrency.prefix_symbol}{$value.toplam}{$ActiveCurrency.suffix_symbol}</option>
+                                    {/loop}
+                                </select>
+                                {/if}
+                                <label>{$lang.kredikartiisim} *</label>
+                                <input type="text" class="form-control" required name="payment[cardname]">
+                                <label>{$lang.kredikartinumara} *</label>
+                                <input type="text" class="form-control credit" required name="payment[cardnumber]">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <label>{$lang.kredikartay} *</label>
+                                        <select class="form-control" name="payment[cardmonth]">
+                                            {loop="$card_month"}
+                                            <option value="{$value}">{$value}</option>
+                                            {/loop}
+                                        </select>
+                                    </div><!-- End .col-sm-6 -->
+
+                                    <div class="col-sm-6">
+                                        <label>{$lang.kredikartyil} *</label>
+                                        <select class="form-control" name="payment[cardyear]">
+                                            {loop="$card_year"}
+                                            <option value="{$value}">{$value}</option>
+                                            {/loop}
+                                        </select>
+                                    </div><!-- End .col-sm-6 -->
+                                </div><!-- End .row -->
+                                <label>{$lang.kredikartcvc} *</label>
+                                <input type="text" class="form-control" required name="payment[cardcvc]" maxlength="4">
+                            </div>
+
+                            <div class="tab-pane fade show active" id="tabhavale" role="tabpanel" aria-labelledby="tab-havale">
+                                <input type="hidden" name="payment[payment_type]" value="2" />
+                                <div class="accordion-summary" id="accordion-payment">
+                                    <p>{$lang.havalebankaseciniz}</p>
+                                    {loop="$banks"}
+                                    <div class="card" style="border:.1rem solid #dadada; padding:10px; margin:5px 0">
+                                        <div class="card-header" id="heading-{$key}">
+
+                                            <h2 class="card-title">
+                                                <div class="custom-control custom-radio" style="margin: 0;">
+                                                    <input type="radio" class="custom-control-input" name="payment[payment_bank]" value="{$value.id}" id="bank{$value.id}" required>
+                                                    <label class="custom-control-label" for="bank{$value.id}" data-toggle="collapse" href="#collapse-{$key}" style="width: 100%;">
+                                                        {$value.bank_name} - {$value.name}
+                                                    </label>
+                                                </div>
+                                            </h2>
+                                        </div><!-- End .card-header -->
+                                        <div id="collapse-{$key}" class="collapse" aria-labelledby="heading-{$key}" data-parent="#accordion-payment" style="">
+                                            <div class="card-body">
+                                                {if="$value.picture"}
+                                                <img src="data/uploads/{$value.picture}" class="img-thumbnail" style="max-height: 45px;" />
+                                                {/if}
+                                                <p>{$lang.hesapsahibi} : {$value.name}</p>
+                                                <p>{$lang.subeadi} / {$lang.subekodu} : {$value.sube_name} / {$value.sube_code}</p>
+                                                <p>{$lang.hesapno} : {$value.hesap_no}</p>
+                                                <p>{$lang.iban} : {$value.iban}</p>
+                                            </div><!-- End .card-body -->
+                                        </div><!-- End .collapse -->
+                                    </div><!-- End .card -->
+                                    {/loop}
+                                </div>
+                            </div>
+
+                        </div><!-- End .tab-content -->
+                        <div class="col-md-12">
+                            <hr>
+                            <h3 class="summary-title">{$lang.siparisnotu}</h3>
+                            <textarea class="form-control" name="payment[note]" style="min-height: auto; height: 80px;">{$data.order.note}</textarea>
+                        </div>
+                    </div><!-- End .col-lg-9 -->
+                    <aside class="col-lg-3">
+                        <div class="summary">
+                            <h3 class="summary-title">{$lang.sepettoplami}</h3><!-- End .summary-title -->
+
+                            <div id="cart_summary">
+                                {include="cart_summary"}
+                            </div>
+
+                            <button type="submit" class="btn btn-outline-primary-2 btn-order btn-block">
+                                <span class="btn-text">{$lang.siparistamamla}</span>
+                                <span class="btn-hover-text">{$lang.siparistamamla}</span>
+                            </button>
+                        </div><!-- End .summary -->
+                        <div class="element">
+                            <p><strong>{$lang.teslimatadresleri}</strong></p>
+                            <p>{$address.shipping.name}</p>
+                            <p>{$address.shipping.address} {$address.shipping.state} / {$address.shipping.city_name} / {$address.shipping.country_name}</p>
+                            <p>{$address.shipping.phone}</p>
+                            <p><strong>{$lang.faturaadresleri}</strong></p>
+                            <p>{$address.billing.name}</p>
+                            <p>{$address.billing.address} {$address.billing.state} / {$address.billing.city_name} / {$address.billing.country_name}</p>
+                            <p>{$address.billing.tax_name} {$address.billing.tax_no}</p>
+                        </div>
+                    </aside><!-- End .col-lg-3 -->
+                </div><!-- End .row -->
+            </form>
+        </div><!-- End .container -->
+    </div><!-- End .checkout -->
+</div>

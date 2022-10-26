@@ -1,0 +1,56 @@
+<nav aria-label="breadcrumb" class="breadcrumb-nav border-0 mb-0">
+    <div class="container">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{#BASEURL#}">{$lang.anasayfa}</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{$lang.uyegirisi}</li>
+        </ol>
+    </div><!-- End .container -->
+</nav><!-- End .breadcrumb-nav -->
+
+<div class="login-page pt-md-3 pb-md-3 pt-lg-17 pb-lg-17">
+    <div class="container">
+        <div class="form-box">
+             {$info}<br>
+            <div class="form-tab">
+                <ul class="nav nav-pills nav-fill" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-selected="false">{$lang.uyegirisi}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{#BASEURL#}user/register" id="register-tab-2" aria-selected="true">{$lang.uyeol}</a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane show active" id="signin-2" role="tabpanel" aria-labelledby="signin-tab-2">
+
+                        <form action="{#BASEURL#}user/login" method="post">
+                            <div class="form-group">
+                                <label for="emailadersi">{$lang.emailadresi} *</label>
+                                <input type="text" class="form-control" id="emailadersi" name="login[username]" required>
+                            </div><!-- End .form-group -->
+
+                            <div class="form-group">
+                                <label for="singin-password-2">{$lang.sifre} *</label>
+                                <input type="password" class="form-control" id="singin-password-2" name="login[password]" required>
+                            </div><!-- End .form-group -->
+
+                            <div class="form-footer">
+                                <button type="submit" class="btn btn-outline-primary-2" style="order:-1">
+                                    <span>{$lang.giris}</span>
+                                    <i class="icon-long-arrow-right"></i>
+                                </button>
+
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="rememberme" name="rememberme" value="1" checked>
+                                    <label class="custom-control-label" for="rememberme">{$lang.benihatirla}</label>
+                                </div><!-- End .custom-checkbox -->
+
+                                <a href="{#BASEURL#}user/forgetpassword" class="forgot-link">{$lang.sifremiunuttum}</a>
+                            </div><!-- End .form-footer -->
+                        </form>
+                    </div><!-- .End .tab-pane -->
+                </div><!-- End .tab-content -->
+            </div><!-- End .form-tab -->
+        </div><!-- End .form-box -->
+    </div><!-- End .container -->
+</div><!-- End .login-page section-bg -->

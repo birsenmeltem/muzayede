@@ -1,0 +1,57 @@
+<h2 class="checkout-title">{$lang.teslimatadresleri}</h2><!-- End .checkout-title -->
+<div class="row elements">
+    <div class="col-md-4 element-type">
+        <div class="element text-center">
+            <a class="btn btn-block btn-addnew" href="javascript:;" data-toggle="ajaxModal" data-remote="{#BASEURL#}user/newaddress/shipping">
+                <i class="fa fa-plus-square fa-2x"></i><br>
+                <div>{$lang.yeniteslimatadresiekle}</div>
+            </a>
+        </div>
+
+    </div>
+    {loop="$data.shippings"}
+    <div class="col-md-4">
+        <div class="element">
+            <h5>{$value.address_name} {if="$value.main"}<i class="fa fa-check-circle text-success" title="{$lang.varsayilanadres}"></i>{/if}</h5>
+            <p>{$value.name}</p>
+            <p>{$value.address}</p>
+            <p>{$value.state}, {$value.city_name}, {$value.country_name}</p>
+            <p>{$value.phone}</p>
+            <div class="btn-group">
+                {if="!$value.main"}<a href="{#BASEURL#}user/mainaddress/{$value.id}" class="btn btn-success btn-rounded btn-sm btn-inline" title="{$lang.varsayilanyap}"><i class="fa fa-check"></i></a>{/if}
+                <a href="javascript:;" data-remote="{#BASEURL#}user/editaddress/{$value.id}" data-toggle="ajaxModal" class="btn btn-info btn-rounded btn-sm  btn-inline" title="{$lang.duzenle}"><i class="fa fa-edit"></i></a>
+                {if="count($data.shippings)>1"}<a href="{#BASEURL#}user/remaddress/{$value.id}" onclick="return window.confirm('{$lang.adressilonay}');" class="btn btn-danger btn-rounded btn-sm  btn-inline" title="{$lang.sil}"><i class="fa fa-trash"></i></a>{/if}
+            </div>
+        </div>
+    </div>
+    {/loop}
+</div>
+<hr>
+<h2 class="checkout-title">{$lang.faturaadresleri}</h2><!-- End .checkout-title -->
+<div class="row elements">
+    <div class="col-md-4 element-type">
+        <div class="element text-center">
+            <a class="btn btn-block btn-addnew" href="javascript:;" data-toggle="ajaxModal" data-remote="{#BASEURL#}user/newaddress/billing">
+                <i class="fa fa-plus-square fa-2x"></i><br>
+                <div>{$lang.yenifaturaadresiekle}</div>
+            </a>
+        </div>
+    </div>
+    {loop="$data.billings"}
+    <div class="col-md-4">
+        <div class="element">
+            <h5>{$value.address_name} {if="$value.main"}<i class="fa fa-check-circle text-success" title="{$lang.varsayilanadres}"></i>{/if}</h5>
+            <p>{$value.name}</p>
+            <p>{$value.address}</p>
+            <p>{$value.state}, {$value.city_name}, {$value.country_name}</p>
+            <p>{$value.tax_name}</p>
+            <p>{$value.tax_no}</p>
+            <div class="btn-group">
+                {if="!$value.main"}<a href="{#BASEURL#}user/mainaddress/{$value.id}" class="btn btn-success btn-rounded btn-sm btn-inline" title="{$lang.varsayilanyap}"><i class="fa fa-check"></i></a>{/if}
+                <a href="javascript:;" data-remote="{#BASEURL#}user/editaddress/{$value.id}" data-toggle="ajaxModal" class="btn btn-info btn-rounded btn-sm  btn-inline" title="{$lang.duzenle}"><i class="fa fa-edit"></i></a>
+                {if="count($data.billings)>1"}<a href="{#BASEURL#}user/remaddress/{$value.id}" onclick="return window.confirm('{$lang.adressilonay}');" class="btn btn-danger btn-rounded btn-sm  btn-inline" title="{$lang.sil}"><i class="fa fa-trash"></i></a>{/if}
+            </div>
+        </div>
+    </div>
+    {/loop}
+</div>

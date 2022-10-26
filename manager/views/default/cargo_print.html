@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>Kargo Etiket</title>
+        <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
+        <style type="text/css" media="print">
+            @page {
+                size: auto; /* auto is the initial value */
+                margin: 0mm; /* this affects the margin in the printer settings */
+            }
+
+            html {
+                background-color: #FFFFFF;
+                margin: 0mm; /* this affects the margin on the html before sending to printer */
+            }
+
+            body {
+                border: 0mm;
+                margin: 0mm; /* margin you want for the content */
+                font-family: 'Arial' !important;
+                font-size: 10px !important;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div style='width:100mm; border:1px solid #000;'>
+            <b>Alıcı Bilgileri</b>
+            <hr />
+            <b>İsim       :</b> {$data.shipping.name}<br />
+            <b>Telefon     :</b>{$data.shipping.phone}<br />
+            <b>Adres        :</b>{$data.shipping.address} {$data.shipping.state} / {$data.shipping.city_name} / {$data.shipping.country_name}
+            <hr />
+            <b>Kargo Bilgileri</b>
+            <hr />
+            <b>Ödeme Türü        :</b> {$data.payment_type_name}<br />
+            <b>Kargo Firması        :</b>{$data.cargo.name} {if="$data.cargo.id == 4"}<b>(Şeffaf)</b>{/if}<br />
+            <b>Kargo Tipi      :</b> Gönderici Ödemeli Kargo<hr />
+            <center>
+                Entegrasyon No :{$data.barcode}<br />
+                <b>Koli Sayısı :1/1<hr />
+                <div  style ='height: 40px;overflow: hidden;'><img src='https://www.cognex.com/api/Sitecore/Barcode/Get?data={$data.barcode}&code=BCL_CODE128&width=200&imageType=JPG&foreColor=%23000000&backColor=%23FFFFFF&rotation=RotateNoneFlipNone'></div>
+                <b>Barkod No : {$data.barcode}
+            </center>
+        </div>
+        <br/>
+        <script>
+            $(document).ready(function () {
+                window.print();
+            });
+        </script>
+    </body>
+</html>

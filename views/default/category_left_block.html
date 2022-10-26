@@ -1,0 +1,160 @@
+<div class="widget widget-collapsible widget-categories">
+
+    {if="$data.end_date"}
+    <div class="collapse show" id="widget-kategoriler">
+        <div class="widget-body cdown">
+            <div class="remaining" data-livehas="1" data-status="{$data.status}" data-live="{$data.live_url}" data-date="{$data.date}" data-id="{$data.id}">
+
+                <p class="auction-completed" style="display:none;"><span><strong>{$lang.tamamlandi}</strong></span> {$data.end_date}</p>
+                <p class="auction-finish-date" style="display:none;"><span><strong>{$lang.kapanis}</strong></span> {$data.end_date}</p>
+
+                <p class="auction-live-date" style="display:none;">
+                    <a class="h-a-r-r"><span class="red">{$lang.canli}</span> {$data.start_live}</a>
+                </p>
+
+                <p class="auction-live-now" style="display:none;">
+                    <a class="h-a-r-r live-now"><span class="red">{$lang.simdicanli}</span></a>
+                </p>
+
+                <p class="auction-countdown" style="display:none;">
+                    <strong>{$lang.kalansure}</strong> <span data-countdown></span>
+                </p>
+            </div>
+
+        </div><!-- End .widget-body -->
+    </div><!-- End .collapse -->
+    {/if}
+    <button class="Filter-open">Filtre</button>
+</div><!-- End .widget -->
+<div class="Filter">
+    <form id="ajax_form" method="get">
+        <input type="hidden" name="filter[category_id]" value="{$data.id}" />
+        <div class="widget widget-clean">
+            <label>{$lang.filtre}:</label>
+            {if="$filter.SAVE"}<a href="{#BASEURL#}clearfilter" class="">{$lang.temizlebtn}</a>{/if}
+            <button class="Filter-close" type="button">Filtreyi Kapat</button>
+        </div><!-- End .widget widget-clean -->
+        <div class="widget widget-collapsible">
+            <h3 class="widget-title">
+                <a data-toggle="collapse" href="#widget-arama" role="button" aria-expanded="true" aria-controls="widget-arama">
+                    {$lang.aramatext}
+                </a>
+            </h3><!-- End .widget-title -->
+
+            <div class="collapse show" id="widget-arama">
+                <div class="widget-body">
+                    <div class="filter-items">
+                        <div class="filter-item ">
+                            <div class="header-search">
+                                <div class="header-search-wrapper show" style="position: relative; top:0; right: 0; margin-top:0;">
+                                    <input type="text" name="filter[name]" value="{$filter.name}" class="form-control" />
+                                    <button class="btn search-toggle" type="submit" id="button-addon2"><i class="icon-search"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- End .filter-items -->
+                </div><!-- End .widget-body -->
+            </div><!-- End .collapse -->
+        </div>
+        <div class="widget widget-collapsible">
+            <h3 class="widget-title">
+                <a data-toggle="collapse" href="#widget-lottext" role="button" aria-expanded="true" aria-controls="widget-lottext">
+                    {$lang.lottext}
+                </a>
+            </h3><!-- End .widget-title -->
+
+            <div class="collapse show" id="widget-lottext">
+                <div class="widget-body">
+                    <div class="filter-items">
+                        <div class="filter-item ">
+                            <div class="header-search">
+                                <div class="header-search-wrapper show" style="position: relative; top:0; right: 0; margin-top:0;">
+                                    <input type="text" name="filter[sku]" value="{$filter.sku}" class="form-control" />
+                                    <button class="btn search-toggle" type="submit" id="button-addon2"><i class="icon-search"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- End .filter-items -->
+                </div><!-- End .widget-body -->
+            </div><!-- End .collapse -->
+        </div>
+        <div class="widget widget-collapsible">
+            <h3 class="widget-title">
+                <a data-toggle="collapse" href="#widget-lottext" role="button" aria-expanded="true" aria-controls="widget-lottext">
+                    {$lang.siralama}
+                </a>
+            </h3><!-- End .widget-title -->
+
+            <div class="collapse show" id="widget-lottext">
+                <div class="widget-body">
+                    <div class="filter-items">
+                        <div class="filter-item ">
+                            <div class="select-custom">
+                                <select name="order" id="sortby" class="form-control checkbox">
+                                    <option value="sku-ASC" {if="$data.orderby == 'sku-ASC'"}selected="selected" {/if}>{$lang.lotartan}</option>
+                                    <option value="sku-DESC" {if="$data.orderby == 'sku-DESC'"}selected="selected" {/if}>{$lang.lotazalan}</option>
+                                    <option value="old_price-ASC" {if="$data.orderby == 'old_price-ASC'"}selected="selected" {/if}>{$lang.fiyatdusuk}</option>
+                                    <option value="old_price-DESC" {if="$data.orderby == 'old_price-DESC'"}selected="selected" {/if}>{$lang.fiyatyuksek}</option>
+                                    <option value="price-ASC" {if="$data.orderby == 'price-ASC'"}selected="selected" {/if}>{$lang.guncelfiyatdusuk}</option>
+                                    <option value="price-DESC" {if="$data.orderby == 'price-DESC'"}selected="selected" {/if}>{$lang.guncelfiyatyuksek}</option>
+                                    <option value="peyTotal-DESC" {if="$data.orderby == 'peyTotal-DESC'"}selected="selected" {/if}>{$lang.peyazalan}</option>
+                                    <option value="followTotal-DESC" {if="$data.orderby == 'followTotal-DESC'"}selected="selected" {/if}>{$lang.takipazalan}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div><!-- End .filter-items -->
+                </div><!-- End .widget-body -->
+            </div><!-- End .collapse -->
+        </div>
+        {if="$data.brands"}
+        <div class="widget widget-collapsible">
+            <h3 class="widget-title">
+                <a data-toggle="collapse" href="#widget-brand" role="button" aria-expanded="true" aria-controls="widget-brand">
+                    {$lang.markalar}
+                </a>
+            </h3><!-- End .widget-title -->
+
+            <div class="collapse show" id="widget-brand">
+                <div class="widget-body">
+                    <div class="filter-items">
+                        {loop="$data.brands"}
+                        <div class="filter-item">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" name="filter[brand][]" class="custom-control-input checkbox" id="brand-{$value.id}" value="{$value.id}" {if="is_array($filter['brand']) && in_array($value.id,$filter['brand'])"} checked {/if}>
+                                <label class="custom-control-label" for="brand-{$value.id}">{$value.name}</label>
+                            </div><!-- End .custom-checkbox -->
+                        </div>
+                        {/loop}
+                    </div><!-- End .filter-items -->
+                </div><!-- End .widget-body -->
+            </div><!-- End .collapse -->
+        </div>
+        {/if}
+        {loop="$data.filters"}
+        {$modelID=$value.id}
+        <div class="widget widget-collapsible">
+            <h3 class="widget-title">
+                <a data-toggle="collapse" href="#widget-{$key}" role="button" aria-expanded="true" aria-controls="widget-{$key}">
+                    {$value.name}
+                </a>
+            </h3><!-- End .widget-title -->
+
+            <div class="collapse show" id="widget-{$key}">
+                <div class="widget-body">
+                    <div class="filter-items">
+                        {loop="$value.children"}
+                        <div class="filter-item">
+                            <div class="custom-control custom-checkbox">
+                                <input name="filter[{$modelID}][]" value="{$value.id}" {if="is_array($filter[ $modelID]) && in_array($value.id,$filter[ $modelID])"} checked {/if} type="checkbox" class="custom-control-input checkbox" id="size-{$value.id}">
+                                <label class="custom-control-label" for="size-{$value.id}">{$value.name}</label>
+                            </div><!-- End .custom-checkbox -->
+                        </div><!-- End .filter-item -->
+                        {/loop}
+                    </div><!-- End .filter-items -->
+                </div><!-- End .widget-body -->
+            </div><!-- End .collapse -->
+        </div><!-- End .widget -->
+        {/loop}
+    </form>
+</div>
+

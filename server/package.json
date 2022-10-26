@@ -1,0 +1,21 @@
+{
+  "name": "muzayede",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Mesut Eyrice",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "blueimp-md5": "^2.17.0",
+    "express": "^4.17.1",
+    "fs": "0.0.1-security",
+    "io": "^1.0.4",
+    "mysql": "^2.18.1",
+    "socket.io": "^2.3.0",
+    "vue": "^2.6.12"
+  },
+  "description": ""
+}

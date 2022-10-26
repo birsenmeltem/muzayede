@@ -1,0 +1,43 @@
+<div class="modal-dialog modal-xl">
+    <form method="post" action="{#BASEURL#}user/savealarm">
+        {if="$data.id"} <input type="hidden" name="ids" value="{$data.id}">{/if}
+        <input type="hidden" name="s[status]" value="1" />
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">{$lang.yenialarm}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body" style="padding: 2rem;">
+
+                <div class="form-group">
+                    <label>{$lang.keyword} :</label>
+                    <input type="text" class="form-control" required name="s[keyword]" value="{$data.keyword}">
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-3">
+                        <label>
+                            <input type="checkbox" name="s[ep]" {if="$data.ep"} checked {/if} value="1" id="tam">
+                            {$lang.tamesleme}
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>{$lang.fiyataraligi} :</label>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" name="s[min_price]" value="{$data.min_price}">
+                        </div>
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" name="s[max_price]" value="{$data.max_price}">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <a href="#" class="btn btn-dark" data-dismiss="modal">{$lang.kapat}</a>
+                <button type="submit" class="btn btn-success"><i class="fas fa-save"></i> {$lang.kaydet}</buton>
+            </div>
+        </div>
+    </form>
+</div>

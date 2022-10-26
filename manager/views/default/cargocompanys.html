@@ -1,0 +1,131 @@
+<div class="kt-subheader  kt-grid__item" id="kt_subheader">
+    <div class="kt-container  kt-container--fluid ">
+        <div class="kt-subheader__main">
+            <h3 class="kt-subheader__title">Kargo Yönetimi</h3>
+        </div>
+    </div>
+</div>
+
+<div class="kt-container  kt-container--fluid  kt-grid__item kt-grid__item--fluid">
+
+    <div class="kt-portlet kt-portlet--mobile">
+        <div class="kt-portlet__head kt-portlet__head--lg">
+            <div class="kt-portlet__head-label">
+                <span class="kt-portlet__head-icon">
+                    <i class="kt-font-brand fa fa-truck"></i>
+                </span>
+                <h3 class="kt-portlet__head-title">
+                    Kargo Firmaları Listele
+                </h3>
+            </div>
+            <div class="kt-portlet__head-toolbar">
+                <div class="kt-portlet__head-wrapper">
+                    <a href="{#ADMINBASEURL#}cargocompanys/add/" data-toggle="ajaxModal"  class="btn btn-success btn-icon-sm">
+                        <i class="fa fa-plus"></i>
+                        Firma Ekle
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="kt-portlet__body">
+            <!--begin: Search Form -->
+            {$info}
+            <div class="kt-form kt-form--label-right kt-margin-t-20 kt-margin-b-10">
+
+                <div class="row align-items-center">
+
+                    <div class="col-xl-8 order-2 order-xl-1">
+                        <form method="get">
+                            <div class="row align-items-center">
+                                <div class="col-md-4 kt-margin-b-20-tablet-and-mobile">
+                                    <div class="kt-input-icon kt-input-icon--left">
+                                        <input type="text" class="form-control" placeholder="Arama Kelimesi..." name="f[name]">
+                                        <span class="kt-input-icon__icon kt-input-icon__icon--left">
+                                            <span><i class="la la-search"></i></span>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 kt-margin-b-20-tablet-and-mobile">
+                                    <div class="kt-form__group kt-form__group--inline">
+                                        <div class="kt-form__label">
+                                            <label>Durumu:</label>
+                                        </div>
+                                        <div class="kt-form__control">
+                                            <select class="form-control"  name="f[status]">
+                                                <option value="all">Tümü</option>
+                                                {loop="$Status"}
+                                                <option value="{$key}" {if="isset($f.status) && $f.status == $key && $f.status != 'all'"} selected {/if}>{$value|strip_tags}</option>
+                                                {/loop}
+
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 kt-margin-b-20-tablet-and-mobile">
+                                    <div class="kt-form__group kt-form__group--inline">
+                                        <div class="kt-form__label">
+
+                                        </div>
+                                        <div class="kt-form__control">
+                                            <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i> ARA</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>        <!--end: Search Form -->
+        </div>
+        <div class="kt-portlet__body">
+            <div class="kt-section__content">
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Firma Adı</th>
+                                    <th>Açıklama</th>
+                                    <th>Sabit Ücret</th>
+                                    <th>Ücretsiz Kargo Limiti</th>
+                                    <th>Resim</th>
+                                    <th>Durumu</th>
+                                    <th>Entegrasyon</th>
+                                    <th width="100">İşlemler</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {loop="$data"}
+                                <tr>
+                                    <td>{$value.id}</td>
+                                    <td>{$value.name}</td>
+                                    <td>{$value.detail}</td>
+                                    <td>{$value.price}</td>
+                                    <td>{$value.free_cargo_price}</td>
+                                    <td>{if="$value.picture"}<img src="../data/uploads/{$value.picture}" class="img-thumbnail" style="max-width: 80px; max-height: 60px;" />{/if}</td>
+                                    <td>{$value.status_name}</td>
+                                    <td>{$value.integration.name}</td>
+                                    <td>
+                                        <div class="btn-group" role="group">
+                                            <a href="{#ADMINBASEURL#}cargocompanys/edit/{$value.id}" class="btn btn-primary btn-sm" data-toggle="ajaxModal" title="Düzenle"><i class="fa fa-edit"></i></a>
+                                            <a href="{#ADMINBASEURL#}cargocompanys/remove/{$value.id}" class="btn btn-danger btn-sm remove" title="Sil"><i class="fa fa-trash-alt"></i></a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                {/loop}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-md-12">
+                        {$pagination}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $('select').select2();
+</script>

@@ -1,0 +1,173 @@
+<div class="kt-subheader  kt-grid__item" id="kt_subheader">
+    <div class="kt-container  kt-container--fluid ">
+        <div class="kt-subheader__main">
+            <h3 class="kt-subheader__title">Siparişler</h3>
+        </div>
+    </div>
+</div>
+
+<div class="kt-container  kt-container--fluid  kt-grid__item kt-grid__item--fluid">
+
+    <div class="kt-portlet kt-portlet--mobile">
+        <div class="kt-portlet__head kt-portlet__head--lg">
+            <div class="kt-portlet__head-label">
+                <span class="kt-portlet__head-icon">
+                    <i class="kt-font-brand fa fa-layer-group"></i>
+                </span>
+                <h3 class="kt-portlet__head-title">
+                    {$baslik}
+                </h3>
+            </div>
+            <div class="kt-portlet__head-toolbar">
+                <div class="kt-portlet__head-wrapper">
+
+                </div>
+            </div>
+        </div>
+
+        <div class="kt-portlet__body">
+            <!--begin: Search Form -->
+            {$info}
+            <div class="kt-form kt-form--label-right kt-margin-t-20 kt-margin-b-10">
+                <form method="get" class="kt-form">
+                    <div class="row align-items-center">
+                        <div class="col-xl-12 order-2 order-xl-12">
+                            <div class="row align-items-center">
+                                <div class="col-md-3 kt-margin-b-20-tablet-and-mobile">
+                                    <div class="kt-form__group">
+                                        <div class="kt-form__label">
+                                            <label>Tarih Aralığı:</label>
+                                        </div>
+                                        <div class="kt-form__control dtrange">
+                                            <input type="text" class="form-control" name="f[date]" value="{$f.date}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 kt-margin-b-20-tablet-and-mobile">
+                                    <div class="kt-form__group">
+                                        <div class="kt-form__label">
+                                            <label>Sipariş Numarası:</label>
+                                        </div>
+                                        <div class="kt-form__control">
+                                            <div class="kt-input-icon kt-input-icon--left">
+                                                <input type="text" class="form-control" name="f[code]" value="{$f.code}">
+                                                <span class="kt-input-icon__icon kt-input-icon__icon--left">
+                                                    <span><i class="la la-search"></i></span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3 kt-margin-b-20-tablet-and-mobile">
+                                    <div class="kt-form__label">
+                                        <label>Üye Arama:</label>
+                                    </div>
+                                    <div class="kt-form__control">
+                                        <div class="kt-input-icon kt-input-icon--left">
+                                            <input type="text" class="form-control" name="f[user_id]"  value="{$f.user_id}">
+                                            <span class="kt-input-icon__icon kt-input-icon__icon--left">
+                                                <span><i class="la la-search"></i></span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 kt-margin-b-20-tablet-and-mobile">
+                                    <div class="kt-form__group">
+                                        <div class="kt-form__label">
+                                            <label>Durumu:</label>
+                                        </div>
+                                        <div class="kt-form__control">
+                                            <select class="form-control"  name="f[status]">
+                                                <option value="all">Tümü</option>
+                                                {loop="$Status"}
+                                                <option value="{$key}" {if="isset($f.status) && $f.status == $key && $f.status != 'all'"} selected {/if}>{$value|strip_tags}</option>
+                                                {/loop}
+
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 kt-margin-t-20 text-right">
+                                    <div class="kt-form__group kt-form__group--inline">
+                                        <div class="kt-form__label">
+
+                                        </div>
+                                        <div class="kt-form__control">
+                                            <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i> ARA</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>        <!--end: Search Form -->
+        </div>
+        <div class="kt-portlet__body">
+            <div class="kt-section__content">
+                <form method="post">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th width="1%"><label class="kt-checkbox kt-checkbox--bold kt-checkbox--brand"><input type="checkbox" /><span></span></label></th>
+                                        <th>Tarih</th>
+                                        <th>Sipariş No</th>
+                                        <th>Üye Adı</th>
+                                        <th>Ödeme Türü</th>
+                                        <th>Ödeme Banka</th>
+                                        <th>Sipariş Tutarı</th>
+                                        <th>Durum</th>
+                                        <th width="100">İşlemler</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {loop="$data"}
+                                    <tr>
+                                        <td><label class="kt-checkbox kt-checkbox--bold kt-checkbox--brand"><input type="checkbox" name="pid[]" value="{$value.id}" /><span></span></label></td>
+                                        <td>{$value.create_date}</td>
+                                        <td>{$value.code}</td>
+                                        <td>{$value.user.name} {$value.user.surname}</td>
+                                        <td>{$value.payment_type_name}</td>
+                                        <td>{$value.payment_bank.name}</td>
+                                        <td>{$value.currency.prefix_symbol}{$value.price}{$value.currency.suffix_symbol}</td>
+                                        <td>{$value.status_name}</td>
+                                        <td>
+                                            <div class="btn-group" role="group">
+                                                <a href="{#ADMINBASEURL#}orders/edit/{$value.id}" class="btn btn-primary btn-sm" title="Düzenle"><i class="fa fa-edit"></i></a>
+                                                <!--<a href="{#ADMINBASEURL#}orders/invoice/{$value.id}" data-text="{if="$value.invoice_no"}Daha önce fatura yazılmış. Yeni numara ile yazdırmak istiyor musunuz?{else}Fatura basılacaktır. Onaylıyor musunuz?{/if}" class="btn btn-fatura btn-dark btn-sm" title="Fatura Yazdır"><i class="fa fa-file-invoice"></i></a>-->
+                                                {if="$value.cargo_integration_id"}<a href="{#ADMINBASEURL#}orders/sendcargo/{$value.id}" target="_blank" class="btn btn-brand btn-sendcargo btn-sm" title="Kargo Barkod Yazdır"><i class="fas fa-paper-plane"></i></a>{/if}
+                                                <a href="{#ADMINBASEURL#}orders/invoice/{$value.id}" target="_blank" class="btn btn-dark btn-sm" title="Fatura Yazdır"><i class="fa fa-file-invoice"></i></a>
+                                                <a href="{#ADMINBASEURL#}orders/remove/{$value.id}" class="btn btn-danger btn-sm remove" title="Sil"><i class="fa fa-trash-alt"></i></a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    {/loop}
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-md-2">
+                            <button name="removeselected" class="btn btn-dark btn-sm"><i class="fa fa-trash"></i> seçilenleri sil</button>
+                        </div>
+                        <div class="col-md-10">
+                            {$pagination}
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $('select').select2();
+    $('.dtrange').daterangepicker({
+        buttonClasses: ' btn',
+        applyClass: 'btn-primary',
+        cancelClass: 'btn-secondary'
+        }, function(start, end, label) {
+            $('.dtrange .form-control').val( start.format('DD.MM.YYYY') + ' / ' + end.format('DD.MM.YYYY'));
+    });
+
+</script>

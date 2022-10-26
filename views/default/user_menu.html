@@ -1,0 +1,31 @@
+<!--<button class="Account-close mobile">Kapat</button>-->
+<ul class="nav nav-dashboard flex-column mb-3 mb-md-0" role="tablist">
+    <li class="nav-item">
+        <a class='nav-link {if="$active_menu=='alarm'"}active{/if}' href="{#BASEURL#}user/alarm">{$lang.alarmsistemi}</a>
+    </li>
+    <li class="nav-item">
+        <a class='nav-link {if="$active_menu=='peylerim'"}active{/if}' href="{#BASEURL#}user/peylerim">{$lang.peylerim}</a>
+    </li>
+    <li class="nav-item">
+        <a class='nav-link {if="$active_menu=='wishlist'"}active{/if}' href="{#BASEURL#}user/wishlist">{$lang.favorilistem}</a>
+    </li>
+    <li class="nav-item">
+        <a class='nav-link {if="$active_menu=='winners'"}active{/if}' href="{#BASEURL#}user/winners">{$lang.kazandiklarim}</a>
+    </li>
+    <li class="nav-item">
+        <a class='nav-link {if="$active_menu=='selling'"}active{/if}' href="{#BASEURL#}user/selling">{$lang.satistakiurunler}</a>
+    </li>
+    <!--<li class="nav-item">
+        <a class='nav-link {if="$active_menu=='orders'"}active{/if}' href="{#BASEURL#}user/orders">{$lang.siparislerim}</a>
+    </li>-->
+    <li class="nav-item">
+        <a class='nav-link {if="$active_menu=='address'"}active{/if}' href="{#BASEURL#}user/address">{$lang.adresbilgileri}</a>
+    </li>
+
+    <li class="nav-item">
+        <a class='nav-link {if="$active_menu=='dashboard'"}active{/if}' href="{#BASEURL#}user/dashboard">{$lang.hesabim}</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{#BASEURL#}user/logout">{$lang.guvenlicikis}</a>
+    </li>
+</ul>

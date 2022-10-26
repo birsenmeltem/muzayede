@@ -1,0 +1,53 @@
+<nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
+    <div class="container">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{#BASEURL#}">{$lang.anasayfa}</a></li>
+            <li class="breadcrumb-item"><a href="{#BASEURL#}user/dashboard">{$lang.hesabim}</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{$lang.kuponlarim}</li>
+        </ol>
+    </div><!-- End .container -->
+</nav><!-- End .breadcrumb-nav -->
+
+<div class="page-content">
+    <div class="orders">
+        <div class="container">
+            <div class="row">
+                <aside class="col-md-4 desktop col-lg-3">
+                    {include="user_menu"}
+                </aside><!-- End .col-lg-3 -->
+
+                <div class="col-md-8 col-lg-9">
+                    {$info}
+                    {if="$data"}
+                    <table class="table-striped table-bordered table-sm" style="width: 100%;">
+                        <thead>
+                            <tr>
+                                <th>{$lang.kuponkodu}</th>
+                                <th>{$lang.kuponindirimi}</th>
+                                <th>{$lang.gecerliliktarihi}</th>
+                                <th>{$lang.bitistarihi}</th>
+                                <th>{$lang.sepetlimiti}</th>
+                                <th>{$lang.kupondurumu}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {loop="$data"}
+                            <tr>
+                                <td>{$value.code}</td>
+                                <td>{$value.d_type_name_p}{$value.discount}{$value.d_type_name}</td>
+                                <td>{$value.start_date}</td>
+                                <td>{$value.end_date}</td>
+                                <td>{$value.cart_limit}</td>
+                                <td>{$value.status_name}</td>
+                            </tr>
+                            {/loop}
+                        </tbody>
+                    </table>
+                    {else}
+                    <div class="alert alert-warning">{$lang.henuzkuponyok}</div>
+                    {/if}
+                </div><!-- End .col-lg-9 -->
+            </div><!-- End .row -->
+        </div><!-- End .container -->
+    </div><!-- End .dashboard -->
+</div><!-- End .page-content -->

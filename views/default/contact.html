@@ -1,0 +1,52 @@
+<nav aria-label="breadcrumb" class="breadcrumb-nav border-0 mb-0">
+    <div class="container">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{#BASEURL#}">{$lang.anasayfa}</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{$lang.iletisim}</li>
+        </ol>
+    </div><!-- End .container -->
+</nav><!-- End .breadcrumb-nav -->
+
+<div class="page-content pb-0">
+    {$info}
+    {if="$settings.company_maps"}<div id="map">{$settings.company_maps}</div>{/if}
+    <div class="container ">
+        <div class="row">
+            <div class="col-lg-6 mb-2 mb-lg-0">
+                <h2 class="title mb-1">{$lang.ibilgi}</h2><!-- End .title mb-2 -->
+                <p class="mb-3">{$lang.ibilgit}</p>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="contact-info">
+                            <h3>{$lang.adres}</h3>
+
+                            <ul class="contact-list" style="max-width: inherit;">
+                                <li>
+                                    <i class="icon-map-marker"></i>
+                                    {$settings.company_address}
+                                </li>
+                                <li>
+                                    <i class="icon-phone"></i>
+                                    <a href="tel:{$settings.company_phone}">{$settings.company_phone}</a>
+                                </li>
+                                <li>
+                                    <i class="icon-envelope"></i>
+                                    <a href="mailto:{$settings.company_email}">{$settings.company_email}</a>
+                                </li>
+                            </ul><!-- End .contact-list -->
+                        </div><!-- End .contact-info -->
+                    </div><!-- End .col-sm-7 -->
+                </div><!-- End .row -->
+            </div><!-- End .col-lg-6 -->
+            <div class="col-lg-6">
+                <h2 class="title mb-1">{$lang.iletisimformu}</h2><!-- End .title mb-2 -->
+                <p class="mb-2">{$lang.iletisimformutext}</p>
+
+                {include="contactform"}
+            </div><!-- End .col-lg-6 -->
+        </div><!-- End .row -->
+
+        <hr class="mt-4 mb-5">
+    </div><!-- End .container -->
+
+</div><!-- End .page-content -->

@@ -1,0 +1,146 @@
+<nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
+    <div class="container">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{#BASEURL#}">{$lang.anasayfa}</a></li>
+            <li class="breadcrumb-item"><a href="{#BASEURL#}user/dashboard">{$lang.hesabim}</a></li>
+            <li class="breadcrumb-item"><a href="{#BASEURL#}user/orders">{$lang.siparislerim}</a></li>
+            <li class="breadcrumb-item active" aria-current="page">#{$data.code} {$lang.siparisdetayi}</li>
+        </ol>
+    </div><!-- End .container -->
+</nav><!-- End .breadcrumb-nav -->
+
+<div class="page-content">
+    <div class="orders">
+        <div class="container">
+            <div class="row">
+                <aside class="col-md-4 desktop col-lg-3">
+                    {include="user_menu"}
+                </aside><!-- End .col-lg-3 -->
+
+                <div class="col-md-8 col-lg-9">
+                    {$info}
+                    <h3 class="widget-title">#{$data.code} {$lang.siparisdetayi}</h3>
+                    <table class="table-cart table-sm table-bordered" style="width: 100%;">
+                        <tbody>
+                            <tr>
+                                <th>{$lang.siparistarihi}</th>
+                                <td>{$data.create_date}</td>
+                                <th>{$lang.sipariskodu}</th>
+                                <td>{$data.code}</td>
+                            </tr>
+                            <tr>
+                                <th>{$lang.siparisdurumu}</th>
+                                <td>{$data.status_name}</td>
+                                <th>{$lang.siparistutari}</th>
+                                <td>{$data.currency.prefix_symbol}{$data.price|numbers_dot}{$data.currency.suffix_symbol}</td>
+                            </tr>
+                            <tr>
+                                <th>{$lang.odemetipi}</th>
+                                <td>{$data.payment_type_name}</td>
+                                <th>{$lang.odemebankasi}</th>
+                                <td>{if="$data.payment_bank.id"}{$data.payment_bank.name}{else}-{/if}</td>
+                            </tr>
+                            {if="$data.tracking_no"}
+                            <tr>
+                                <th>{$lang.kargotakipno}</th>
+                                <td>{$data.tracking_no}</td>
+                                <th>{$lang.kargotakiptext}</th>
+                                <td>{if="$data.tracking_url"}<a target="_blank" href="{$data.tracking_url}">{$lang.kargotakiplink}</a>{else}-{/if}</td>
+                            </tr>
+                            {/if}
+                        </tbody>
+                    </table>
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h3 class="widget-title">{$lang.teslimatadresleri}</h3>
+                            <p>{$data.shipping.name}</p>
+                            <p>{$data.shipping.address} {$data.shipping.state} / {$data.shipping.city_name} / {$data.shipping.country_name}</p>
+                            <p>{$data.shipping.phone}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <h3 class="widget-title">{$lang.faturaadresleri}</h3>
+                            <p>{$data.billing.name}</p>
+                            <p>{$data.billing.address} {$data.billing.state} / {$data.billing.city_name} / {$data.billing.country_name}</p>
+                            <p>{$data.billing.tax_name} {$data.billing.tax_no}</p>
+                            <p>{$data.billing.phone}</p>
+                        </div>
+                    </div>
+
+                    <table class="table table-cart table-mobile table-sm">
+                        <thead>
+                            <tr>
+                                <th>{$lang.urunbilgisi}</th>
+                                <th>{$lang.toplamtutar}</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            {loop="$data.products"}
+                            <tr>
+                                <td class="product-col">
+                                    <div class="product">
+                                        <figure class="product-media">
+                                            <a href="{$value.url}">
+                                                <img src="data/products/{$value.product_id}/{$value.picture}" alt="{$value.name}">
+                                            </a>
+                                        </figure>
+
+                                        <h3 class="product-title">
+                                            <a href="{$value.url}">{$value.name}</a>
+                                            {if="$value.model"}
+                                            <br>
+                                            <div class="cart-product-info" style="color: #999; font-size:1.2rem;">
+                                                {$value.model}
+                                            </div>
+                                            {/if}
+                                        </h3><!-- End .product-title -->
+                                    </div><!-- End .product -->
+                                </td>
+                                <td class="total-col">{$data.currency.prefix_symbol}{$value.total_price|numbers_dot}{$data.currency.suffix_symbol}</td>
+                            </tr>
+                            {/loop}
+                        </tbody>
+                    </table>
+                    <div class="row">
+                        <div class="col-md-7">
+                            <h6>{$lang.siparisnotu}</h6>
+                            {$data.note}
+                        </div>
+                        <div class="col-md-5">
+                            <table class="table-summary table-sm table-bordered" width="100%">
+                                <tbody>
+                                    <tr class="summary-shipping">
+                                        <td>{$lang.aratoplam}:</td>
+                                        <td class="text-right">{$data.currency.prefix_symbol}{$data.total|numbers_dot}{$data.currency.suffix_symbol}</td>
+                                    </tr><!-- End .summary-subtotal -->
+                                    {if="$data.coupon_order_price"}
+                                    <tr class="summary-shipping">
+                                        <td>{$lang.kuponindirimi}: </td>
+                                        <td class="text-right">-{$data.currency.prefix_symbol}{$data.coupon_order_price|numbers_dot}{$data.currency.suffix_symbol}</td>
+                                    </tr>
+                                    {/if}
+                                    <tr class="summary-shipping">
+                                        <td>{$data.cargo.name}:</td>
+                                        <td class="text-right">{$data.currency.prefix_symbol}{$data.cargo_price|numbers_dot}{$data.currency.suffix_symbol}</td>
+                                    </tr>
+                                    {if="$data.payment_type_name"}
+                                    <tr class="summary-shipping">
+                                        <td>{$data.payment_type_name}: </td>
+                                        <td class="text-right">{$data.currency.prefix_symbol}{$data.payment_price|numbers_dot}{$data.currency.suffix_symbol}</td>
+                                    </tr>
+                                    {/if}
+                                    <tr class="summary-total">
+                                        <td>{$lang.toplamtutar}:</td>
+                                        <td class="text-right">{$data.currency.prefix_symbol}{$data.price|numbers_dot}{$data.currency.suffix_symbol}</td>
+                                    </tr><!-- End .summary-total -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div><!-- End .col-lg-9 -->
+            </div><!-- End .row -->
+        </div><!-- End .container -->
+    </div><!-- End .dashboard -->
+</div><!-- End .page-content -->

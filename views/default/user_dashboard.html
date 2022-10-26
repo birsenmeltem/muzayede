@@ -1,0 +1,82 @@
+<nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
+    <div class="container">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{#BASEURL#}">{$lang.anasayfa}</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{$lang.hesabim}</li>
+        </ol>
+    </div><!-- End .container -->
+</nav><!-- End .breadcrumb-nav -->
+
+<div class="page-content">
+    <div class="dashboard">
+        <div class="container">
+            <div class="row">
+                <aside class="Account-menu desktop col-md-4 col-lg-3">
+                    {include="user_menu"}
+                </aside><!-- End .col-lg-3 -->
+                <!--<button class="Account-open mobile">Hesabım</button>-->
+                <div class="col-md-8 col-lg-9">
+                    {$info}
+                    <form method="post">
+
+                        <label>{$lang.emailadresi}</label>
+                        <input type="email" class="form-control" required name="u[username]" id="username" value="{$data.username}">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <label>{$lang.adiniz} *</label>
+                                <input type="text" class="form-control" required name="u[name]" id="adname" value="{$data.name}">
+                            </div><!-- End .col-sm-6 -->
+
+                            <div class="col-sm-6">
+                                <label>{$lang.soyadiniz} *</label>
+                                <input type="text" class="form-control" required  name="u[surname]" id="adsurname" value="{$data.surname}">
+                            </div><!-- End .col-sm-6 -->
+                        </div><!-- End .row -->
+
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <label>{$lang.telefon} *</label>
+                                <input type="tel" class="form-control"  disabled value="{$data.phone}">
+                            </div><!-- End .col-sm-6 -->
+                        </div><!-- End .row -->
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <label><input type="checkbox" name="u[sms]" value="1" {if="$data.sms"}checked {/if} /> {$lang.smsalmakistiyorum}
+                                </label>
+                            </div><!-- End .col-sm-6 -->
+
+                            <div class="col-sm-12">
+                                <label><input type="checkbox" name="u[mail]" value="1" {if="$data.mail"}checked {/if} /> {$lang.mailalmakistiyorum}</label>
+                            </div><!-- End .col-sm-6 -->
+                        </div><!-- End .row -->
+                        <button type="submit" class="btn btn-outline-primary-2">
+                            <span>{$lang.kaydet}</span>
+                            <i class="icon-long-arrow-right"></i>
+                        </button>
+                    </form>
+                    <hr>
+                    {if="!$data.facebook && !$data.twitter"}
+                    <h3 class="widget-title">{$lang.sifremidegistir}</h3>
+                    <form method="post">
+
+                        <label>{$lang.mevcutsifre}</label>
+                        <input type="password" class="form-control" required name="s[oldpass]" />
+
+                        <label>{$lang.yenisifre}</label>
+                        <input type="password" class="form-control" required name="s[newpass]" />
+
+                        <label>{$lang.yenisifretekrar}</label>
+                        <input type="password" class="form-control" required name="s[newpass1]" />
+
+                        <button type="submit" class="btn btn-outline-primary-2">
+                            <span>{$lang.degistir}</span>
+                            <i class="icon-long-arrow-right"></i>
+                        </button>
+                    </form>
+                    {/if}
+                </div><!-- End .col-lg-9 -->
+            </div><!-- End .row -->
+        </div><!-- End .container -->
+    </div><!-- End .dashboard -->
+</div><!-- End .page-content -->

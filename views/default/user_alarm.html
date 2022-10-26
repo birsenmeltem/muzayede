@@ -1,0 +1,56 @@
+<nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
+    <div class="container">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{#BASEURL#}">{$lang.anasayfa}</a></li>
+            <li class="breadcrumb-item"><a href="{#BASEURL#}user/dashboard">{$lang.hesabim}</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{$lang.alarmsistemi}</li>
+        </ol>
+    </div><!-- End .container -->
+</nav><!-- End .breadcrumb-nav -->
+
+<div class="page-content">
+    <div class="orders">
+        <div class="container">
+            <div class="row">
+                <aside class="col-md-4 desktop col-lg-3">
+                    {include="user_menu"}
+                </aside><!-- End .col-lg-3 -->
+
+                <div class="col-md-8 col-lg-9">
+                    {$info}
+                    <div class="row">
+                        <div class="col-md-12 text-right">
+                            <a href="{#BASEURL#}user/newalarm" data-toggle="ajaxModal" class="btn btn-dark btn-sm">{$lang.yenialarm}</a>
+                            <hr>
+                        </div>
+                    </div>
+                    {if="$data"}
+                    <table class="table-striped table-bordered table-sm" style="width: 100%;">
+                        <thead>
+                            <tr>
+                                <th>{$lang.keyword}</th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {loop="$data"}
+                            <tr>
+                                <td>{$value.keyword}</td>
+                                <td><a href="{#BASEURL#}search?{$value.search}">{$lang.sonuclarigoster}</a></td>
+                                <td>
+                                    <a class="btn-info btn btn-sm" style="min-width: auto;padding: .25rem .5rem;" data-toggle="ajaxModal" href="{#BASEURL#}user/newalarm/{$value.id}"><i class="fas fa-pencil-alt"></i></a>
+                                    <a class="btn-danger btn btn-sm" style="min-width: auto;padding: .25rem .5rem;" href="{#BASEURL#}user/remalart/{$value.id}"><i class="fas fa-ban"></i></a>
+                                </td>
+                            </tr>
+                            {/loop}
+                        </tbody>
+                    </table>
+                    {else}
+                    <div class="alert alert-warning">{$lang.henuzalarmyok}</div>
+                    {/if}
+                </div><!-- End .col-lg-9 -->
+            </div><!-- End .row -->
+        </div><!-- End .container -->
+    </div><!-- End .dashboard -->
+</div><!-- End .page-content -->

@@ -1,0 +1,28 @@
+<nav aria-label="breadcrumb" class="breadcrumb-nav">
+    <div class="container">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{#BASEURL#}">{$lang.anasayfa}</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{$data.name}</li>
+        </ol>
+    </div><!-- End .container -->
+</nav><!-- End .breadcrumb-nav -->
+
+<div class="page-content pb-3">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-10 offset-lg-1">
+                {$info}
+                <div class="about-text  mt-3">
+                    <h2 class="title text-center mb-2">{$data.name}</h2><!-- End .title text-center mb-2 -->
+                    {$data.detail}
+                    {if="$data.yer == 2"}
+                    <hr>
+                    {include="contactform"}
+                    {/if}
+                </div><!-- End .about-text -->
+            </div><!-- End .col-lg-10 offset-1 -->
+        </div><!-- End .row -->
+    </div><!-- End .container -->
+
+    <div class="mb-2"></div><!-- End .mb-2 -->
+</div><!-- End .page-content -->

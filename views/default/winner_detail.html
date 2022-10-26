@@ -1,0 +1,15 @@
+<div class="modal-dialog modal-sm modal-dialog-centered">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="modal-body" style="padding: 2rem;">
+            <p><b>Pey Verilen Ürün Sayısı:</b> <span data-offer-count="">{$data.pey}</span></p>
+            <p><b>Alınan Ürün Sayısı:</b> <span data-sale-count="">{$data.sale}</span></p>
+            <p><b>Maliyet:</b> <span data-total-price="">{$data.price|numbers_dot} TL</span></p>
+            <p><b>Komisyon:</b> <span data-total-commission-price="">{$data.commission|numbers_dot} TL</span></p>
+            <!--<p><b>Komisyon KDV:</b> <span data-total-tax-price="">{$data.commissionkdv|numbers_dot} TL</span></p>-->
+            <p><b>Toplam Maliyet:</b> <span data-total-buyer-price="">{$data.totalprice|numbers_dot} TL</span></p>
+        </div>
+    </div>
+</div>

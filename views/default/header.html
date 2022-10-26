@@ -1,0 +1,65 @@
+<base href="{#BASEURL#}" />
+<meta charset="UTF-8">
+<meta property="og:title" content="{$seo_title}" />
+<meta property="og:description" content="{$seo_desc}" />
+<meta property="og:url" content="{$seo_url}" />
+<meta property="og:type" content="website" />
+{if="$seo_image"}<meta property="og:image" content="{$seo_image}" />{/if}
+<meta http-equiv="Content-Security-Policy" content="default-src data: gap://* file://* https://ssl.gstatic.com *; img-src 'self' * data:; style-src 'self' 'unsafe-inline' *; script-src 'self' 'unsafe-eval' 'unsafe-inline' *; connect-src 'self' * ws://* wss://*;">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>{$seo_title}</title>
+<meta name="description" content="{$seo_desc}" />
+<meta name="keywords" content="{$seo_keywords}" />
+{if="$seo_url"}
+<link rel="canonical" href="{$seo_url}" />
+{/if}
+{if="$noindex"}
+<meta name="robots" content="noindex" />
+{else}
+<meta name="robots" content="index, follow" />
+{/if}
+<meta name="author" content="Phebus Müzayede">
+<!-- Favicon -->
+{if="$settings.favicon"}
+<link rel="shortcut icon" href="{#BASEURL#}data/uploads/{$settings.favicon}">
+{/if}
+<link rel="stylesheet" href="views/assets/css/global.css?{$version}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" integrity="sha256-h20CPZ0QyXlBuAw7A+KluUYx/3pK+c7lYEpqLTlxjYQ=" crossorigin="anonymous" />
+<!-- Global Assets End-->
+<!-- Plugins CSS File -->
+<link rel="stylesheet" href="{#TEMPLATE#}assets/css/bootstrap.min.css">
+<!-- Main CSS File -->
+<link rel="stylesheet" href="{#TEMPLATE#}assets/css/style.css?{$version}">
+<link rel="stylesheet" href="{#TEMPLATE#}assets/css/plugins/owl-carousel/owl.carousel.css?v1">
+<link rel="stylesheet" href="{#TEMPLATE#}assets/css/plugins/magnific-popup/magnific-popup.css">
+<link rel="stylesheet" href="{#TEMPLATE#}assets/css/plugins/nouislider/nouislider.css">
+<link rel="stylesheet" href="{#TEMPLATE#}assets/css/intlTelInput.min.css?v2">
+<style type="text/css">
+    .widget-categories .widget-body ul {
+        margin: 0;
+        margin-left:1.7rem;
+    }
+    .widget-categories .widget-body li {
+        margin: 0;
+        list-style-type: square;
+    }
+
+    .widget-categories .widget-body a:hover {
+        color:#c96;
+    }
+    .widget-categories .widget-body a {
+        display: block;
+        font-weight: 300;
+        font-size: 1.3rem;
+        line-height: 1.5;
+        color: #666;
+        padding: .5rem 0;
+    }
+</style>
+<script type="text/javascript">
+var baseURL = '{#BASEURL#}';
+var currency_prefix = '{$ActiveCurrency.prefix_symbol}';
+var currency_suffix = '{$ActiveCurrency.suffix_symbol}';
+</script>
+{$settings.metacode}

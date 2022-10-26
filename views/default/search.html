@@ -1,0 +1,100 @@
+<nav aria-label="breadcrumb" class="breadcrumb-nav mb-2">
+    <div class="container">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{#BASEURL#}">{$lang.anasayfa}</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{$data.name}</li>
+        </ol>
+    </div><!-- End .container -->
+</nav><!-- End .breadcrumb-nav -->
+
+<div class="page-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                {$info}
+
+                <div>
+                    <h3>{$data.name}</h3>
+                    {$data.detail}
+                </div>
+                <hr>
+                <div class="toolbox">
+                    {if="$data.total"}
+                    <div class="toolbox-left">
+                        <div class="toolbox-info">
+                            {$lang.toplamurun} : <span>{$data.total}</span>
+                        </div><!-- End .toolbox-info -->
+                    </div><!-- End .toolbox-left -->
+
+                    <div class="toolbox-right">
+
+
+                    </div><!-- End .toolbox-right -->
+                    {/if}
+                </div><!-- End .toolbox -->
+
+                <div class="products mb-3">
+                    {if="$data.total"}
+                    <div class="recommendations">
+                        {loop="$data.records"}
+
+                        <div class="item">
+                            <div class="image">
+                                <a href="{$value.url}" title="7 Mart 1965 1/5 B">
+                                    <img class="lazy" data-src="{#CDNURL#}data/products/{$value.id}/{$value.pictures[0]['picture']}" alt="{$value.name}">
+                                </a>
+                            </div>
+                            <div class="content">
+                                <a class="a-default" href="{$value.url}" title="{$value.name}">
+                                    <p><strong>{$value.name}</strong></p>
+                                </a>
+                                <p> {$lang.acilisfiyati}: {$value.sale_currency_prefix}{$value.sale_old_price|numbers_dot}{$value.sale_currency_suffix}</p>
+                                <a href="{$value.url}" class="btn btn-outline-primary">Pey Ver</a>
+                                <!--<div class="item-time-left cdown">
+
+                                    <div class="remaining" data-livehas="0" data-status="{$value.a_status}" data-live="{$value.live_url}" data-date="{$value.date}" data-id="{$value.auction_id}">
+
+                                        <p class="auction-completed" style="display:none;"><span><strong>{$lang.tamamlandi}</strong></span> {$data.end_date}</p>
+                                        <p class="auction-finish-date" style="display:none;"><span><strong>{$lang.kapanis}</strong></span> {$data.end_date}</p>
+
+                                        <p class="auction-live-date" style="display:none;">
+                                            <a class="h-a-r-r"><span class="red">{$lang.canli}</span> {$data.start_live}</a>
+                                        </p>
+
+                                        <p class="auction-live-now" style="display:none;">
+                                            <a class="h-a-r-r live-now"><span class="red">{$lang.simdicanli}</span></a>
+                                        </p>
+
+                                        <p class="auction-countdown" style="display:none;">
+                                            <strong>{$lang.kalansure}</strong> <span data-countdown></span>
+                                        </p>
+                                    </div>
+
+                                </div>-->
+                            </div>
+                        </div>
+                        {/loop}
+                    </div>
+                    {else}
+                    <div class="alert alert-warning">{$lang.nosearchpro}</div>
+                    {/if}
+                </div><!-- End .products -->
+
+
+                <nav aria-label="Page navigation">
+                    <ul class="pagination justify-content-center">
+                        {$data.pagination}
+                    </ul>
+                </nav>
+                <div class="row">
+                    <div class="col-md-12">
+                        {$data.texts}
+                    </div>
+                </div>
+
+
+
+            </div><!-- End .col-lg-9 -->
+        </div><!-- End .row -->
+    </div><!-- End .container -->
+</div><!-- End .page-content -->

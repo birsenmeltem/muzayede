@@ -1,0 +1,109 @@
+<div class="row">
+    <div class="col-lg-12">
+        <h2 class="checkout-title">{$lang.adresbilgileri}</h2><!-- End .checkout-title -->
+        <label>{$lang.adresbasligi} * ({$lang.adresbasliginot})</label>
+        <input type="text" class="form-control" required name="ad[address_name]" id="address_name" value="{$data.address_name}">
+        <div class="row bireysel">
+            <div class="col-sm-6">
+                <label>{$lang.adiniz} *</label>
+                <input type="text" class="form-control" required name="ad[name]" id="adname" value="{if="$data.a_type == 0"}{$data.name}{/if}">
+            </div><!-- End .col-sm-6 -->
+
+            <div class="col-sm-6">
+                <label>{$lang.soyadiniz} *</label>
+                <input type="text" class="form-control" required  name="ad[surname]" id="adsurname" value="{if="$data.a_type == 0"}{$data.surname}{/if}">
+            </div><!-- End .col-sm-6 -->
+        </div><!-- End .row -->
+        <label>{$lang.adres} *</label>
+        <textarea cols="" rows="4" class="form-control"  name="ad[address]" id="address"  style="min-height: auto; height: 65px;">{$data.address}</textarea>
+
+        <div class="row">
+            <div class="col-sm-6">
+                <label>{$lang.ulke} *</label>
+                <select  name="ad[country_id]" id="country_id" class="form-control" onchange="get_citys(this.value, '#city_id');" required>
+                    <option value="">{$lang.seciniz}</option>
+                    {loop="$countrys"}
+                    <option value="{$value.id}" {if="$value.id == $data.country_id"} selected {/if}>{$value.name}</option>
+                    {/loop}
+                </select>
+            </div><!-- End .col-sm-6 -->
+
+            <div class="col-sm-6">
+                <label>{$lang.sehir} *</label>
+                <select  name="ad[city_id]" class="form-control" id="city_id" onchange="changecity(this.value);" required>
+                    {loop="$citys"}
+                    <option value="{$value.id}" {if="$value.id == $data.city_id"} selected {/if}>{$value.name}</option>
+                    {/loop}
+                </select>
+            </div><!-- End .col-sm-6 -->
+        </div><!-- End .row -->
+
+        <div class="row">
+            <div class="col-sm-6">
+                <label>{$lang.ilce} *</label>
+                <input type="text" class="form-control" required  name="ad[state]" id="state" value="{$data.state}">
+            </div><!-- End .col-sm-6 -->
+
+            <div class="col-sm-6">
+                <label>{$lang.telefon} *</label>
+                <input type="tel" class="form-control" required  name="ad[phone]" id="phone" value="{$data.phone}">
+            </div><!-- End .col-sm-6 -->
+        </div><!-- End .row -->
+
+        {if="!$user.id"}
+        <label>{$lang.emailadresi} *</label>
+        <input type="email" class="form-control" required name="email">
+        {/if}
+        {if="$type"}
+        <input type="hidden" class="form-control" name="ad[{$type}]" value="1">
+        {/if}
+
+        <div class="custom-control custom-checkbox" {if="$data.id || $type"}style="display: none;"{/if}>
+        <input type="checkbox" class="custom-control-input" id="checkout-diff-address">
+        <label class="custom-control-label" for="checkout-diff-address">{$lang.faturaadresfarkli}</label>
+        </div><!-- End .custom-checkbox -->
+    </div><!-- End .col-lg-9 -->
+    <div class="col-md-12" style="display: none;" id="billingWrapper">
+        <h2 class="checkout-title">{$lang.faturabilgileri}</h2><!-- End .checkout-title -->
+        <div class="row">
+            <div class="col-sm-3">
+                <label style="margin-top: 2.5rem;">{$lang.faturatipi}: </label>
+            </div><!-- End .col-sm-6 -->
+
+            <div class="col-sm-5">
+                <div class="custom-control custom-radio">
+                    <input type="radio" class="custom-control-input faturaType"  name="ad[a_type]" id="bireysel" value="0" {if="!$data.id || ($data.id && $data.a_type == 0)"}checked="checked"{/if} {if="!$data.id || $type=='shipping'"}disabled{/if}>
+                    <label class="custom-control-label" for="bireysel"> Bireysel</label>
+                </div>
+            </div><!-- End .col-sm-6 -->
+            <div class="col-sm-4">
+                <div class="custom-control custom-radio">
+                    <input type="radio" class="custom-control-input faturaType"  name="ad[a_type]" id="kurumsal" value="1" {if="($data.id && $data.a_type == 1)"}checked="checked"{/if} {if="!$data.id || $type=='shipping'"}disabled{/if}>
+                    <label class="custom-control-label" for="kurumsal"> Kurumsal</label>
+                </div>
+            </div><!-- End .col-sm-6 -->
+        </div><!-- End .row -->
+        <div class="row bireysel" style="display: none;">
+            <div class="col-sm-12">
+                <label>{$lang.tckimlik} *</label>
+                <input type="text" class="form-control" required name="ad[tax_no]" id="tax_no" {if="!$data.id || $type=='shipping'"}disabled{/if} value="{if="$data.a_type == 0"}{$data.tax_no}{/if}">
+            </div><!-- End .col-sm-6 -->
+        </div><!-- End .row -->
+        <div class="row kurumsal" style="display: none;">
+            <div class="col-sm-12">
+                <label>{$lang.ticariunvan} *</label>
+                <input type="text" class="form-control" required name="ad[name]" id="tname" {if="!$data.id || $type=='shipping'"}disabled{/if} value="{if="$data.a_type == 1"}{$data.name}{/if}">
+            </div><!-- End .col-sm-6 -->
+            <div class="col-sm-6">
+                <label>{$lang.vergidairesi} *</label>
+                <input type="text" class="form-control" required name="ad[tax_name]" id="ttax_name" {if="!$data.id || $type=='shipping'"}disabled{/if} value="{$data.tax_name}">
+            </div><!-- End .col-sm-6 -->
+
+            <div class="col-sm-6">
+                <label>{$lang.verginumarasi} *</label>
+                <input type="text" class="form-control" required name="ad[tax_no]" id="ttax_no" {if="!$data.id || $type=='shipping'"}disabled{/if} value="{$data.tax_no}">
+            </div><!-- End .col-sm-6 -->
+        </div><!-- End .row -->
+    </div>
+    <!-- End .col-lg-3 -->
+</div><!-- End .row -->

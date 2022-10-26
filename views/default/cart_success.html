@@ -1,0 +1,31 @@
+<nav aria-label="breadcrumb" class="breadcrumb-nav">
+    <div class="container">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{#BASEURL#}">{$lang.anasayfa}</a></li>
+            <li class="breadcrumb-item"><a href="{#BASEURL#}cart">{$lang.sepetim}</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{$lang.tebrikler}</li>
+        </ol>
+    </div><!-- End .container -->
+</nav><!-- End .breadcrumb-nav -->
+<div class="page-content">
+    <div class="checkout">
+        <div class="container text-center">
+            <h2 class="title text-center mb-5">{$lang.tebrikler}</h2>
+            {$data.cartsuccesstext}
+        </div>
+    </div>
+</div>
+<script>
+    gtag('event', 'conversion', {
+        'send_to': 'AW-702342878/ytyyCPHiirgBEN7N884C',
+        'value': '{$data.price}',
+        'currency': 'TRY',
+        'transaction_id': '{$data.code}'
+    });
+
+    fbq('track', 'Purchase', {value: '{$data.price}', currency: 'TRY',
+        contents: [{$data.products_ids}],
+        content_type: 'product',
+        content_ids : [{$data.products_sku}]
+    });
+</script>

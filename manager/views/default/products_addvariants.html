@@ -1,0 +1,41 @@
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <form method="post" onsubmit="return SaveVariants(this)">
+            <input type="hidden" name="id" value="{$data.product_id}" />
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Varyant Ekle / Kaldır</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i data-dismiss="modal" class="fa fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                {if="$data.var"}
+                <div class="kt-font-light kt-font-bold kt-label-bg-color-2 text-center" style="padding: 5px;">
+                    <p><i class="fas fa-exclamation-circle kt-font-danger"></i> Burada yapacağınız herhangi bir işlem eski stok eşleştirmelerini iptal edecektir. Bu işlem geri alınamaz !</p>
+                </div>
+                {/if}
+                <div class="form-group row form-group-marginless kt-margin-t-20">
+                    {loop="$data.variants"}
+                    <div class="col-lg-3">
+                        <label class="kt-checkbox kt-checkbox--solid">
+                            <input type="checkbox" name="variant[]" {if="is_array($data.var) && in_array($value.id,$data.var)"}checked=""{/if} value="{$value.id}"> {$value.name}
+                            <span></span>
+                        </label>
+                    </div>
+                    {/loop}
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+                <button type="submit" class="btn btn-success">KAYDET</button>
+            </div>
+        </form>
+    </div>
+</div>
+<script type="text/javascript">
+    function SaveVariants(form) {
+        $.post(baseURL + 'products/saveprovariants', $(form).serialize(), function() {
+            rebuildvariants('{$data.product_id}');
+            $('#ajaxModal').modal('hide');
+        });
+        return false;
+    }
+</script>

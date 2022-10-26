@@ -1,0 +1,114 @@
+<div class="row">
+    <div class="col-md-12">
+        {if="$data.global_variants && !$data.variants"}
+        <div class="kt-portlet kt-portlet--skin-solid kt-bg-dark">
+            <div class="kt-portlet__head kt-portlet__head--noborder">
+                <div class="kt-portlet__head-label">
+                    <span class="kt-portlet__head-icon">
+                        <i class="fas fa-bullhorn"></i>
+                    </span>
+                    <h3 class="kt-portlet__head-title">
+                        Bilgilendirme
+                    </h3>
+                </div>
+                <div class="kt-portlet__head-toolbar">
+                    <div class="kt-portlet__head-actions">
+                        <a href="javascript:;" data-remote="{#ADMINBASEURL#}products/addvariants/{$data.id}" data-toggle="ajaxModal" class="btn btn-light btn-sm btn-icon-md">
+                            <i class="flaticon2-add-1"></i> Varyantları Seç
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="kt-portlet__body">
+                Üründe kullanmak istediğiniz varyant(lar)ı önce seçmeniz gerekmektedir. Daha sonra seçtiğiniz varyant(lar)ı eşleştirerek stok oluşturabilirsiniz. İstediğiniz varyantı göremiyorsanız, ürünün kategorisi ile eşleşmemiş olabilir.
+            </div>
+        </div>
+        {else}
+        <div class="text-right">
+            <a href="javascript:;" data-remote="{#ADMINBASEURL#}products/addvariants/{$data.id}" data-toggle="ajaxModal" class="btn btn-dark btn-sm btn-icon-md">
+                <i class="fas fa-edit"></i> Varyantları Düzenle
+            </a>
+        </div>
+        {/if}
+    </div>
+</div>
+{if="$data.variants"}
+<div class="row">
+    <div class="col-md-4">
+        <div class="kt-section">
+            <div class="kt-section__info">
+                Stok Eşleştir:
+            </div>
+            <div class="kt-section__content kt-section__content--border" id="seform">
+                {loop="$data.variants"}
+                <div class="form-group row">
+                    <label class="col-lg-4 col-form-label">{$value.variant_name}:</label>
+                    <div class="col-lg-8">
+                        <select class="form-control" name="v[values_ids][{$value.variant_id}]">
+                            {loop="$value.values"}
+                            <option value="{$value.id}">{$value.name}</option>
+                            {/loop}
+                        </select>
+                    </div>
+                </div>
+                {/loop}
+                <div class="form-group row">
+                    <label class="col-lg-4 col-form-label">Stok:</label>
+                    <div class="col-lg-8">
+                        <input type="text" class="form-control" value="0" name="v[stock]">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-lg-4 col-form-label">Barkod:</label>
+                    <div class="col-lg-8">
+                        <input type="text" class="form-control" value="" name="v[barcode]">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-lg-4 col-form-label">Stok Kodu:</label>
+                    <div class="col-lg-8">
+                        <input type="text" class="form-control" value="" name="v[sku]">
+                        <div class="help-block">Boş bırakırsanız rastgele oluşur.</div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-lg-4 col-form-label"></label>
+                    <div class="col-lg-8 text-right">
+                        <button type="button" class="btn btn-sm btn-dark btn-icon-md" data-stockekle="true" data-product-id="{$data.id}"><i class="fas fa-plus"></i> EKLE</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <div class="kt-section__info">
+            Eşleşen Varyantlar:
+        </div>
+        <table class="table table-bordered table-head-solid" id="varyantTable">
+            <thead>
+                <tr>
+                    <th>Varyantlar</th>
+                    <th>Stok Kodu</th>
+                    <th>Barkod</th>
+                    <th>Stok Adeti</th>
+                    <th width="150"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {loop="$data.model_stocks"}
+                <tr>
+                    <td>{$value.name}</td>
+                    <td>{$value.sku}</td>
+                    <td>{$value.barcode}</td>
+                    <td>{$value.stock}</td>
+                    <td>
+                        <a href="javascript:;" data-remote="{#ADMINBASEURL#}products/editmodelstock/{$value.id}" data-toggle="ajaxModal" class="btn btn-sm btn-info">düzenle</a>
+                        <a href="javascript:;" data-msremove="true" data-id="{$value.id}" class="btn btn-sm btn-danger">sil</a>
+                    </td>
+                </tr>
+                {/loop}
+            </tbody>
+        </table>
+    </div>
+</div>
+{/if}

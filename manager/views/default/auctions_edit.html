@@ -1,0 +1,77 @@
+<div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content">
+        <form method="post" action="{#ADMINBASEURL#}auctions" enctype="multipart/form-data">
+            {if="$data.id"}<input type="hidden" name="id" value="{$data.id}" />{/if}
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Müzayede Ekle / Düzenle</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i data-dismiss="modal" class="fa fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Bağlı Olduğu Kategori:</label>
+                    <select class="form-control" name="s[category_id]">
+                        <option value="0">Seçiniz</option>
+                        {$catlist}
+                    </select>
+                    <div class="help-block">Seçtiğiniz kategorinin altındaki kategorilerdede gözükür.</div>
+                </div>
+                <div class="form-group">
+                    <label>Müzayede Adı:</label>
+                    <input type="text" class="form-control" required name="s[name]" value="{$data.name}">
+                </div>
+
+                <div class="form-group">
+                    <label>İçerik Yazısı:</label>
+                    <textarea class="form-control summernote" name="s[detail]">{$data.detail}</textarea>
+                </div>
+                {if="$data.picture"}
+                <div class="form-group">
+                    <label>Kapak(Resim):</label>
+                    <div class="col-md-4">
+                        <img src="../data/uploads/{$data.picture}" style="height:80px" class="img-thumbnail" /><br>
+                    </div>
+
+                </div>
+                {/if}
+                <div class="form-group">
+                    <label>Kapak(Resim):</label>
+                    <input type="file" class="form-control" name="img">
+                </div>
+                <div class="form-group">
+                    <label>Başlangıç Tarihi:</label>
+                    <input type="text" class="form-control datetimepickers" required name="s[start_time]" value="{$data.start_date}">
+                </div>
+                <div class="form-group">
+                    <label>Bitiş Tarihi:</label>
+                    <input type="text" class="form-control datetimepickers" required name="s[end_time]" value="{$data.end_date}">
+                </div>
+                <div class="form-group">
+                    <label>Lotlar arası saniye(Canlı):</label>
+                    <input type="text" class="form-control" required name="s[remaining]" value="{$data.remaining}">
+                </div>
+                <div class="form-group">
+                    <label>Alıcı Komisyonu(%):</label>
+                    <input type="text" class="form-control" required name="s[buy_comm]" value="{$data.buy_comm}">
+                </div>
+                <div class="form-group">
+                    <label>Satıcı Komisyonu(%):</label>
+                    <input type="text" class="form-control" required name="s[sell_comm]" value="{$data.sell_comm}">
+                </div>
+                <div class="form-group">
+                    <label>Durum:</label>
+                    <select class="form-control" name="s[status]">
+                        <option value="0" {if="$data.status == 0"} selected {/if}>Yayında Değil</option>
+                        <option value="1" {if="$data.status == 1"} selected {/if}>Yayında</option>
+                        <option value="2" {if="$data.status == 2"} selected {/if}>Canlı</option>
+                        <option value="3" {if="$data.status == 3"} selected {/if}>Canlı Bitti</option>
+                    </select>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+                <button type="submit" class="btn btn-success">KAYDET</button>
+            </div>
+        </form>
+    </div>
+</div>

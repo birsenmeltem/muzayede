@@ -1,0 +1,10 @@
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-l
+
+RewriteRule ^(.+)$ index.php?url=$1 [QSA,L]
+RewriteCond %{HTTP_HOST} ^manager\.parknfly\.no$ [OR]
+RewriteCond %{HTTP_HOST} ^www\.manager\.parknfly\.no$
+RewriteRule ^/?$ "http\:\/\/parknfly\.no\/web\/manager" [R=301,L]
+

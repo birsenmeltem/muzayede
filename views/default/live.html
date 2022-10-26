@@ -1,0 +1,1272 @@
+<div class="page-content">
+    <div class="container " id="livecontent" v-cloak>
+        <div class="sub-full-container">
+            <div class="live-header">
+                <span><a href="{#BASEURL#}"><i class="fas fa-angle-left"></i></a></span>
+                <a href="{$data.url}" target="_blank">
+                    <h3 class="live-name ellipsis">
+                        <span class="red rounded-padding">Canlı</span>{$data.name}
+                    </h3>
+                </a>
+                <div class="col-md-12 text-center">
+                    <div class="exchange-radios">
+                        <span style="display: inline-block;">Currency Converter:</span>
+                        <span style="display: inline-block;">
+                            <label class="radio-inline" v-for="(rate,cur) in exchanges">
+                                <span>
+                                    <input v-model="selectedExchange" class="exchange" :data-target="cur" name="Exchange" type="radio" :value="cur"></span>
+                                <span>{{cur}}</span>
+                            </label>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="live-grid">
+                <div class="left">
+                    <div class="image">
+                        <div class="helper" :key="product.id">
+                            <div class="owls owl-carousel owl-theme owl-light" data-owl-options='{"dots": true,"nav": true,"loop": true,"responsive": {"1200": {"nav": true,"dots": true}}}' >
+                                <div class="item" v-for="item in product.pictures">
+                                    <img :src="'{#CDNURL#}data/products/'+product.id+'/'+item.picture" class="pinch">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="lot-number"><span><strong>Lot:</strong> <span data-lotno>{{product.sku}}</span></span></p>
+
+                    <p class="lot-prise grey" data-sale-price-container v-if="product.price != '0.00'">
+                        Güncel Fiyat:
+                        <strong>
+                            <span data-sale-price>{{currentPrice?currentPrice:product.old_price}}</span> TL
+                            <span v-if="selectedExchange!='TL'" :data-price="currentPrice||product.old_price" class="convert" data-convert>
+                                {{exchangePrice(currentPrice?currentPrice:product.old_price)}} {{selectedExchange}}
+                            </span>
+                        </strong>
+                        <small class="lot-open" data-open-price-container>A&#231;ılış Fiyatı:
+                            <span data-open-price>{{product.old_price}}</span>TL
+                            <span v-if="selectedExchange!='TL'" :data-price="product.old_price" class="convert" data-convert>
+                                {{exchangePrice(product.old_price)}} {{selectedExchange}}
+                            </span>
+                        </small>
+                    </p>
+                    <p class="lot-name" data-product-name><strong>{{product.name}} </strong></p>
+                    <p class="lot-content" data-product-info v-html="product.shortdetail"></p>
+                    <span class="lot-detail" data-product-detail></span>
+                </div>
+                <div class="right">
+                    <div :key="product.id + '-' + offers.length" class="time-left-bar" :style="timebarStyle"></div>
+                    <div class="right-header">
+
+                        <button @click="offerClick" class="btn btn-outline-primary btn-rounded live-bid-btn" data-btn-offer
+                            :disabled="!allowedOffer" :class="offerBtnClass" id="btnOffer" type="button">
+                            <p v-if="offerOwner">Lot Sizde</p>
+                            <span v-else data-next-price-container>
+                                <span data-next-price>{{exchangePrice(lotActive?nextPrice:'')}}</span>
+                                <span>{{selectedExchange}} Pey Ver</span>
+                            </span>
+                        </button>
+
+
+                        <div :class="{disabled:!lotActive}" class="live-bid-slide-btn" data-btn-offer>
+                            <div class="slide-text">
+                                <span data-next-price="">{{nextPrice}}</span>
+                                <span>TL</span>
+                            </div>
+                            <div id="bidSlider">
+                                <span class="p-v">Pey Ver</span>
+                                <span class="l-s">Lot Sizde</span>
+                                <span class="p-o">Peyiniz iletildi</span>
+                                <i class="fas fa-long-arrow-alt-right"></i>
+                                <i class="fas fa-lock"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="live-actions">
+                        <ul data-live-messages v-if="auctionLive && messages.length">
+
+                            <li v-for="msg in messages.slice().reverse()" v-html="msg.text">
+
+                            </li>
+                        </ul>
+                        <ul v-else>
+                            <li v-if="auctionLive && lotActive && !messages.length">
+                                <strong>{{lotPendingMessage}}</strong>
+                            </li>
+                            <li v-if="auctionCompleted"><strong>{{lang.muzayedetamamlandi}}</strong></li>
+
+                            <li v-if="auctionPending"><strong>Canlı müzayede başlama saati: {{auction_start_time}}</strong></li>
+
+                            <li v-if="auctionLive && !lotActive">
+                                <strong>{{lang.start_muzayede}}</strong>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="live-bottom">
+                <div class="return-live-btn" title="Canlıya Dön">
+                    <i class="fas fa-podcast"></i>
+                </div>
+                <ul class="nav nav-tabs">
+                    <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#allLots"><strong>T&#252;m Lotlar</strong></a></li>
+                    <li class="nav-item"> <a class="nav-link" data-toggle="tab"  href="#allWon"><strong>Kazandıklarım</strong></a></li>
+                </ul>
+                <div class="tab-content">
+                    <div class="lots tab-pane show active" id="allLots">
+                        <ul>
+                            <li v-for="value in products" :data-product-id="value.id" :id="'product-'+value.id" data-from-db="" :class="value.sale && value.status==2?'sold':''">
+                                <a :href="value.url" target="_blank">
+                                    <div class="image">
+                                        <img width="211" height="128" v-if="value.pictures" :src="'{#CDNURL#}data/products/'+value.id+'/'+value.pictures[0].picture" :alt="value.name">
+                                    </div>
+                                    <p><strong>Lot No: {{ value.sku }}</strong></p>
+                                </a>
+                                <p class="live-lot"><strong>Lot: {{ value.sku }}</strong></p>
+                                <div class="green-text live-sold">
+                                    <strong>
+                                        <span data-sold-price>{{value.price}}</span> TL
+                                    </strong>
+                                    <small>Satıldı</small></div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="lots tab-pane" id="allWon">
+                        <ul>
+                            <li v-for="value in wins" :data-product-id="value.id" :id="'product-'+value.id" data-from-db="" :class="value.sale && value.status==2?'sold':''">
+                                <a :href="value.url" target="_blank">
+                                    <div class="image">
+                                        <img width="211" height="128" :src="'{#CDNURL#}data/products/'+value.id+'/'+value.pictures[0].picture" :alt="value.name">
+                                    </div>
+                                    <p><strong>Lot No: {{ value.sku }}</strong></p>
+                                </a>
+                                <p class="live-lot"><strong>Lot: {{ value.sku }}</strong></p>
+                                <div class="green-text live-sold"><strong><span data-sold-price>{{value.price}}</span> TL</strong><small>Satıldı</small></div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="l-overlay"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="cdown" style="display: none;">
+    <div class="remaining" data-livehas="1" data-status="{$data.status}" data-live="{$data.live_url}"
+        data-date="{$data.date}" data-id="{$data.id}">
+        <p class="auction-countdown" style="display:none;">
+            <span data-countdown></span>
+        </p>
+    </div>
+</div>
+<style type="text/css">
+    [v-cloak] {
+        display: none;
+    }
+
+    .green-text {
+        color: green !important;
+    }
+
+    .green, .green:hover {
+        background-color: green !important;
+        color: white !important;
+    }
+
+    .left p {
+        margin: 1em 0;
+    }
+
+    .live-name span {
+        padding: 0 8px;
+        margin-right: 16px;
+    }
+
+    .live-grid {
+        display: grid;
+        grid-template-columns: 3fr 1fr;
+        grid-gap: 20px;
+        height: calc(100vh - 570px);
+        min-height: 346px;
+    }
+
+    .live-grid .left {
+        background-color: #fff;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+        overflow-y: auto;
+        overflow-x: hidden;
+        padding: 20px;
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        grid-column-gap: 20px;
+        grid-template-areas: "l-i l-n" "l-i l-p" "l-i l-name" "l-i l-c" "l-i l-d" "l-i ." "l-i ." "l-i ." "l-i ." "l-i ." "l-i ." "l-i ." "l-i ." "l-i ." "l-i ." "l-i ." "l-i ." "l-i ." "l-i ." "l-i ." "l-i .";
+    }
+
+    .live-grid .left .image {
+        grid-area: l-i;
+        width: 100%;
+        height: 300px;
+        border-radius: 4px;
+        border: 1px solid #efefef;
+        overflow: hidden;
+    }
+
+    .live-grid .left .image .helper {
+        height: 100%;
+    }
+
+    .live-grid .left .image .helper .owl-dots {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+    }
+
+    .live-grid .left p {
+        margin-top: 0;
+    }
+
+    .live-grid .left .lot-number {
+        grid-area: l-n;
+    }
+
+    .live-grid .left .lot-prise {
+        grid-area: l-p;
+        padding: 8px 16px;
+        text-align: center;
+        border-radius: 4px;
+    }
+
+    .live-grid .left .lot-prise.new {
+        background-color: rgb(235, 222, 123);
+    }
+
+    .live-grid .left .lot-prise strong {
+        display: inline-block;
+    }
+
+    .live-grid .left .lot-prise small {
+        display: block;
+    }
+
+    .live-grid .left .lot-estimate {
+        display: block;
+    }
+
+    .live-grid .left .lot-prise .lot-estimate,
+    .live-grid .left .lot-prise .lot-open {
+        opacity: 0.6;
+    }
+
+    .live-grid .left .lot-prise .user-name {
+        color: #0088ff;
+    }
+
+
+    .live-grid .left .lot-name {
+        grid-area: l-name;
+        font-size: 18px;
+        font-weight: 500;
+    }
+
+    .live-grid .left .lot-content {
+        grid-area: l-c;
+    }
+
+    .live-grid .left .lot-detail {
+        grid-area: l-d;
+    }
+
+    .live-bottom {
+        margin-top: 20px;
+        position: relative;
+    }
+
+    .live-bottom .l-overlay {
+        display: none;
+    }
+
+    .live-bottom-menu {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+    }
+
+    .live-bottom-menu li {
+        border-radius: 4px 4px 0 0;
+        display: block;
+        padding: 10px 20px;
+        color: #5D5D5D;
+        margin-right: 10px;
+        cursor: pointer;
+    }
+
+
+    .live-bottom-menu li.selected {
+        background-color: white;
+    }
+
+    .live-bottom-menu li:hover {
+        color: black;
+    }
+
+    .return-live-btn {
+        position: absolute;
+        z-index: 1;
+        right: 0;
+        top: 0;
+        font-size: 24px;
+        color: red;
+        cursor: pointer;
+        display: none;
+        padding: 5px 16px;
+    }
+
+    .manuel .return-live-btn {
+        display: block;
+    }
+
+
+    .flag-icon2 {
+        display: none;
+    }
+
+    .live-bottom .lots {
+        border-radius: 0 4px 4px 4px;
+        overflow-x: auto;
+        white-space: nowrap;
+        background-color: white;
+        padding: 20px 20px 0 20px;
+        min-height: 262px;
+        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+        overflow: auto;
+        overflow-y: hidden;
+        position: relative;
+    }
+
+    .live-bottom .lots ul {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+    }
+
+    .live-bottom .lots li {
+        width: 19%;
+        margin-right: 1%;
+        text-align: center;
+        flex-shrink: 0;
+        text-align: center;
+        min-width: 130px;
+    }
+
+    .live-bottom .lots li .image {
+        width: 100%;
+        height: 130px;
+        border-radius: 4px;
+        border: 1px solid #efefef;
+        overflow: hidden;
+    }
+
+    .live-bottom .lots li .image img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+
+    .live-bottom .lots li > a > p {
+        margin: 4px 0;
+    }
+
+    .live-bottom .lots li .live-lot {
+        display: none;
+    }
+
+    .live-bottom .lots li.active > a > p {
+        display: none;
+    }
+
+    .live-bottom .lots li.active .live-lot {
+        display: block;
+    }
+
+    .live-bottom .lots li .live-sold {
+        display: none;
+    }
+
+    .live-bottom .lots li.sold .live-sold {
+        display: block;
+    }
+
+    .live-bottom .lots li .l-place-bid {
+        margin: 8px auto 0;
+        display: block;
+        width: min-content;
+    }
+
+    .live-lot {
+        border-radius: 4px;
+        padding: 4px 8px;
+        background-color: #B30000;
+        color: white;
+        margin: 4px 0;
+    }
+
+    .live-lot::before {
+        font-family: "Font Awesome 5 Free";
+        font-weight: 900;
+        content: "\f2ce";
+        text-rendering: auto;
+        color: white;
+        -webkit-font-smoothing: antialiased;
+        margin-right: 6px;
+    }
+
+    .live-grid > .right {
+        background-color: #fff;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        display: grid;
+        grid-template-rows: min-content auto;
+        position: relative;
+    }
+
+    .live-grid .right-header {
+        padding: 0;
+        text-align: center;
+        border-bottom: 1px solid #efefef;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .live-grid .time-left-bar {
+        height: 3px;
+        position: absolute;
+        transition: width 1s linear;
+        top: 0;
+        left: 0;
+        background-color: red;
+        width: 0;
+    }
+
+    .live-grid .right-header button {
+        outline: none;
+        font-variation-settings: "wght" 600;
+        font-size: 20px;
+        margin-bottom: 16px;
+        margin-top: 16px;
+    }
+
+    .live-actions {
+        overflow-y: auto;
+        overflow-x: hidden;
+        padding: 16px 0;
+        height: 293px;
+    }
+
+    .live-actions li {
+        padding: 4px 20px;
+        transition: background-color 1s cubic-bezier(1, 0.2, 1, 1);
+    }
+
+    .live-actions li.new {
+        background-color: rgb(235, 222, 123);
+        transition: background-color 0s cubic-bezier(1, 0.2, 1, 1);
+    }
+
+    .live-actions li .user-name {
+        max-width: 120px;
+        color: #0088ff;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        display: inline-block;
+        overflow: hidden;
+        vertical-align: middle;
+        margin-right: 4px;
+    }
+
+    .live .content-inner {
+        background-color: transparent;
+    }
+
+    .live-header > span {
+        display: none;
+    }
+
+    .live-header > span a {
+        color: #333;
+        padding: 0 24px 0 16px;
+        font-size: 16px;
+        line-height: 16px;
+    }
+
+    .live-header > span a i {
+        font-size: 24px;
+    }
+
+    .content-wrap.live .exchange-radios {
+        text-align: center;
+        padding-bottom: 0;
+        margin: 0 0 14px 0;
+    }
+
+    .content-wrap.live {
+        background-color: #f9f9f9;
+    }
+
+    .content-wrap.live.app {
+        background-color: #f5f5f5 !important;
+    }
+
+    .live.app .content-inner {
+        background-color: #f5f5f5 !important;
+    }
+
+    .content-wrap.live.app .exchange-radios {
+        margin-top: 0;
+        padding-top: 10px;
+    }
+
+    .content-wrap.live.app .live-header {
+        display: none;
+    }
+
+    .content-wrap.live.app a {
+        display: block;
+        pointer-events: none;
+    }
+
+    .content-wrap.live.app .live-bottom-menu {
+        background-color: #000;
+    }
+
+    .content-wrap.live.app .live-bottom .lots {
+        background-color: #212121 !important;
+    }
+
+    .content-wrap.live.app .live-bottom .lots li .image {
+        border: 1px solid #444242;
+        background-color: #333333;
+    }
+
+    .content-wrap.live.app .live-bottom.open .live-bottom-menu li {
+        border-radius: 0px;
+    }
+
+    .content-wrap.live.app .live-bottom.open .live-bottom-menu li.selected {
+        color: #fff;
+        background-color: #212121;
+    }
+
+    .content-wrap.live.app .live-bottom-menu li.selected {
+        color: #ccc;
+        background-color: #000;
+    }
+
+
+    .content-wrap.live.app .sub-full-container a {
+        color: #f5f5f5;
+    }
+
+    .content-wrap.live.app .l-place-bid {
+        display: none;
+    }
+
+    .live-header h1 {
+        margin: 14px 0;
+    }
+
+    .live .sub-full-container {
+        padding-top: 0;
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .live-video {
+        width: 100%;
+        height: 120px;
+        background-color: black;
+        margin: 0 auto;
+        text-align: center;
+    }
+
+    .live-users-container {
+        position: fixed;
+        width: 220px;
+        bottom: 0;
+        right: 3px;
+        background-color: white;
+        max-height: 100%;
+        box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+        border-radius: 4px;
+        z-index: 10;
+    }
+
+    .l-f-header {
+        padding: 16px;
+        cursor: pointer;
+        background-color: #333;
+        color: white;
+        border-radius: 4px 4px 0 0;
+    }
+
+    .lf-inner {
+        padding: 16px 0;
+        display: block;
+        overflow-y: auto;
+        max-height: 350px;
+    }
+
+    .lf-inner ul li {
+        position: relative;
+        padding: 4px 16px;
+        border-bottom: 1px solid #efefef;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .lf-inner ul li.new {
+        background-color: rgb(235, 222, 123);
+    }
+
+    .lf-inner ul li.selected {
+        background-color: rgb(247, 221, 221) !important;
+    }
+
+    .lf-inner ul li.selected i {
+        color: red;
+    }
+
+    .lf-user {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .lf-user .user-name {
+        font-size: 11px;
+        color: #2188ff;
+    }
+
+    .lf-user span {
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        display: block;
+        overflow: hidden;
+        max-width: 150px;
+    }
+
+    .lf-inner ul li {
+        vertical-align: middle;
+    }
+
+    .lf-inner ul li:hover {
+        background-color: #efefef;
+    }
+
+    .lf-inner ul li i {
+        margin: 0;
+        cursor: pointer;
+        align-self: center;
+        color: #ccc;
+    }
+
+    .lf-inner ul li i:hover {
+        color: red;
+    }
+
+    .buy-now-btn-live strong, .live-sold strong {
+        display: block;
+    }
+
+    .live-bid-btn > p {
+        display: none;
+        margin: 0;
+    }
+
+    .live-bid-btn.green > p {
+        display: block;
+        color: white !important;
+    }
+
+    .live-bid-btn .estimate, .live-bid-slide-btn .estimate {
+        display: block;
+        font-size: 14px;
+        opacity: 0.8;
+        text-align: center;
+        margin-top: 4px;
+    }
+
+    .live-bid-btn .estimate span:first-child {
+        margin-right: 4px;
+    }
+
+    /* slide btn */
+
+    .live-bid-slide-btn {
+        position: relative;
+        background-color: #f3f3f3;
+        width: 250px;
+        height: 60px;
+        border: white;
+        border-radius: 40px;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 16px;
+        margin-top: 16px;
+
+    }
+
+    .app .live-bid-slide-btn {
+        display: flex;
+    }
+
+    .app .live-bid-btn {
+        display: none;
+    }
+
+    #bidSlider {
+        transition: width 0.2s, border-radius 0.2s, height 0.2s;
+        position: absolute;
+        left: -10px;
+        background-color: #fff;
+        width: 70px;
+        height: 70px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: black;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        border: 1px solid #ccc;
+        box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+        overflow: hidden;
+    }
+
+    #bidSlider span {
+        font-size: 14px;
+        -webkit-user-select: none; /* Safari */
+        -ms-user-select: none; /* IE 10+ and Edge */
+        user-select: none; /* Standard syntax */
+        cursor: unset;
+        white-space: nowrap;
+    }
+
+    .green #bidSlider {
+        background-color: green;
+        color: white;
+    }
+
+    .disabled #bidSlider, .green #bidSlider {
+        pointer-events: none;
+    }
+
+    .disabled .p-v {
+        opacity: 0.4;
+    }
+
+    #bidSlider i {
+        opacity: 0.5;
+    }
+
+    #bidSlider .fa-lock {
+        display: none;
+    }
+
+    .green #bidSlider .fa-lock {
+        display: block;
+    }
+
+    .green #bidSlider .fa-long-arrow-alt-right {
+        display: none;
+    }
+
+    #bidSlider .l-s {
+        display: none;
+    }
+
+    .green #bidSlider .l-s {
+        display: block;
+    }
+
+    .green #bidSlider .p-v {
+        display: none;
+    }
+
+    #bidSlider .p-o {
+        display: none;
+    }
+
+    #bidSlider.unlocked .p-v,
+    #bidSlider.unlocked .l-s,
+    #bidSlider.unlocked i {
+        display: none;
+    }
+
+    #bidSlider.unlocked .p-o {
+        display: block;
+    }
+
+    #bidSlider.unlocked {
+        transition: all 0.3s;
+        width: inherit;
+        left: 0 !important;
+        height: inherit;
+        border-radius: inherit;
+    }
+
+    #bidSlider i {
+        bottom: 10px;
+        position: absolute;
+    }
+
+
+    .slide-text {
+        color: #000000;
+        font-size: 20px;
+        text-transform: uppercase;
+        font-family: "Roboto", sans-serif;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        cursor: default;
+    }
+
+    .owl-carousel {
+        width: 100%;
+        height: 100%;
+        max-width: 100%;
+    }
+
+    .sub-full-container h3 {
+        text-align: center;
+        margin-top: 20px;
+        line-height: normal;
+    }
+
+    .ellipsis {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        min-width: 0;
+        max-width: 100%;
+    }
+
+    .grey {
+        background-color: #f3f3f3;
+    }
+
+    .helper .owl-carousel .owl-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        max-width: initial;
+    }
+
+    .owl-carousel .owl-item > div {
+        width: 100%;
+        height: 100%;
+    }
+
+    .owl-carousel .owl-stage-outer {
+        height: 100%;
+        width: 100%;
+    }
+
+    .helper .owl-carousel .owl-stage {
+        height: 100%;
+        position: absolute;
+    }
+
+    .owl-carousel .owl-item {
+        height: 100%;
+    }
+
+    .live-grid .left *, .live-actions strong {
+        color: #333;
+    }
+</style>
+<script src="views/assets/js/vue.js"></script>
+<script src="{#LIVEBASEURL#}socket.io/socket.io.js"></script>
+<script type="text/javascript" lang="rain">
+    const user_id = "{$user.id}";
+    const live_id = '{$data.id}';
+
+    const exchangeRates = {
+        TL  : 1,
+        USD : {$currency_exchange.USD},
+        EUR : {$currency_exchange.EUR},
+        GBP : {$currency_exchange.GBP},
+    };
+
+
+    const auction_start_time = '{$data.start_live}';
+    const auctionStatus = "{$data.status}";
+    const live_username = user_id ? '{$user.id|md5}' : '';
+
+    // const waiting = {$data.remaining};
+    // const fairWaiting = {$data.remaining};
+    var lang = {
+        'start_muzayede': '{$lang.startmuzayede}',
+        'pey_bekleniyor': '{$lang.peybekleniyor}',
+        'livepeytl': '{$lang.livepeytl}',
+        'livepeymasada': '{$lang.livepeymasada}',
+        'sonrakilotagec': '{$lang.sonrakilotagec}',
+        'livelotsatildi': '{$lang.livelotsatildi}',
+        'muzayedetamamlandi': '{$lang.muzayedetamamlandi}',
+        'kendiurunpey': '{$lang.kendiurunpey}'
+    }
+</script>
+<script type="text/javascript">
+    let duration = {$data.remaining};
+    let product = {$product|json_encode};
+    let products = {$data.records|json_encode};
+    window.onload = function(){
+
+        new Vue({
+            el: "#livecontent",
+            data: function () {
+                return {
+                    exchanges : exchangeRates,
+                    selectedExchange : localStorage.getItem("selected-exchange") || 'TL',
+                    auction_id : live_id,
+                    auction_start_time : auction_start_time,
+                    auctionStatus : parseInt(auctionStatus),
+                    duration : duration,
+                    product: product,
+                    username: live_username,
+                    socket: null,
+                    lotActive: false,
+                    currentPrice: product.price,
+                    nextPrice: null,
+                    remaining: null,
+                    seller: null,
+                    offers: [],
+                    messages: [],
+                    lang : lang,
+                    sale : null,
+                    status : parseInt(product.status),
+                    resetMessages: false,
+                    products: products,
+                    // wins: wins,
+                    countdown : 0
+                };
+            },
+            methods: {
+                exchangePrice(value)
+                {
+                return Math.round(value * this.exchangeRate * 100) / 100;
+            },
+            findProduct(id)
+            {
+            return this.products.find(p => p.id == id);
+            },
+            offerClick() {
+            if (! this.username) {
+                alert('{$lang.peyicinuye}');
+            }
+
+            if (this.allowedOffer)
+            {
+                console.log("sendpay")
+                this.socket.emit('sendPey', {
+                    'id': this.auction_id,
+                    'username': this.username,
+                    'price': this.nextPrice,
+                    'product_id': this.product.id,
+                });
+            }
+        },
+        addNewMessage(data)
+        {
+            let item = null;
+
+            if (data.id !== undefined) {
+                data.text = lang.livepeytl.replace('{PRICE}', data.price);
+                item = this.messages.find(msg => msg.id === data.id);
+            }
+
+            if (! item) {
+                this.messages.push(data);
+            }
+        },
+        timeBarFunction(remaining) {
+            return;
+            // let $vm = this;
+            // if (remaining === 0 || remaining === waiting || remaining <= fairWaiting) {
+            //     var startWidth = 100 - ((remaining * 100) / waiting);
+            //     $(".time-left-bar").width(startWidth + "%").stop();
+            //
+            //     remaining -= 0.3;
+            //
+            //     var beforeInt = false;
+            //     $(".time-left-bar").animate({ 'width': '100%' }, {
+            //         duration   : remaining * 1000,
+            //         easing    : 'linear',
+            //         progress :  function(animation, progress, remainingMs ) {
+            //
+            //             if(!beforeInt && parseInt(remainingMs / 1000) == 3) {
+            //                 beforeInt = true;
+            //                 $vm.messages.push({text:lang.sonrakilotagec});
+            //             }
+            //         },
+            //         complete : function () {
+            //             $(".time-left-bar").width("100%");
+            //         }
+            //     });
+            // }
+        },
+        shiftHistory(id){
+
+            if ($("#allLots").hasClass("manuel"))
+                return;
+
+            $('#allLots li').removeClass('active');
+            $('#product-' + id).addClass('active');
+
+
+            var left = $('#product-' + id).position().left;
+            var currScroll = $("#allLots").scrollLeft();
+            var contWidth = $('#allLots').width() / 2;
+            var activeOuterWidth = $('#product-' + id).outerWidth() / 2;
+            left = left + currScroll - contWidth + activeOuterWidth;
+
+            $('#allLots').scrollLeft(left);
+        },
+        connect() {
+            if (! window.io) return;
+
+            this.socket = io.connect("{#LIVEBASEURL#}", {
+                autoConnect: true
+            });
+
+            this.socket.on('disconnect', (reason) => {
+                if (reason === 'io server disconnect') {
+                    this.socket.connect();
+                }
+                console.log(reason);
+            });
+
+            this.socket.on('same seller', () => {
+                alert(lang.kendiurunpey);
+            });
+
+            this.socket.on('connect', () => {
+                console.log('bağlandı');
+                this.socket.emit('joinlive', {'id': live_id, 'username': live_username});
+
+            });
+
+            this.socket.on("lots", lots => {
+
+                if (this.product.id != lots.id) {
+                    console.log("reset messages", lots.id, this.product.id);
+                    this.resetMessages = true;
+                    $('.owl-carousel').owlCarousel('destroy');
+                    setTimeout(()=>{
+                            $('.owl-carousel').owlCarousel({
+                                items: 1,
+                                loop: true,
+                                margin: 0,
+                                responsiveClass: true,
+                                nav: true,
+                                navText: ['<i class="icon-angle-left">', '<i class="icon-angle-right">'],
+                                dots: true,
+                                smartSpeed: 400,
+                                autoplay: false,
+                                autoplayTimeout: 15000
+                            });
+                        },500);
+                }
+
+                let product = lots.product;
+
+                let productData = this.findProduct(product.id);
+
+                if (productData) {
+                    product.pictures = productData.pictures;
+                }
+
+                this.currentPrice   = lots.price;
+                this.nextPrice      = lots.nextPrice;
+                this.lotActive      = lots.active;
+                this.remaining      = lots.remaining;
+                this.$set(this, 'product', product);
+                this.$set(this, 'offers', lots.offers);
+                this.startTime      = lots.startTime;
+                this.seller         = lots.seller;
+                this.status         = lots.status;
+                this.sale           = lots.sale;
+
+                this.countdown      = lots.countdown;
+
+                if (this.resetMessages) {
+                    this.$set(this, 'messages', []);
+                    this.resetMessages = false;
+                }
+
+                lots.offers.forEach((offer,i) => this.addNewMessage({...offer,id:i}));
+
+                console.log("shift");
+                this.shiftHistory(lots.id);
+                console.log("done");
+            });
+
+            this.socket.on('start', (data) => {
+                this.auctionStatus = 2;
+            });
+
+            this.socket.on('end muzayede', () => {
+                this.auctionStatus = 3;
+            });
+
+            this.socket.on("terminate lot", (e) => {
+
+                console.log("terminate",e.id);
+
+                if (e.id) {
+                    let product = this.findProduct(e.id);
+                    this.status     = product.status = e.status;
+                    this.sale       = product.sale = e.sale;
+                    this.currentPrice = product.price = e.price;
+                    this.lotActive  = false;
+                    this.$set(this, 'product', product);
+
+                    if (product.status === 2) {
+                        this.addNewMessage({text:this.soldMessage});
+                    }
+                }
+            });
+        },
+        },
+        computed: {
+            exchangeRate()
+            {
+                return parseFloat(this.exchanges[this.selectedExchange]);
+            },
+            wins(){
+                return this.products.filter(p => p.sale === this.username);
+            },
+            timebarStyle(){
+                if (this.auctionStatus == 2) {
+
+                    let width = 100 - (this.countdown / this.duration * 100)
+
+                    if (width>0) {
+                        return {
+                            width:width+"%",
+                        }
+                    }
+                }
+
+                return {
+                    width: '0%',
+                    transition: 0,
+                };
+            },
+            soldMessage(){
+                return this.lang.livelotsatildi.replace('{PRICE}', this.currentPrice)
+                .replace('{LOT}', this.product.sku);
+            },
+            lotPendingMessage(){
+                return lang.pey_bekleniyor.replace("{LOT}",this.product.sku);
+            },
+            offerBtnClass(){
+                return {
+                    disabled : !this.allowedOffer,
+                    green : this.offerOwner,
+                };
+            },
+            offerOwner(){
+                return this.sale === this.username;
+            },
+            allowedOffer(){
+                if (! this.auctionLive) return false;
+                if (this.isSameSeller) return false;
+                if (this.offerOwner) return false;
+
+                return this.lotActive;
+            },
+            isSold(){
+                return this.status === 2;
+            },
+            isSkipped(){
+                return this.status === 3;
+            },
+            auctionCompleted(){
+                return this.auctionStatus === 3;
+            },
+            auctionPending(){
+                return this.auctionStatus === 1;
+            },
+            auctionLive(){
+                return this.auctionStatus === 2;
+            },
+            isSameSeller(){
+                return this.seller === this.username;
+            },
+        },
+        mounted() {
+            this.connect();
+            // $(".owl-carousel").owlCarousel();
+            setTimeout(() => {
+
+                    setInterval(()=>{
+                            let cd = Math.max(this.countdown-1, 0);
+
+                            this.countdown = cd;
+
+                            if (cd === 3)
+                            {
+                                this.messages.push({text:lang.sonrakilotagec});
+                            }
+                        },1000)
+
+                }, (new Date).getMilliseconds())
+        },
+        watch:{
+            selectedExchange(val, old){
+                localStorage.setItem("selected-exchange",val);
+            }
+        }
+    });
+
+        $("#allLots").bind('scroll mousedown wheel DOMMouseScroll mousewheel keyup touchmove', function (e) {
+            if (e.which > 0 || e.type == "mousedown" || e.type == "mousewheel" || e.type == "touchmove") {
+                $(".return-live-btn").css("display", "block");
+                $("#allLots").addClass("manuel");
+            }
+        });
+
+        $(".return-live-btn").click(function () {
+            $(".return-live-btn").css("display", "");
+            $("#allLots").removeClass("manuel");
+            var active = $('#allLots li.active');
+            console.log(active);
+
+            if(!$('#allLots li.active')[0]) active = $('#allLots li')[0];
+
+            var left = $(active).position().left;
+            var currScroll = $("#allLots").scrollLeft();
+            var contWidth = $('#allLots').width() / 2;
+            var activeOuterWidth = $(active).outerWidth() / 2;
+            left = left + currScroll - contWidth + activeOuterWidth;
+
+            $('#allLots').scrollLeft(left);
+
+        });
+    };
+
+</script>

@@ -1,0 +1,34 @@
+<table class="table table-summary">
+    <tbody>
+        <tr class="summary-subtotal">
+            <td>{$lang.aratoplam}:</td>
+            <td>{$ActiveCurrency.prefix_symbol}{$data.total|numbers_dot}{$ActiveCurrency.suffix_symbol}</td>
+        </tr><!-- End .summary-subtotal -->
+        {if="$data.discount"}
+        <tr class="summary-shipping">
+            <td>{$lang.kuponindirimi}: <a href="{#BASEURL#}cart/cleancoupon" title="{$lang.kuponiptalet}"><i class="fa fa-trash"></i></a></td>
+            <td>-{$ActiveCurrency.prefix_symbol}{$data.discount|numbers_dot}{$ActiveCurrency.suffix_symbol}</td>
+        </tr>
+        {/if}
+        <tr class="summary-shipping">
+            <td>
+                {if="$data.cargo.name"}
+                {$data.cargo.name}:
+                {else}
+                {$lang.kargoucreti}:
+                {/if}
+            </td>
+            <td>{$ActiveCurrency.prefix_symbol}{$data.cargo.price|numbers_dot}{$ActiveCurrency.suffix_symbol}</td>
+        </tr>
+        {if="$data.payment_price"}
+        <tr class="summary-shipping">
+            <td>{$data.payment_name}: </td>
+            <td>{$ActiveCurrency.prefix_symbol}{$data.payment_price|numbers_dot}{$ActiveCurrency.suffix_symbol}</td>
+        </tr>
+        {/if}
+        <tr class="summary-total">
+            <td>{$lang.toplamtutar}:</td>
+            <td>{$ActiveCurrency.prefix_symbol}{$data.genel_total|numbers_dot}{$ActiveCurrency.suffix_symbol}</td>
+        </tr><!-- End .summary-total -->
+    </tbody>
+</table><!-- End .table table-summary -->

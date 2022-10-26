@@ -1,0 +1,5 @@
+.idea
+server/node_modules
+cache/*.php
+cache/html/*.cache
+data/*/*

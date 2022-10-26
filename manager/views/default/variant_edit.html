@@ -1,0 +1,43 @@
+<div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+        <form method="post" action="{#ADMINBASEURL#}products/variants">
+            {if="$data.id"}<input type="hidden" name="id" value="{$data.id}" />{/if}
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Varyant Ekle / Düzenle</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i data-dismiss="modal" class="fa fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Bağlı Olduğu Kategoriler:</label>
+                    <select class="form-control" name="s[category_id][]" multiple="multiple">
+                        {$catlist}
+                    </select>
+                    <div class="help-block">Seçtiğiniz kategorinin altındaki kategorilerdede gözükür.</div>
+                </div>
+                <div class="form-group">
+                    <label>Varyant Adı:</label>
+                    <input type="text" class="form-control" required name="s[name]" value="{$data.name}">
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-3">
+                        <label>Filtrede Gözüksün:</label><br>
+                        <span class="kt-switch kt-switch--outline kt-switch--icon kt-switch--success">
+                            <label>
+                                <input type="checkbox" name="s[show_filter]" {if="$data.show_filter"} checked {/if} value="1">
+                                <span></span>
+                            </label>
+                        </span>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+                <button type="submit" class="btn btn-success">KAYDET</button>
+            </div>
+        </form>
+    </div>
+</div>
+<script type="text/javascript">
+   $('select').select2();
+</script>

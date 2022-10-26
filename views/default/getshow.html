@@ -1,0 +1,26 @@
+{if="$data.pey"}
+<div class="product-price" style="font-size: 2rem;color:#333">
+    {$lang.peyiniz} : {$data.sale_currency_prefix}{$data.pey.price|numbers_dot}{$data.sale_currency_suffix}
+    <span class="convert" data-convert data-price="{$data.pey.price|numbers_dot}"  style="display: none;"></span>
+</div><!-- End .product-price -->
+<a href="#" style="flex: auto;display: block;text-align: center;" class="btn-product btn-cart disabled lotdeactive {if="$data.lotown"}lotactive{/if}"><span>{$lang.fiyat} : {$data.sale_currency_prefix}{$data.sale_price|numbers_dot}{$data.sale_currency_suffix}</span><span class="convert" data-convert data-price="{$data.sale_price|numbers_dot}"  style="display: none;"></span><br><span style="font-size: 1.2rem;">{if="$data.lotown"}{$lang.lotsizde}{else}{$lang.lotsizdedegil}{/if}</span></a>
+{else}
+{if="$data.sale_price!='0.00'"}<a href="#" style="flex: auto;display: block;text-align: center;" class="btn-product btn-cart disabled"><span>{$lang.fiyat} :</span> <strong><span>{$data.sale_currency_prefix}{$data.sale_price|numbers_dot}{$data.sale_currency_suffix}</span><span class="convert" data-convert data-price="{$data.sale_price|numbers_dot}"  style="display: none;"></span></strong></a>{/if}
+{/if}
+{if="$data.status  == 1"}
+<div>
+    <div class="input-group flex-nowrap number-spinner">
+        <input type="text" class="form-control text-center" name="pey" >
+        <span class="input-group-append">
+            <button style="min-width: auto;" class="btn btn-outline-dark" data-dir="up"><i class="icon-plus"></i></button>
+        </span>
+    </div>
+    <button type="button" class="btn btn-primary btn-rounded btn-block peysend"><i class="fa fa-gavel"></i> Pey Ver</button>
+</div>
+{/if}
+{if="$type == 'product'"}
+<div class="col-md-12">
+    <p>{$lang.komisyon} : {$data.sale_currency_prefix}{$data.comm|numbers_dot}{$data.sale_currency_suffix} <span  style="display: none;" class="convert" data-convert data-price="{$data.comm|numbers_dot}"></span></p>
+    <p>{$lang.totalmaliyet} : {$data.sale_currency_prefix}{$data.total|numbers_dot}{$data.sale_currency_suffix} <span  style="display: none;" class="convert" data-convert data-price="{$data.total|numbers_dot}"></span></p>
+</div>
+{/if}

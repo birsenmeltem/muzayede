@@ -1,0 +1,68 @@
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <form method="post" action="{#ADMINBASEURL#}orders/edit/{$data.order_id}" enctype="multipart/form-data">
+            <input type="hidden" name="id" value="{$data.id}" />
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Adres Düzenle</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i data-dismiss="modal" class="fa fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Adı Soyadı / Firma Adı:</label>
+                    <input type="text" class="form-control" required name="ad[name]" value="{$data.name}">
+                </div>
+                <div class="form-group">
+                    <label>Adres:</label>
+                    <textarea cols="" rows="4" class="form-control"  name="ad[address]" id="address"  style="min-height: auto; height: 65px;">{$data.address}</textarea>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-sm-6">
+                        <label>Ülke :</label>
+                        <select  name="ad[country_id]" id="country_id" class="form-control" onchange="get_citys(this.value, '#city_id');" required>
+                            <option value="">Seçiniz</option>
+                            {loop="$countrys"}
+                            <option value="{$value.id}" {if="$value.id == $data.country_id"} selected {/if}>{$value.name}</option>
+                            {/loop}
+                        </select>
+                    </div><!-- End .col-sm-6 -->
+
+                    <div class="col-sm-6">
+                        <label>Şehir :</label>
+                        <select  name="ad[city_id]" class="form-control" id="city_id" onchange="changecity(this.value);" required>
+                            {loop="$citys"}
+                            <option value="{$value.id}" {if="$value.id == $data.city_id"} selected {/if}>{$value.name}</option>
+                            {/loop}
+                        </select>
+                    </div><!-- End .col-sm-6 -->
+                </div><!-- End .row -->
+
+                <div class="form-group row">
+                    <div class="col-sm-6">
+                        <label>İlçe :</label>
+                        <input type="text" class="form-control" required  name="ad[state]" id="state" value="{$data.state}">
+                    </div><!-- End .col-sm-6 -->
+
+                    <div class="col-sm-6">
+                        <label>Telefon :</label>
+                        <input type="text" class="form-control"  name="ad[phone]" id="phone" value="{$data.phone}">
+                    </div><!-- End .col-sm-6 -->
+                </div><!-- End .row -->
+                {if="$data.billing"}
+                <div class="form-group">
+                    <label>Vergi Dairesi:</label>
+                    <input type="text" class="form-control"  name="ad[tax_name]" id="tax_name" value="{$data.tax_name}">
+                </div>
+                <div class="form-group">
+                    <label>Vergi Numarası / TC Kimlik:</label>
+                    <input type="text" class="form-control"  name="ad[tax_no]" id="tax_no" value="{$data.tax_no}">
+                </div>
+                {/if}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+                <button type="submit" class="btn btn-success">KAYDET</button>
+            </div>
+        </form>
+    </div>
+</div>

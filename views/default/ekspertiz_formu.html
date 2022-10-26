@@ -1,0 +1,69 @@
+<div class="container">
+    <div class="content-section">
+        <div class="row">
+            <div class="Sidebar col-md-3">
+                <ul class="nav nav-dashboard flex-column mb-3 mb-md-0" role="tablist">
+                    <li class="nav-item"><a class="nav-link " href="{#BASEURL#}">{$lang.anasayfa}</a></li>
+                    <li class="nav-item"><a class="nav-link " href="{#BASEURL#}muzayede-arsivi">{$lang.muzayedearsivi}</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="{#BASEURL#}ekspertiz-formu">{$lang.ekspertizformu}</a></li>
+                    <li class="nav-item"><a class="nav-link " href="{#BASEURL#}iletisim">{$lang.iletisim}</a></li>
+                </ul>
+            </div>
+            <div class="content-section-in col-md-9">
+
+                <h4 class="baslik">{$lang.ekspertizformu}</h4>
+                <p align="center">{$lang.ekstext}</p>
+                 {$info}
+                <br>
+                <div class="form-container">
+                    <form method="post" id="form-contact" enctype="multipart/form-data">
+
+                        <div class="form-group">
+                            <label><strong>Adınız ve Soyadınız</strong></label>
+                            <input class="form-control" type="text" name="i[name]" maxlength="100" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label><strong>Telefon Numaranız</strong></label>
+                            <input class="form-control" type="tel" name="i[phone]" maxlength="20" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label><strong>E-Mail Adresiniz</strong></label>
+                            <input class="form-control" type="email" name="i[email]" maxlength="100" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label><strong>Mesajınız</strong></label>
+                            <textarea class="form-control" name="i[message]" cols="30" rows="6" required></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            *5 tane görsel yüklemeye izin verilecektir.<br>
+                            *Görsel boyutlarının her biri en fazla 5 MB olabilir.<br>
+                            *Dosya uzantıları jpg olmalıdır.<br>
+                            <div id="ts-fileupload-container">
+                                <input id="upload" name="files[]" type="file" multiple="multiple" accept=".jpg, .jpeg">
+                               <div>
+                                   <span class="name"></span>
+                                   <span class="text">Dosyaları Seçiniz</span>
+                               </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-primary" type="submit" id="btnSubmit">Gönder</button>
+                        </div>
+                        <br>
+                        <div class="form-group">
+                            <b>DİKKATE ALINMAYACAKLAR</b>
+                            <ul>
+                                <li>*2863 sayılı Kültür ve Tabiat Varlıklarını Koruma Kanunu kapsamındaki eserler</li>
+                            </ul>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{include="whatsapp"}

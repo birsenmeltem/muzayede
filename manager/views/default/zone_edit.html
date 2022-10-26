@@ -1,0 +1,21 @@
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <form method="post" action="{#ADMINBASEURL#}cargocompanys/zones">
+            {if="$data.id"}<input type="hidden" name="id" value="{$data.id}" />{/if}
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Bölge Ekle / Düzenle</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i data-dismiss="modal" class="fa fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Bölge Adı:</label>
+                    <input type="text" class="form-control" required name="s[name]" value="{$data.name}">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+                <button type="submit" class="btn btn-success">KAYDET</button>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,86 @@
+<div dir="ltr">
+    <table style="color:rgb( 0 , 0 , 0 );font-family:'verdana';font-size:13.3333px;width:900px">
+        <tbody>
+            <tr>
+                <td valign="top" style="width:450px">
+                    <table style="width:372.222px">
+                        <tbody>
+                            <tr>
+                                <td style="font-weight:bold;width:110px">Adı ve Soyadı</td>
+                                <td style="width:25px">:</td>
+                                <td style="width:240px"><b>{{NAME}}</b></td>
+                            </tr>
+                            <tr>
+                                <td style="font-weight:bold">Telefon</td>
+                                <td>:</td>
+                                <td><span class="wmi-callto">{{PHONE}}</span></td>
+                            </tr>
+                            <tr>
+                                <td style="font-weight:bold">Email</td>
+                                <td>:</td>
+                                <td><a href="mailto:{{MAIL}}">{{MAIL}}</a></td>
+                            </tr>
+                            <tr>
+                                <td style="font-weight:bold">Müzayede</td>
+                                <td>:</td>
+                                <td>{{MEZAT}}</td>
+                            </tr>
+                            <tr>
+                                <td style="font-weight:bold">M. Tarihi</td>
+                                <td>:</td>
+                                <td>{{DATE}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+                <td valign="top" style="width:450px">
+                    <table style="width:450px">
+                        <tbody>
+                            <tr>
+                                <td style="font-weight:bold;width:200px">Ürün Sayısı</td>
+                                <td style="width:25px">:</td>
+                                <td style="width:100px">{{TOTALURUN}}</td>
+                            </tr>
+                            <tr>
+                                <td style="font-weight:bold">Satılan Ürün Sayısı</td>
+                                <td>:</td>
+                                <td>{{SALEURUN}}</td>
+                            </tr>
+                            <tr>
+                                <td style="font-weight:bold">Toplam Satış Tutarı</td>
+                                <td>:</td>
+                                <td>{{TOTALPRICE}} TL</td>
+                            </tr>
+                            <tr>
+                                <td style="font-weight:bold">Komisyon</td>
+                                <td>:</td>
+                                <td>{{COMMISSION}} TL</td>
+                            </tr>
+                            <tr>
+                                <td style="font-weight:bold">Kazanç</td>
+                                <td>:</td>
+                                <td>{{GAIN}} TL</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <br style="color:rgb( 0 , 0 , 0 );font-family:'verdana';font-size:13.3333px">
+    <table style="color:rgb( 0 , 0 , 0 );font-family:'verdana';font-size:13.3333px;width:750px">
+        <tbody>
+            <tr>
+                <td style="font-weight:bold">Lot No</td>
+                <td style="font-weight:bold">Açıklama</td>
+                <td align="right" style="font-weight:bold">Açılış</td>
+                <td align="right" style="font-weight:bold">Kapanış</td>
+                <td align="right" style="font-weight:bold">Komisyon</td>
+                <td align="right" style="font-weight:bold">Komisyon KDV</td>
+                <td align="right" style="font-weight:bold">Toplam</td>
+            </tr>
+            {{PRODUCTS}}
+        </tbody>
+    </table>
+    <br>
+</div>

@@ -1,0 +1,183 @@
+<script src="{#TEMPLATE#}assets/js/lazyload.min.js"></script>
+<script src="{#TEMPLATE#}assets/js/jquery.min.js"></script>
+<script src="{#TEMPLATE#}assets/js/cd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.17/dist/sweetalert2.all.min.js"></script>
+<script src="{#TEMPLATE#}assets/js/bootstrap.bundle.min.js"></script>
+<script src="{#TEMPLATE#}assets/js/jquery.hoverIntent.min.js"></script>
+<script src="{#TEMPLATE#}assets/js/jquery.waypoints.min.js"></script>
+<script src="{#TEMPLATE#}assets/js/superfish.min.js"></script>
+<script src="{#TEMPLATE#}assets/js/owl.carousel.min.js"></script>
+<script src="{#TEMPLATE#}assets/js/bootstrap-input-spinner.js"></script>
+<script src="{#TEMPLATE#}assets/js/jquery.magnific-popup.min.js"></script>
+<script src="{#TEMPLATE#}assets/js/wNumb.js"></script>
+<script src="{#TEMPLATE#}assets/js/jquery.elevateZoom.min.js"></script>
+<script src="{#TEMPLATE#}assets/js/nouislider.min.js"></script>
+<script src="{#TEMPLATE#}assets/js/intlTelInput.min.js"></script>
+<!-- Main JS File
+<script src="{#LIVEBASEURL#}socket.io/socket.io.js"></script>
+<script src="views/assets/js/live.js?{$version}"></script>-->
+<script src="{#TEMPLATE#}assets/js/main.js?{$version}"></script>
+<!-- Global Assets JS-->
+<script src="views/assets/js/jquery.lazy.min.js"></script>
+<script src="views/assets/js/global.js?{$version}"></script>
+<script>
+    $(document).ready(function(){
+        $(window).scroll(function(){
+            $('.lazy').each(function(){
+                if( $(this).offset().top < ($(window).scrollTop() + $(window).height() + 100) )
+                {
+                    $(this).attr('src', $(this).attr('data-src'));
+                }
+            });
+        })
+    })
+</script>
+<script>
+    (function () {
+        function logElementEvent(eventName, element) {
+            console.log(Date.now(), eventName, element.getAttribute("data-src"));
+        }
+
+        var callback_enter = function (element) {
+            logElementEvent("🔑 ENTERED", element);
+        };
+        var callback_exit = function (element) {
+            logElementEvent("🚪 EXITED", element);
+        };
+        var callback_loading = function (element) {
+            logElementEvent("⌚ LOADING", element);
+        };
+        var callback_loaded = function (element) {
+            logElementEvent("👍 LOADED", element);
+        };
+        var callback_error = function (element) {
+            logElementEvent("💀 ERROR", element);
+            element.src = "https://via.placeholder.com/440x560/?text=Error+Placeholder";
+        };
+        var callback_finish = function () {
+            logElementEvent("✔️ FINISHED", document.documentElement);
+        };
+        var callback_cancel = function (element) {
+            logElementEvent("🔥 CANCEL", element);
+        };
+
+        var ll = new LazyLoad({
+            class_applied: "lz-applied",
+            class_loading: "lz-loading",
+            class_loaded: "lz-loaded",
+            class_error: "lz-error",
+            // Assign the callbacks defined above
+            callback_enter: callback_enter,
+            callback_exit: callback_exit,
+            callback_cancel: callback_cancel,
+            callback_loading: callback_loading,
+            callback_loaded: callback_loaded,
+            callback_error: callback_error,
+            callback_finish: callback_finish
+        });
+    })();
+</script>
+<!-- Global Assets End-->
+<script type="text/javascript">
+    $(".category-btn").click(function () {
+        $(".category-menu").stop(true, true).toggle(200);
+        $(this).toggleClass("category-open");
+    });
+
+    $(".auction-filter li").click(function (e) {
+        e.stopPropagation();
+
+        var type = $(this).data("type");
+
+        if (type === "today")
+            today();
+        else if (type === "all")
+            all();
+            else if (type == "category")
+                return;
+                else
+                    category($(this));
+    });
+
+    function today() {
+        $(".auction-filter li").removeClass("selected");
+        $(".auction-filter li[data-type='today']").addClass("selected");
+
+        $(".home-auction").hide();
+        $(".home-auction[data-category='today']").show();
+    }
+    function all() {
+        $(".auction-filter li").removeClass("selected");
+        $(".auction-filter li[data-type='all']").addClass("selected");
+
+        $(".home-auction").show();
+    }
+    function category(obj) {
+        $(".category-name").html($("a", obj).html());
+
+        $(".category-menu").stop(true, true).toggle("slow");
+        $(".category-btn").toggleClass("category-open");
+
+        var categoryId = obj.data("category-id");
+        if (categoryId == 0)
+            all();
+        else {
+            $(".auction-filter li").removeClass("selected");
+            $(".auction-filter li[data-type='category']").addClass("selected");
+
+            $(".home-auction").hide();
+            $(".home-auction[data-category-id='" + categoryId + "']").show();
+        }
+    }
+
+    $(".auction-filter li[data-type='all']").click();
+
+    $("li", ".category-menu").hide();
+    $("[data-category-id='0']", ".category-menu").show();
+    $(".home-auction").each(function () {
+        $("[data-category-id='" + $(this).data("category-id") + "']", ".category-menu").show();
+    });
+
+    var selectedExchange = localStorage.getItem("selected-exchange");
+
+    $(document).ready(function () {
+
+        if (selectedExchange != null) {
+            setTimeout(function() {
+                $(".exchange[data-target='" + selectedExchange + "']").click();
+                },300);
+        }
+
+        $(".exchange", ".exchange-radios").change(function () {
+            var target = $(this).data("target");
+            localStorage.setItem("selected-exchange", target);
+            convert(target);
+        });
+
+
+    });
+
+    function convert(target) {
+        var exchange;
+        switch (target) {
+            case "USD": exchange = {$currency_exchange.USD}; break;
+            case "EUR": exchange = {$currency_exchange.EUR}; break;
+            case "GBP": exchange = {$currency_exchange.GBP}; break;
+            default: exchange = 0;
+        }
+
+        if (exchange > 0) {
+            $('[data-convert]').each(function(index, value) {
+                var price = parseFloat($(this).data('price'));
+                if(price) {
+                    $(this).html((parseFloat(price * exchange).toFixed(2)) + " " + target);
+                    $(this).toggle(target !== "TL");
+                }
+            });
+        }
+        else
+            $(".convert").hide();
+    }
+
+
+</script>

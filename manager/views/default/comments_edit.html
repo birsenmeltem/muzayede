@@ -1,0 +1,57 @@
+<div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+        <form method="post" action="{#ADMINBASEURL#}comments" enctype="multipart/form-data">
+            <input type="hidden" name="id" value="{$data.id}" />
+            <input type="hidden" name="s[product_id]" value="{$data.product_id}" />
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Yorum Düzenle</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i data-dismiss="modal" class="fa fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Ürün Adı:</label>
+                    <p class="form-control-static">{$data.product_name}</p>
+                </div>
+                <div class="form-group">
+                    <label>Üye Adı:</label>
+                    <p class="form-control-static">{$data.user_name} ({$data.username})</p>
+                </div>
+                <div class="form-group">
+                    <label>Yorum:</label>
+                    <textarea cols="" rows="4" class="form-control" name="s[detail]">{$data.detail}</textarea>
+                </div>
+                <div class="form-group">
+                    <label>Puan:</label>
+                    <select class="form-control" name="s[rate]">
+                        <option value="1" {if="intval($data.rate) == 1"} selected {/if}>1</option>
+                        <option value="2" {if="intval($data.rate) == 2"} selected {/if}>2</option>
+                        <option value="3" {if="intval($data.rate) == 3"} selected {/if}>3</option>
+                        <option value="4" {if="intval($data.rate) == 4"} selected {/if}>4</option>
+                        <option value="5" {if="intval($data.rate) == 5"} selected {/if}>5</option>
+                    </select>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-md-3">
+                        <label>Durum:</label><br>
+                        <span class="kt-switch kt-switch--outline kt-switch--icon kt-switch--success">
+                            <label>
+                                <input type="checkbox" name="s[status]" {if="$data.status"} checked {/if} value="1">
+                                <span></span>
+                            </label>
+                        </span>
+                    </div>
+                    <div class="col-md-8">
+                        <label>IP:</label>
+                        <p class="form-control-static">{$data.ipaddress}</p>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+                <button type="submit" class="btn btn-success">KAYDET</button>
+            </div>
+        </form>
+    </div>
+</div>

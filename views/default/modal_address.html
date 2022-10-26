@@ -1,0 +1,42 @@
+<div class="modal-dialog modal-xl modal-dialog-centered">
+    <form method="post" id="newaddressform" action="{#BASEURL#}user/address">
+        {if="$data.id"} <input type="hidden" name="ids" value="{$data.id}">{/if}
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body" style="padding: 2rem;">
+                {include="new_ship_address"}
+            </div>
+            <div class="modal-footer">
+                <a href="#" class="btn btn-dark" data-dismiss="modal">{$lang.kapat}</a>
+                <button type="submit" class="btn btn-success"><i class="fas fa-save"></i> {$lang.kaydet}</buton>
+            </div>
+        </div>
+    </form>
+</div>
+<script type="text/javascript">
+
+    $(document).ready(function() {
+        {if="$type == 'billing'"}
+        setTimeout(function() {
+            $('#billingWrapper').slideDown().find('input, select, textarea').removeAttr('disabled');
+            {if="$data.id"}
+            {if="$data.a_type == 0"}
+            $('.kurumsal').slideUp().find('input, select, textarea').attr('disabled','disabled');
+            $('.bireysel').slideDown().find('input, select, textarea').removeAttr('disabled');
+            {else}
+            $('.bireysel').slideUp().find('input, select, textarea').attr('disabled','disabled');
+            $('.kurumsal').slideDown().find('input, select, textarea').removeAttr('disabled');
+            {/if}
+            {else}
+            $('.kurumsal').slideUp().find('input, select, textarea').attr('disabled','disabled');
+            $('.bireysel').slideDown().find('input, select, textarea').removeAttr('disabled');
+            {/if}
+                console.log('calisti');
+            },10);
+
+        {/if}
+    });
+
+</script>

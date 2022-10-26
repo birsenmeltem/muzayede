@@ -1,0 +1,67 @@
+{loop="$data"}
+{$dataStatus=$value.info.status}
+{loop="$value.records"}
+<div class="product  product-list {$value.cls}" data-id="{$value.id}" data-type="{$value.cls}">
+    <div class="row products-in">
+        <div class="col-12 col-lg-3">
+            <figure class="product-media">
+                <a href="{$value.url}">
+                    <img src="{#CDNURL#}data/products/{$value.id}/{$value.picture}" alt="{$value.name}" class="product-image">
+                </a>
+            </figure><!-- End .product-media -->
+        </div><!-- End .col-sm-6 col-lg-3 -->
+
+        <div class="col-6 col-lg-3 order-lg-last">
+            <div class="product-list-action">
+                <div class="product-price">
+                    {$lang.acilisfiyati} : {$value.sale_currency_prefix}{$value.sale_old_price|numbers_dot}{$value.sale_currency_suffix}
+                </div>
+                <div class="result">
+                    {if="$value.pey.id"}
+                    <div class="product-price" style="font-size: 2rem;color:#333">
+                        {$lang.peyiniz} : {$value.sale_currency_prefix}{$value.pey.price|numbers_dot}{$value.sale_currency_suffix}
+                    </div><!-- End .product-price -->
+                    <a href="#" class="btn-product btn-cart disabled lotdeactive {if="$value.lotown"}lotactive{/if}"><span>{$lang.fiyat} : {$value.sale_currency_prefix}{$value.sale_price|numbers_dot}{$value.sale_currency_suffix}</span><br><span style="font-size: 1.2rem;">{if="$value.lotown"}{$lang.lotsizde}{else}{$lang.lotsizdedegil}{/if}</span></a>
+                    {else}
+                    {if="$value.sale_price!='0.00'"}<a href="#" class="btn-product btn-cart disabled"><span>{$lang.fiyat} : {$value.sale_currency_prefix}{$value.sale_price|numbers_dot}{$value.sale_currency_suffix}</span></a>{/if}
+                    {/if}
+                    {if="$value.status  == 1 && $dataStatus == 1"}
+                    <div class="peyDiv">
+                        <div class="input-group flex-nowrap number-spinner">
+                            <input type="text" class="form-control text-center" name="pey" >
+                            <span class="input-group-append">
+                                <button style="min-width: auto;" class="btn btn-outline-dark" data-dir="up"><i class="icon-plus"></i></button>
+                            </span>
+                        </div>
+                        <button type="button" class="btn btn-primary btn-rounded btn-block peysend"><i class="fa fa-gavel"></i> Pey Ver</button>
+                    </div>
+                    {/if}
+                </div>
+            </div><!-- End .product-list-action -->
+        </div><!-- End .col-sm-6 col-lg-3 -->
+
+        <div class="col-lg-6">
+            <div class="product-body product-action-inner">
+
+                <div class="product-cat">
+                    <a>Lot : {$value.sku} > {$value.brand.name}</a>
+                </div><!-- End .product-cat -->
+                <h3 class="product-title"><a href="{$value.url}">{$value.name}</a></h3><!-- End .product-title -->
+
+                <div class="product-content">
+                    <p>{$value.shortdetail}</p>
+                </div><!-- End .product-content -->
+                <div class="col-12 col-lg-12">
+                    <div class="product-action">
+                        <a href="javascript:;" class="btn-product btn-wishlist {if="$value.me_follow"}active{/if}" data-addwish="{$value.id}" title="{$lang.favorilerimeekle}"><span>{$lang.favorilerimeekle}</span>&nbsp;&nbsp;:&nbsp;&nbsp; <span id="takip{$value.id}">{$value.follows}</span></a>
+
+                        <!--<a class="btn-product btn-quickview" title="Takip Sayısı"><span>Takip : {$value.follows}</span></a>-->
+                        <a class="btn-product btn-pey" title="Pey Sayısı"><i class="fa fa-gavel" style="font-size: 1.8rem;margin-right: .5rem;"></i> <span>Pey : {$value.offers}</span></a>
+                    </div><!-- End .product-action -->
+                </div>
+            </div><!-- End .product-body -->
+        </div><!-- End .col-lg-6 -->
+    </div><!-- End .row -->
+</div>
+{/loop}
+{/loop}

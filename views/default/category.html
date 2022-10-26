@@ -1,0 +1,26 @@
+<nav aria-label="breadcrumb" class="breadcrumb-nav mb-2">
+    <div class="container">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{#BASEURL#}">{$lang.anasayfa}</a></li>
+            {loop="$data.breadcrumb"}
+            <li class="breadcrumb-item"><a href="{$value.url}">{$value.name}</a></li>
+            {/loop}
+            <li class="breadcrumb-item active" aria-current="page">{$data.name}</li>
+        </ol>
+    </div><!-- End .container -->
+</nav><!-- End .breadcrumb-nav -->
+
+<div class="page-content">
+    <div class="container">
+        <div class="Category row">
+            <div class="col-lg-9" id="result_cat">
+                {include="category_right_block"}
+            </div><!-- End .col-lg-9 -->
+            <aside class="col-lg-3 order-lg-first" style="z-index:5">
+                <div class="sidebar sidebar-shop">
+                    {include="category_left_block"}
+                </div><!-- End .sidebar sidebar-shop -->
+            </aside><!-- End .col-lg-3 -->
+        </div><!-- End .row -->
+    </div><!-- End .container -->
+</div><!-- End .page-content -->

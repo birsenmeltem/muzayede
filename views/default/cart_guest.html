@@ -1,0 +1,46 @@
+<nav aria-label="breadcrumb" class="breadcrumb-nav">
+    <div class="container">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{#BASEURL#}">{$lang.anasayfa}</a></li>
+            <li class="breadcrumb-item"><a href="{#BASEURL#}cart">{$lang.sepetim}</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{$lang.uyeolmadandevamet}</li>
+        </ol>
+    </div><!-- End .container -->
+</nav><!-- End .breadcrumb-nav -->
+<div class="page-content">
+    <div class="checkout">
+        <div class="container">
+            {$info}
+            <form action="{#BASEURL#}cart/checkout" method="post">
+                <div class="row">
+                    <div class="col-lg-9">
+                        {include="new_ship_address"}
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12">
+                                <h2 class="checkout-title">{$lang.kargobilgileri}</h2>
+                                <div id="cargo_company_list">
+                                    {include="cart_cargo_company"}
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- End .col-lg-9 -->
+                    <aside class="col-lg-3">
+                        <div class="summary">
+                            <h3 class="summary-title">{$lang.sepettoplami}</h3><!-- End .summary-title -->
+
+                            <div id="cart_summary">
+                                {include="cart_summary"}
+                            </div>
+
+                            <button type="submit" class="btn btn-outline-primary-2 btn-order btn-block">
+                                <span class="btn-text">DEVAM ET</span>
+                                <span class="btn-hover-text">DEVAM ET</span>
+                            </button>
+                        </div><!-- End .summary -->
+                    </aside><!-- End .col-lg-3 -->
+                </div><!-- End .row -->
+            </form>
+        </div><!-- End .container -->
+    </div><!-- End .checkout -->
+</div>

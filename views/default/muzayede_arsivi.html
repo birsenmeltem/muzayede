@@ -1,0 +1,55 @@
+<div class="container">
+    <div class="content-section">
+        <div class="row">
+            <div class="Sidebar col-md-3">
+                <ul class="nav nav-dashboard flex-column mb-3 mb-md-0" role="tablist">
+                    <li class="nav-item"><a class="nav-link " href="{#BASEURL#}">{$lang.anasayfa}</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="{#BASEURL#}muzayede-arsivi">{$lang.muzayedearsivi}</a></li>
+                    <li class="nav-item"><a class="nav-link " href="{#BASEURL#}ekspertiz-formu">{$lang.ekspertizformu}</a></li>
+                    <li class="nav-item"><a class="nav-link " href="{#BASEURL#}iletisim">{$lang.iletisim}</a></li>
+                </ul>
+            </div>
+
+            <div class=" content-section-in col-md-9">
+                <form action="{#BASEURL#}search_archive" method="get" id="ssform">
+                    <div class="header-search-wrapper show">
+                        <label for="q" class="sr-only">{$lang.arama}</label>
+                        <input type="search" class="form-control" name="q" id="q" placeholder="{$lang.aramakelimesi}" required="">
+                    </div><!-- End .header-search-wrapper -->
+                </form>
+                <h4 class="baslik">{$lang.muzayedearsivi}</h4>
+                <div class="home-auction-grid ">
+                    <div class="row">
+                        {loop="$data.records"}
+                        <div class="col-md-6">
+                            <div class="home-auction" data-category-id="{$value.category_id}">
+                                <div>
+                                    <a href="{$value.url}" title="{$value.name}"><img title="{$value.name}" width="1" height="1" class="lazy" data-src="data/uploads/{$value.picture}"></a>
+                                </div>
+                                <div class="auction-info">
+                                    <h3><a href="{$value.url}" title="{$value.name}">{$value.name}</a></h3>
+                                    <div class="remaining">
+                                        <p class="auction-completed"><span><strong>Tamamlandı:</strong></span> {$value.end_date}</p>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {/loop}
+                    </div>
+
+                </div>
+                <nav aria-label="Page navigation">
+                    <ul class="pagination justify-content-center">
+                        {$data.pagination}
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<style type="text/css">
+    .home-auction img {
+        max-height: 194px;
+    }
+</style>

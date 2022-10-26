@@ -1,0 +1,30 @@
+<div class="_contentbox-body _list _cargo-list">
+    <ul class="posts-list">
+        {loop="$cargoCompanys"}
+        <li>
+            <div style="border: 1px solid #ccc; padding: 10px;">
+                <label class="row" for="shippingCompanyId_{$value.id}">
+                    <div class="col-md-1"><input type="radio" id="shippingCompanyId_{$value.id}" name="shippingCompanyId" value="{$value.id}" required></div>
+                    <div class="col-md-2">
+                        {if="$value.picture"}
+                        <div class="_label-logo">
+                            <img src="data/uploads/{$value.picture}" alt="{$value.name}">
+                        </div>
+                        {/if}
+                    </div>
+                    <div class="col-md-7">
+                        {$value.name}<br><small>{$value.detail}</small>
+                    </div>
+                    <div class="col-md-2">
+                        {if="!$value.price"}
+                        <b> ÜCRETSİZ </b>
+                        {else}
+                        <b> {$ActiveCurrency.prefix_symbol}{$value.price|numbers_dot}{$ActiveCurrency.suffix_symbol} </b>
+                        {/if}
+                    </div>
+                </label>
+            </div>
+        </li>
+        {/loop}
+    </ul>
+</div>

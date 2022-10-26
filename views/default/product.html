@@ -1,0 +1,236 @@
+<nav aria-label="breadcrumb" class="breadcrumb-nav border-0 mb-0">
+    <div class="container d-flex align-items-center">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{#BASEURL#}">{$lang.anasayfa}</a></li>
+            <li class="breadcrumb-item"><a href="{$data.auction_url}">{$data.auction.name}</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Lot : {$data.sku}</li>
+        </ol>
+    </div><!-- End .container -->
+</nav><!-- End .breadcrumb-nav -->
+
+<div class="page-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                {$info}
+            </div>
+        </div>
+        <div class="product-details-top">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="product-gallery product-gallery-vertical">
+                        <div class="row">
+                            <figure class="product-main-image">
+                                {if="$data.pictures"}
+                                {loop="$data.pictures"}
+                                <img  id="product-zoom" width="1" height="1" class="lazy" data-src="{#CDNURL#}data/products/{$data.id}/{$value.picture}" data-zoom-image="{#CDNURL#}data/products/{$data.id}/{$value.big_picture}" alt="{$data.name}">
+                                {break}
+                                {/loop}
+                                <a href="#" id="btn-product-gallery" class="btn-product-gallery">
+                                    <i class="icon-arrows"></i>
+                                </a>
+                                {/if}
+                            </figure><!-- End .product-main-image -->
+                            {if="$data.pictures"}
+                            <div id="product-zoom-gallery" class="product-image-gallery">
+                                {loop="$data.pictures"}
+                                <a class="product-gallery-item {if="!$key"}active{/if}" href="#" data-image="{#CDNURL#}data/products/{$data.id}/{$value.picture}" data-zoom-image="data/products/{$data.id}/{$value.big_picture}">
+                                <img src="{#CDNURL#}data/products/{$data.id}/{$value.picture}" alt="{$data.name}">
+                                </a>
+                                {/loop}
+                            </div><!-- End .product-image-gallery -->
+                            {/if}
+                        </div><!-- End .row -->
+                    </div><!-- End .product-gallery -->
+                </div><!-- End .col-md-6 -->
+
+                <div class="col-md-6">
+                    <div class="product-details">
+                        {if="$data.auction.end_date"}
+                        <div class="product-content cdown" style="">
+                            <div class="remaining" data-livehas="1" data-status="{$data.auction.status}" data-live="{$data.auction.live_url}" data-date="{$data.auction.date}" data-id="{$data.auction.id}">
+                                <p class="auction-completed" style="display:none;"><span><strong>{$lang.tamamlandi}</strong></span> {$data.auction.end_date}</p>
+                                <p class="auction-finish-date" style="display:none;"><span><strong>{$lang.kapanis}</strong></span> {$data.auction.end_date}</p>
+                                <p class="auction-live-date" style="display:none;">
+                                    <a class="h-a-r-r" href="{$data.auction.live_url}"><span class="red">{$lang.canli}</span> {$data.auction.start_live}</a>
+                                </p>
+                                <p class="auction-live-now" style="display:none;">
+                                    <a class="h-a-r-r live-now"><span class="red">{$lang.simdicanli}</span></a>
+                                </p>
+                                <p class="auction-countdown" style="display:none;">
+                                    <strong>{$lang.kalansure}</strong> <span data-countdown></span>
+                                </p>
+                            </div>
+                        </div>
+                        {/if}
+                        <h1 class="product-title">{$data.name}</h1><!-- End .product-title -->
+                        <!--
+                        <div class="ratings-container">
+                        <div class="ratings">
+                        <div class="ratings-val" style="width: {$data.rate_width}%;"></div>
+                        </div>
+                        <a class="ratings-text" id="review-link">( {$data.review} Oy)</a>
+                        </div>
+                        -->
+
+                        <div class="product-content">
+                            <p>{$data.shortdetail}</p>
+                            {if="$data.video_link"}
+                            <div class="embed-responsive embed-responsive-16by9">
+                                <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/{$data.video_link}?rel=0"></iframe>
+                            </div>
+                            {/if}
+                            <p>{$data.detail}</p>
+                        </div><!-- End .product-content -->
+                        {if="!$data.pricehide"}
+                        <div class="product-price">
+                            <span class="new-price">{$lang.acilisfiyati} : {$data.sale_currency_prefix}{$data.sale_old_price|numbers_dot}{$data.sale_currency_suffix}</span>
+                            <span class="convert" data-convert data-price="{$data.sale_old_price|numbers_dot}" style="display: none;"></span>
+                        </div>
+
+                        <div class="col-12 col-lg-10">
+                            <div class="row">
+                                <div class="col-md-3 col-6">
+                                    <a style="display: inline-block;" class="btn-product btn-quickview" title="Takip Sayısı"><span>Takip : <span id="takip{$data.id}">{$data.follows}</span></span></a></div>
+                                <div class="col-md-3 col-6">
+                                    <a style="display: inline-block; border:0" class="btn-product btn-pey" title="Pey Sayısı"><i class="fa fa-gavel" style="font-size: 1.8rem;margin-right: .5rem;"></i> <span>Pey : <span id="pey{$data.id}">{$data.offers}</span></span></a>
+                                </div>
+                                <div class="col-md-3 col-6">
+                                    <a style="display: inline-block; border:0" href="javascript:;" class="btn-product btn-wishlist {if="$data.me_follow"}active{/if}" data-addwish="{$data.id}" title="{$lang.favorilerimeekle}"><span>{$lang.favorilerimeekle}</span></a>
+                                </div>
+                                <div class="col-md-3 col-6">
+                                    <a style="display: inline-block; border:0" href="javascript:;" class="btn-live btn-product {if="$data.me_live"}active{/if}" data-addlive="{$data.id}" title="{$lang.canlidauyar}"><span>{$lang.canlidauyar}</span></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-7 col-sm-12">
+
+                            <div class="product product-list" data-id="{$data.id}" style="border: 0; padding-bottom: 0;" data-type="product">
+                                <div class="result">
+                                    {if="$data.pey"}
+                                    <div class="product-price" style="font-size: 2rem;color:#333">
+                                        {$lang.peyiniz} : {$data.sale_currency_prefix}{$data.pey.price|numbers_dot}{$data.sale_currency_suffix}
+                                        <span class="convert" data-convert data-price="{$data.pey.price|numbers_dot}"  style="display: none;"></span>
+                                    </div><!-- End .product-price -->
+                                    <a href="#" class="btn-product btn-cart disabled lotdeactive {if="$data.lotown"}lotactive{/if}"><span>{$lang.fiyat} : {$data.sale_currency_prefix}{$data.sale_price|numbers_dot}{$data.sale_currency_suffix} <span class="convert" data-convert data-price="{$data.sale_price|numbers_dot}"  style="display: none;"></span></span><br><span style="font-size: 1.2rem;">{if="$data.lotown"}{$lang.lotsizde}{else}{$lang.lotsizdedegil}{/if}</span></a>
+                                    {else}
+                                    {if="$data.sale_price!='0.00'"}<a href="#" class="btn-product btn-cart disabled"><span>{$lang.fiyat} : {$data.sale_currency_prefix}{$data.sale_price|numbers_dot}{$data.sale_currency_suffix} <span class="convert" data-convert data-price="{$data.sale_price|numbers_dot}"  style="display: none;"></span></a>{/if}
+                                    {/if}
+                                    {if="$data.stock"}
+                                    <div class="peyDiv">
+                                        <div class="input-group flex-nowrap number-spinner">
+                                            <input type="text" class="form-control text-center" name="pey" >
+                                            <span class="input-group-append">
+                                                <button style="min-width: auto;" class="btn btn-outline-dark" data-dir="up"><i class="icon-plus"></i></button>
+                                            </span>
+                                        </div>
+                                        <button type="button" class="btn btn-primary btn-rounded btn-block peysend"><i class="fa fa-gavel"></i> Pey Ver</button>
+                                    </div>
+                                    {/if}
+                                    {if="$data.comm"}
+                                    <div class="col-md-12">
+                                        <p>{$lang.komisyon} : {$data.sale_currency_prefix}{$data.comm|numbers_dot}{$data.sale_currency_suffix} <span  style="display: none;" class="convert" data-convert data-price="{$data.comm|numbers_dot}"></span></p>
+                                        <p>{$lang.totalmaliyet} : {$data.sale_currency_prefix}{$data.total|numbers_dot}{$data.sale_currency_suffix} <span  style="display: none;" class="convert" data-convert data-price="{$data.total|numbers_dot}"></span></p>
+                                    </div>
+                                    {/if}
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-md-12">
+                            <div class="exchange-radios">
+                                <span>Currency Converter:</span>
+                                <span>
+                                    <label class="radio-inline">
+                                        <span><input class="exchange" name="Exchange" value="0" type="radio" checked="checked" data-target="TL"></span>
+                                        <span>TL</span>
+                                    </label>
+                                    <label class="radio-inline">
+                                        <span>
+                                            <input class="exchange" name="Exchange" value="{$currency_exchange.USD}" type="radio" data-target="USD">
+                                        </span>
+                                        <span>USD</span>
+                                    </label>
+                                    <label class="radio-inline">
+                                        <span>
+                                            <input class="exchange" name="Exchange" value="{$currency_exchange.EUR}" type="radio" data-target="EUR">
+                                        </span>
+                                        <span>EUR</span>
+                                    </label>
+                                    <label class="radio-inline">
+                                        <span>
+                                            <input class="exchange" name="Exchange" value="{$currency_exchange.GBP}" type="radio" data-target="GBP">
+                                        </span>
+                                        <span>GBP</span>
+                                    </label>
+                                </span>
+                            </div>
+                        </div>
+                        {/if}
+                        <div class="product-details-footer">
+                            <div class="product-cat">
+                                <span>{$lang.kategoriler}:</span>
+                                {loop="$data.cats"}
+                                {$catname=$value.name}
+                                <a href="{$value.url}">{$value.name}</a>
+                                {if="count($data.cats)-1 != $counter"},{/if}
+                                {/loop}
+                            </div><!-- End .product-cat -->
+
+                            <div class="social-icons social-icons-sm">
+                                <span class="social-label">{$lang.paylas}:</span>
+                                <div class="a2a_kit a2a_kit_size_16 a2a_default_style">
+                                    <a class="a2a_button_facebook"></a>
+                                    <a class="a2a_button_twitter"></a>
+                                    <a class="a2a_button_whatsapp"></a>
+                                    <a class="a2a_button_linkedin"></a>
+                                    <a class="a2a_button_pinterest"></a>
+                                    <a class="a2a_button_email"></a>
+                                    <a class="a2a_dd" href="https://www.addtoany.com/share"></a>
+                                </div>
+                                <script async src="https://static.addtoany.com/menu/page.js"></script>
+                            </div>
+                        </div><!-- End .product-details-footer -->
+                    </div><!-- End .product-details -->
+                </div><!-- End .col-md-6 -->
+            </div><!-- End .row -->
+        </div><!-- End .product-details-top -->
+    </div><!-- End .container -->
+</div><!-- End .page-content -->
+<style type="text/css">
+    .product-content .remaining>p { display: inline-block; margin: 6px 16px 0 0; }
+    .btn-live.active span{color:red !important;}
+</style>
+<script type="application/ld+json">
+    {
+        "@context": "http://schema.org/",
+        "@type": "Product",
+        "name": "{$data.name}",
+        "alternatename": "{$data.seo_title}",
+        "image": "{#BASEURL#}data/products/{$data.id}/{$data.pictures[0]['picture']}",
+        "description": "{$data.shortdetail|strip_tags}",
+        "category": "{$catname}",
+        "brand":
+        {
+            "@type": "Thing",
+            "name": "PHEBUS"
+        },
+        "offers":
+        {
+            "@type": "Offer",
+            "url": "{$data.url}",
+            "priceValidUntil": "{$data.today_date}",
+            "priceCurrency": "TRY",
+            "price": "{if="$data.sale_price>0"}{$data.sale_price}{else}{$data.sale_old_price}{/if}",
+            "itemCondition": "https://schema.org/NewCondition",
+            "availability": "https://schema.org/InStock",
+            "seller":
+            {
+                "@type": "Organization",
+                "name": "PHEBUS",
+                "logo": "https://phebusmuzayede.com/data/uploads/1427838287_logo.png"
+            }
+        }
+    }
+</script>

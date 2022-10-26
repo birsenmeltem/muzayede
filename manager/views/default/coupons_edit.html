@@ -1,0 +1,66 @@
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <form method="post" action="{#ADMINBASEURL#}settings/coupons">
+            {if="$data.id"}<input type="hidden" name="id" value="{$data.id}" />{/if}
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Kupon Oluştur</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i data-dismiss="modal" class="fa fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Kupon Kodu :</label>
+                    <input type="text" class="form-control" name="s[code]">
+                    <div class="help-block">Boş bırakırsanız otomotik oluşturur</div>
+                </div>
+                <div class="form-group">
+                    <label>İndirim Türü :</label>
+                    <select name="s[d_type]" class="form-control">
+                        <option value="0">Yüzde</option>
+                        <option value="1">Net</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>İndirim Miktarı :</label>
+                    <input type="text" class="form-control" name="s[discount]">
+                </div>
+                <div class="form-group">
+                    <label>Başlangıç Tarihi :</label>
+                    <input type="text" class="form-control datapicker" name="s[start_date]">
+                    <div class="help-block">Boş bırakırsanız bugünü seçer.</div>
+                </div>
+                <div class="form-group">
+                    <label>Bitiş Tarihi :</label>
+                    <input type="text" class="form-control datapicker" name="s[start_date]">
+                    <div class="help-block">Boş bırakırsanız süresiz olur.</div>
+                </div>
+                <div class="form-group">
+                    <label>Sepet Limiti :</label>
+                    <input type="text" class="form-control" name="s[cart_limit]" value="{$data.cart_limit}">
+                    <div class="help-block">Eğer kupon sepet minimum X TL olmasını istiyorsanız giriniz.</div>
+                </div>
+                <div class="form-group">
+                    <label>Kullanım Türü :</label>
+                    <select name="s[multi]" class="form-control">
+                        <option value="0">Tek Kullanım</option>
+                        <option value="1">Çoklu Kullanım</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+                <button type="submit" class="btn btn-success">OLUŞTUR</button>
+            </div>
+        </form>
+    </div>
+</div>
+<script type="text/javascript">
+    $('.datapicker').datetimepicker({
+        format: "dd.mm.yyyy",
+        todayHighlight: true,
+        autoclose: true,
+        startView: 2,
+        minView: 2,
+        forceParse: 0,
+        pickerPosition: 'bottom-left'
+    });
+</script>

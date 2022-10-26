@@ -1,0 +1,28 @@
+<?php if(!class_exists('view')){exit;}?><base href="<?php  echo ADMINBASEURL;?>">
+<meta charset="utf-8"/>
+<title><?php echo $meta_title;?></title>
+<meta content="<?php echo $meta_desc;?>" name="description" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">        <!--begin::Fonts -->
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Poppins:300,400,500,600,700|Roboto:300,400,500,600,700">
+<!--end::Fonts -->
+<!--begin::Global Theme Styles(used by all pages) -->
+<link rel="stylesheet" href="//maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/css/line-awesome.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" integrity="sha256-h20CPZ0QyXlBuAw7A+KluUYx/3pK+c7lYEpqLTlxjYQ=" crossorigin="anonymous" />
+<link href="<?php  echo ADMIN_TEMPLATE;?>assets/css/plugins.bundle.css?v" rel="stylesheet" type="text/css" />
+<link href="<?php  echo ADMIN_TEMPLATE;?>assets/css/summernote.css?v" rel="stylesheet" type="text/css" />
+<link href="<?php  echo ADMIN_TEMPLATE;?>assets/css/line-awesome.css?v" rel="stylesheet" type="text/css" />
+<link href="<?php  echo ADMIN_TEMPLATE;?>assets/css/flaticon.css?v{" rel="stylesheet" type="text/css" />
+<link href="<?php  echo ADMIN_TEMPLATE;?>assets/css/style.bundle.css?v" rel="stylesheet" type="text/css" />
+<link href="<?php  echo ADMIN_TEMPLATE;?>assets/vendors/upload/jquery.filer.css" rel="stylesheet" type="text/css">
+<link href="<?php  echo ADMIN_TEMPLATE;?>assets/vendors/upload/themes/jquery.filer-dragdropbox-theme.css" type="text/css" rel="stylesheet" />
+<!--end::Global Theme Styles -->
+<!--begin::Layout Skins(used by all pages) -->
+<link href="<?php  echo ADMIN_TEMPLATE;?>assets/css/skins/header/base/light.css" rel="stylesheet" type="text/css" />
+<link href="<?php  echo ADMIN_TEMPLATE;?>assets/css/skins/header/menu/light.css" rel="stylesheet" type="text/css" />
+<link href="<?php  echo ADMIN_TEMPLATE;?>assets/css/skins/brand/dark.css" rel="stylesheet" type="text/css" />
+<link href="<?php  echo ADMIN_TEMPLATE;?>assets/css/skins/aside/dark.css" rel="stylesheet" type="text/css" />
+<!--end::Layout Skins -->
+<link rel="shortcut icon" href="<?php  echo TEMPLATE;?>assets/media/logos/favicon.ico" />
+<script type="text/javascript">
+var baseURL = '<?php  echo ADMINBASEURL;?>';
+</script>

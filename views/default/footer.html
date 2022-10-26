@@ -1,0 +1,73 @@
+<div class="footer-middle">
+
+    <div class="container">
+        <div class="Footer-in">
+            <div class="Footer-info">
+                <div class="widget widget-about">
+                    <img src="data/uploads/{$settings.logo}" class="footer-logo" alt="Footer Logo" style="max-width: 125px; max-height: 80px;">
+                    <p>{$lang.aboutshort}</p>
+
+                    <div class="social-icons">
+                        {if="$settings.facebook"}<a href="{$settings.facebook}" class="social-icon" target="_blank" title="Facebook"><i class="icon-facebook-f"></i></a>{/if}
+                        {if="$settings.twitter"}<a href="{$settings.twitter}" class="social-icon" target="_blank" title="Twitter"><i class="icon-twitter"></i></a>{/if}
+                        {if="$settings.instagram"}<a href="{$settings.instagram}" class="social-icon" target="_blank" title="Instagram"><i class="icon-instagram"></i></a>{/if}
+                        {if="$settings.google"}<a href="{$settings.google}" class="social-icon" target="_blank" title="Youtube"><i class="icon-youtube"></i></a>{/if}
+                    </div><!-- End .soial-icons -->
+                </div><!-- End .widget about-widget -->
+            </div><!-- End .col-sm-6 col-lg-3 -->
+
+            <div class="Footer-item">
+                <div class="widget">
+                    <h4 class="widget-title">{$lang.kurumsal}</h4><!-- End .widget-title -->
+
+                    <ul class="widget-list">
+                        <li><a href="{#BASEURL#}">{$lang.anasayfa}</a></li>
+                        {$topmenuhtml}
+                        <li><a href="{#BASEURL#}muzayede-arsivi">{$lang.muzayedearsivi}</a></li>
+                        <li><a href="{#BASEURL#}ekspertiz-formu">{$lang.ekspertizformu}</a></li>
+                        <li><a href="{#BASEURL#}iletisim">{$lang.iletisim}</a></li>
+                    </ul><!-- End .widget-list -->
+                </div><!-- End .widget -->
+            </div><!-- End .col-sm-6 col-lg-3 -->
+
+            <div class="Footer-item">
+                <div class="widget">
+                    <h4 class="widget-title">{$lang.musterihizmet}</h4><!-- End .widget-title -->
+
+                    <ul class="widget-list">
+                        {$altmenuhtml}
+                    </ul><!-- End .widget-list -->
+                </div><!-- End .widget --><!-- End .widget -->
+            </div><!-- End .col-sm-6 col-lg-3 -->
+
+            <div class="Footer-item">
+                <div class="widget">
+                    <h4 class="widget-title">{$lang.hesabim}</h4><!-- End .widget-title -->
+
+                    <ul class="widget-list">
+                        {if="$user.id"}
+                        <li><a href="{#BASEURL#}user/dashboard">{$lang.hesabim}</a></li>
+                        <li><a href="{#BASEURL#}user/logout">{$lang.guvenlicikis}</a></li>
+                        {else}
+                        <li><a href="{#BASEURL#}user/register">{$lang.uyeol}</a></li>
+                        <li><a href="{#BASEURL#}user/login">{$lang.uyegirisi}</a></li>
+                        {/if}
+                        <li><a href="{#BASEURL#}user/orders">{$lang.siparislerim}</a></li>
+                        <li><a href="{#BASEURL#}user/wishlist">{$lang.favorilistem}</a></li>
+                    </ul><!-- End .widget-list -->
+                </div><!-- End .widget -->
+            </div><!-- End .col-sm-6 col-lg-3 -->
+        </div><!-- End .row -->
+    </div><!-- End .container -->
+</div><!-- End .footer-middle -->
+
+<div class="footer-bottom">
+    <div class="container">
+       <div class="footer-bottom-in">
+           <p class="footer-copyright">Copyright © 2020 {$settings.seo_title}</p><!-- End .footer-copyright -->
+           <p>Bu site <a href="https://muzayedesistemi.com/">Muzayedesistemi.com</a> alt yapısını kullamaktadır.</p>
+       </div>
+        <figure class="footer-payments">
+        </figure><!-- End .footer-payments -->
+    </div><!-- End .container -->
+</div><!-- End .footer-bottom -->

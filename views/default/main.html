@@ -1,0 +1,124 @@
+<section class="slider">
+    <div class="mb-3">
+        <div class="intro-slider owl-carousel owl-theme owl-nav-inside owl-light" data-toggle="owl"
+            data-owl-options='{
+            "dots": true,
+            "nav": false,
+            "autoplay" : true,
+            "autoplayTimeout" : 4000,
+            "loop": true,
+            "responsive": {
+            "1200": {
+            "nav": false,
+            "dots": true
+            }
+            }
+            }'>
+            {loop="$banners"}
+            <div>
+                <div class="slider-image" style="background-image: url('{#CDNURL#}data/uploads/{$value.picture}');">
+                    <a class="slider-link" href="{$value.url}" target="_blank" title=""> </a>
+
+                    <!--<img  src="data/uploads/{$value.picture}" alt="">-->
+
+                    <div class="slider-text">
+                        <p class="big-text"><span></span></p>
+                        <p><span></span></p>
+                    </div>
+
+                </div><!-- End .intro-slide -->
+            </div>
+            {/loop}
+        </div><!-- End .intro-slider owl-carousel owl-simple -->
+
+        <span class="slider-loader"></span><!-- End .slider-loader -->
+    </div><!-- End .intro-slider-container -->
+</section>
+
+<div class="container">
+    <div class="content-section">
+        <h1>Güncel Müzayedeler</h1>
+        <div class="home-auction-grid">
+            {loop="$mainpage_auctions"}
+            <div class="home-auction cdown" data-category-id="{$value.category_id}" data-category="{if="$value.today"}today{/if}">
+            <div>
+                <a href="{$value.url}" title="{$value.name}"><img title="{$value.name}" width="1" height="1" class="lazy" data-src="{#CDNURL#}data/uploads/{$value.picture}"></a>
+            </div>
+            <div class="auction-info">
+                <h3><a href="{$value.url}" title="{$value.name}">{$value.name}</a></h3>
+                <div class="remaining" data-livehas="1" data-status="{$value.status}" data-live="{$value.live_url}" data-date="{$value.date}" data-id="{$value.id}">
+                    <p class="auction-completed" style="display:none;"><span><strong>Tamamlandı:</strong></span> {$value.end_date}</p>
+                    <p class="auction-finish-date" style="display:none;"><span><strong>Kapanış:</strong></span> {$value.end_date}</p>
+                    <p class="auction-live-date"  style="display:none;">
+                        <a href="{$value.live_url}" class="h-a-r-r"><span class="red">Canlı:</span> {$value.start_live}</a>
+                    </p>
+                    <p class="auction-live-now"  style="display:none;">
+                        <a href="{$value.live_url}" class="h-a-r-r live-now"><span class="red">Şimdi Canlı ›</span></a>
+                    </p>
+                    <p class="auction-countdown" title="Kalan Süre:"  style="display:none;">
+                        <strong>Kalan Süre: </strong> <span data-countdown=""></span>
+                    </p>
+                </div>
+            </div>
+            </div>
+            {/loop}
+        </div>
+        <div class="Ekspertiz">
+            <a href="https://phebusmuzayede.com/ekspertiz-formu" class="global_link"></a>
+            <img width="1" height="1" data-src="{#CDNURL#}data/uploads/eksrap.jpg"  class="lazy w-100">
+        </div>
+    </div>
+
+    <div class="content-section">
+
+        <h1>Güncel Müzayedelerimizden Öne Çıkan Lotlar</h1>
+        <div class="recommendations">
+            {loop="$mainpage_products"}
+            <div class="item">
+                <div class="image">
+                    <a href="{$value.url}" title="{$value.name}">
+                        <img   class="lazy" data-src="{#CDNURL#}data/products/{$value.id}/{$value.picture}" alt="{$value.name}">
+                    </a>
+                </div>
+                <div class="content">
+                    <a class="a-default" href="{$value.url}" title="{$value.name}">
+                        <p><strong>{$value.name}</strong></p>
+                    </a>
+                    <p> {$lang.acilisfiyati}: {$value.sale_currency_prefix}{$value.old_price|numbers_dot}{$value.sale_currency_suffix}</p>
+                    {if="$value.price != '0.00'"}
+                    <p> {$lang.fiyat}: {$value.sale_currency_prefix}{$value.price|numbers_dot}{$value.sale_currency_suffix}</p>
+                    {/if}
+                    <a href="{$value.url}" class="btn btn-outline-primary">Pey Ver</a>
+                    <div class="item-time-left cdown">
+
+                        <div class="remaining" data-livehas="0" data-status="{$value.a_status}" data-live="{$value.live_url}" data-date="{$value.date}" data-id="{$value.auction_id}">
+
+                            <p class="auction-completed" style="display:none;"><span><strong>Tamamlandi:</strong></span> {$value.end_date}</p>
+                            <p class="auction-finish-date" style="display:none;"><span><strong>Kapanış:</strong></span> {$value.end_date}</p>
+
+                            <p class="auction-live-date" style="display:none;">
+                                <a class="h-a-r-r"><span class="red">Canlı:</span> {$value.start_live}</a>
+                            </p>
+
+                            <p class="auction-live-now" style="display:none;">
+                                <a class="h-a-r-r live-now"><span class="red">Şimdi Canlı ›</span></a>
+                            </p>
+
+                            <p class="auction-countdown" style="display:none;">
+                                <strong>Kalan Süre:</strong> <span data-countdown></span>
+                            </p>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            {/loop}
+        </div>
+    </div>
+
+
+</div>
+<style type="text/css">
+    .home-auction img { max-height: 261px; }
+</style>
+{include="whatsapp"}

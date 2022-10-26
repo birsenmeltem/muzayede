@@ -1,0 +1,64 @@
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <form method="post" action="{#ADMINBASEURL#}languages" enctype="multipart/form-data">
+            {if="$data.id"}<input type="hidden" name="id" value="{$data.id}" />{/if}
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Dil Ekle / Düzenle</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i data-dismiss="modal" class="fa fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Dil Kodu:</label>
+                    <input type="text" class="form-control" required name="s[flag]" value="{$data.flag}" {if="$data.id"} disabled {/if}>
+                    <div class="help-block">Türkçe karakter kullanmayınız ! Örnek Türkçe için "tr"</div>
+                </div>
+                <div class="form-group">
+                    <label>Dil Adı:</label>
+                    <input type="text" class="form-control" required name="s[name]" value="{$data.name}">
+                </div>
+                {if="$data.picture"}
+                <div class="form-group">
+                    <label>Bayrak:</label>
+                    <div class="col-md-4">
+                        <img src="../data/langs/{$data.picture}" style="height:24px" class="img-thumbnail" /><br>
+                    </div>
+
+                </div>
+                {/if}
+                <div class="form-group">
+                    <label>Bayrak:</label>
+                    <input type="file" class="form-control" name="img">
+                </div>
+                <div class="form-group">
+                    <label>Para Birimi:</label>
+                    <select class="form-control" name="s[currency_id]" required>
+                        <option value="0">Seçiniz</option>
+                        {loop="$currencys"}
+                            <option value="{$value.id}" {if="$data.currency_id == $value.id"} selected{/if}>{$value.name}</option>
+                        {/loop}
+                    </select>
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-3">
+                        <label>Durum:</label><br>
+                        <span class="kt-switch kt-switch--outline kt-switch--icon kt-switch--success">
+                            <label>
+                                <input type="checkbox" name="s[status]" {if="$data.status"} checked {/if} value="1">
+                                <span></span>
+                            </label>
+                        </span>
+                    </div>
+                    <div class="col-md-8">
+                        <label>Sıra:</label>
+                        <input type="text" class="form-control" name="s[rows]" value="{$data.rows}">
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+                <button type="submit" class="btn btn-success">KAYDET</button>
+            </div>
+        </form>
+    </div>
+</div>

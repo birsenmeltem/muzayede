@@ -1,0 +1,55 @@
+<nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
+    <div class="container">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{#BASEURL#}">{$lang.anasayfa}</a></li>
+            <li class="breadcrumb-item"><a href="{#BASEURL#}user/dashboard">{$lang.hesabim}</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{$lang.siparislerim}</li>
+        </ol>
+    </div><!-- End .container -->
+</nav><!-- End .breadcrumb-nav -->
+
+<div class="page-content">
+    <div class="orders">
+        <div class="container">
+            <div class="row">
+                <aside class="col-md-4 desktop col-lg-3">
+                    {include="user_menu"}
+                </aside><!-- End .col-lg-3 -->
+
+                <div class="col-md-8 col-lg-9">
+                    {$info}
+                    {if="$data"}
+                    <div class="table-responsive">
+                        <table class="table-striped table-bordered table-sm" style="width: 100%;">
+                            <thead>
+                                <tr>
+                                    <th>{$lang.siparistarihi}</th>
+                                    <th>{$lang.sipariskodu}</th>
+                                    <th>{$lang.odemetipi}</th>
+                                    <th>{$lang.siparistutari}</th>
+                                    <th>{$lang.siparisdurumu}</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {loop="$data"}
+                                <tr>
+                                    <td>{$value.create_date}</td>
+                                    <td>{$value.code}</td>
+                                    <td>{$value.payment_type_name}</td>
+                                    <td>{$value.currency.prefix_symbol}{$value.price}{$value.currency.suffix_symbol}</td>
+                                    <td>{$value.status_name}</td>
+                                    <td><a class="btn-primary btn btn-sm" style="min-width: auto;padding: .25rem .5rem;" href="{#BASEURL#}user/order_detail/{$value.id}"><i class="fas fa-eye"></i> {$lang.incele}</a></td>
+                                </tr>
+                                {/loop}
+                            </tbody>
+                        </table>
+                    </div>
+                    {else}
+                    <div class="alert alert-warning">{$lang.henuzsiparisyok}</div>
+                    {/if}
+                </div><!-- End .col-lg-9 -->
+            </div><!-- End .row -->
+        </div><!-- End .container -->
+    </div><!-- End .dashboard -->
+</div><!-- End .page-content -->

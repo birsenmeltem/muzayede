@@ -1,0 +1,26 @@
+<script type="text/javascript">
+    window.print();
+</script>
+    <h3>En çok lot satan üyeler sonuç raporu {if="$f.date"} ({$f.date}) {/if}</h3>
+{if="$data.data"}
+<table style="width:600px; border-collapse: collapse;" cellpadding="3" cellpadding="3" border="1" align="center">
+    <thead>
+        <tr>
+            <th>Lot Adeti</th>
+            <th>Üye Kullanıcı Adı</th>
+            <th>Üye Adı Soyadı</th>
+            <th>Telefon</th>
+        </tr>
+    </thead>
+    <tbody>
+        {loop="$data.data"}
+        <tr>
+            <td align="center">{$value.total}</td>
+            <td>{$value.username}</td>
+            <td>{$value.name} {$value.surname}</td>
+            <td>{$value.phone}</td>
+        </tr>
+        {/loop}
+    </tbody>
+</table>
+{/if}
