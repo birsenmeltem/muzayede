@@ -104,7 +104,7 @@ class Auctions extends Controller
                 $product_id = (int) $this->input->post('product_id',true);
                 if(!$product_id) die;
 
-                $product = $this->model->db->from('products')->where('id',$product_id)->select('price,sku,old_price,seller')->first();
+                $product = $this->model->db->from('products')->where('id',$product_id)->select('price,sku,old_price,seller,kdv,auction_id')->first();
                 if(!$product) die();
 
                 if(Session::fetch('user','id') != $product['seller']) {
@@ -139,11 +139,17 @@ class Auctions extends Controller
                         $oldprice = $price;
                         $price = PeyCheck($price);
 
+                        $total['PriceKdv'] = ($price * $product['kdv']) / 100;
+
+                        $total['comm'] = ((($price * $auc['buy_comm']) / 100));
+                        $total['comm'] += $total['comm'] * 18 / 100;
+                        $total['priceCommTotal'] = ($price);
+
                         $output = [
                             'header' => $this->model->vars['eminmisin'],
                             'status' => 'success',
                             'price' => $price,
-                            'html' => sprintf($this->model->vars['peyhtml'],$auc['name'],$product['sku'],$price),
+                            'html' => sprintf($this->model->vars['peyhtml'],$auc['name'],$product['sku'],$price, array_sum($total)),
                         ];
 
                         if($oldprice != $price) {

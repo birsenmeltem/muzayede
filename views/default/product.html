@@ -129,6 +129,7 @@
                                     {/if}
                                     {if="$data.comm"}
                                     <div class="col-md-12">
+                                        <p>{$lang.kdv} : {$data.sale_currency_prefix}{$data.priceKdv|numbers_dot}{$data.sale_currency_suffix} <span  style="display: none;" class="convert" data-convert data-price="{$data.priceKdv|numbers_dot}"></span></p>
                                         <p>{$lang.komisyon} : {$data.sale_currency_prefix}{$data.comm|numbers_dot}{$data.sale_currency_suffix} <span  style="display: none;" class="convert" data-convert data-price="{$data.comm|numbers_dot}"></span></p>
                                         <p>{$lang.totalmaliyet} : {$data.sale_currency_prefix}{$data.total|numbers_dot}{$data.sale_currency_suffix} <span  style="display: none;" class="convert" data-convert data-price="{$data.total|numbers_dot}"></span></p>
                                     </div>

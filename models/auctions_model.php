@@ -114,8 +114,9 @@ class Auctions_Model extends Model
 
         parent::calcProductPrice($data,$EXCHANGE);
 
+        $data['priceKdv'] = (($data['price'] * $data['kdv']) / 100);
         $data['comm'] = ($data['price'] * $this->settings['commission']) / 100;
-        $data['total'] = ($data['price'] + $data['comm']);
+        $data['total'] = ($data['price'] + $data['comm'] + $data['priceKdv']);
         return $data;
     }
 
@@ -173,12 +174,13 @@ class Auctions_Model extends Model
 
         foreach($products as $pro) {
             $komm = (($pro['price'] * $auc['buy_comm']) / 100);
-            //$komm_kdv = ($komm * 0.18);
+            $komm_kdv = ($komm * 0.18);
             $buyers['sale'] += 1;
             $buyers['price'] += numbers($pro['price']);
+            $buyers['priceKdv'] += numbers(($pro['price'] * 18) / 100);
             $buyers['commission'] += numbers($komm);
             $buyers['commissionkdv'] += numbers($komm_kdv);
-            $buyers['totalprice'] += numbers($pro['price'] + (numbers($komm + $komm_kdv)));
+            $buyers['totalprice'] += numbers($pro['price'] + $buyers['priceKdv']+ (numbers($komm + $komm_kdv)));
         }
 
         return $buyers;

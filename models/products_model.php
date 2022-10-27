@@ -66,8 +66,10 @@ class Products_Model extends Model
         $data['pictures'] = $this->db->from('products_images')->where('product_id',$data['id'])->orderby('rows','ASC')->run();
 
         if($data['price']) {
+            $data['priceKdv'] = (($data['price'] * $data['kdv']) / 100);
             $data['comm'] = ((($data['price'] * $auction['buy_comm']) / 100));
-            $data['total'] = ($data['price'] + $data['comm']);
+            $data['comm'] += ($data['comm'] * 18) / 100;
+            $data['total'] = ($data['price'] + $data['comm'] + $data['priceKdv']);
         }
 
         //SEO

@@ -1,4 +1,5 @@
 <?php
+$translate['kdv'] = 'KDV';
 $translate['mainpagetitle'] = 'Online Müzayede Sitesi ve Mezat Açık Arttırma - PHEBUS Müzayede';
 $translate['mainpagedesc'] = 'PHEBUS bir online müzayede sitesidir. PHEBUS müzayede ile açık artırmalara online katılabilir müzayedelerden istediğiniz ürünlere teklif verip sahip olabilirsiniz';
 $translate['catseotitle'] = 'Online %s Müzayedesi İnternetten Teklif Ver Al | PHEBUS Müzayede';
@@ -55,7 +56,7 @@ $translate['peyayni'] = 'Peyiniz, güncel fiyat ile aynı olamaz !';
 $translate['peydusuk'] = 'Peyiniz, %s TL den düşük olamaz !';
 $translate['gecerlipeyverin'] = 'Lütfen geçerli bir pey verin.!';
 $translate['eminmisin'] = 'Emin misiniz?';
-$translate['peyhtml'] = '<b>%s</b>, #%s Lot No. lu ürüne <b>%s</b> TL pey verdiniz. Onaylıyor musunuz?<br><br><b style="color:red">Önemli Uyarı:</b> Onay verilen peyler, azaltılamaz ya da silinemez.';
+$translate['peyhtml'] = '<b>%s</b>, #%s Lot No. lu ürüne <b>%s</b> TL pey verdiniz. Onaylıyor musunuz?<br>Toplam maliyetiniz <strong style="color:red">%s</strong> TL olacaktır !<br><b style="color:red">Önemli Uyarı:</b> Onay verilen peyler, azaltılamaz ya da silinemez.';
 $translate['muzayededetay'] = '%s, %s saat: %s\'a kadar internet sitemizden pey verebilirsiniz. %s itibariyle canlı mezat başlayacaktır. Komisyon Oranı: &#37; %s "ÖDEME SÜRESİ MÜZAYEDE BİTİMİNDEN SONRA 1 HAFTADIR.';
 $translate['ilgialani'] = 'İlgi Alanlarınız(Virgül ile ayırın)';
 $translate['smskod'] = 'Lütfen cep telefonunuza gelen doğrulama kodunu giriniz';
