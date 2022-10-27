@@ -311,8 +311,10 @@ class Reports_Model extends Model
             foreach($data as $key => $val) {
                 $data[$key]['auction_time'] = date("d.m.Y H:i",$val['start_time']);
                 $komm = (($val['price'] * $val['buy_comm']) / 100);
+                $data[$key]['priceKdv'] = numbers((($val['price'] * $val['kdv']) / 100));
                 $data[$key]['komm'] = numbers($komm);
-                $data[$key]['total_price'] = numbers($val['price'] + $komm);
+                $data[$key]['kommKdv'] = numbers(($data[$key]['komm'] * 18) / 100);
+                $data[$key]['total_price'] = numbers($val['price'] + $data[$key]['priceKdv'] + $komm + $data[$key]['kommKdv']);
             }
             return ['status' => true , 'data' => $data , 'querystring' => http_build_query(['f'=>$f])];
         }
@@ -322,7 +324,7 @@ class Reports_Model extends Model
         $_POST['f'] = $f;
         $data = $this->buyerseller();
 
-        $html[] = 'Alıcı ID,Alıcı Adı,Müzayede Adı,Müzayede Tarihi,Lot No,Satıcı ID,Satıcı Adı,Pey,Komisyon,Tutar';
+        $html[] = 'Alıcı ID,Alıcı Adı,Müzayede Adı,Müzayede Tarihi,Lot No,Satıcı ID,Satıcı Adı,Pey,Pey KDV,Komisyon,Komisyon KDV,Tutar';
         foreach($data['data'] as $val) {
             $htmls[] = $val['sale'];
             $htmls[] = $val['buyer_name'].' '.$val['buyer_surname'];
@@ -332,7 +334,9 @@ class Reports_Model extends Model
             $htmls[] = $val['seller'];
             $htmls[] = $val['seller_name'].' '.$val['seller_surname'];
             $htmls[] = $val['price'];
+            $htmls[] = $val['priceKdv'];
             $htmls[] = $val['komm'];
+            $htmls[] = $val['kommKdv'];
             $htmls[] = $val['total_price'];
             $html[] = implode(',',$htmls);
             unset($htmls);

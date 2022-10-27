@@ -125,7 +125,9 @@
                     <th>Satıcı ID</th>
                     <th>Satıcı Adı</th>
                     <th>Pey</th>
+                    <th>Pey KDV</th>
                     <th>Komisyon</th>
+                    <th>Komisyon KDV</th>
                     <th>Tutar</th>
                 </tr>
                 </thead>
@@ -140,7 +142,9 @@
                     <td>{$value.seller}</td>
                     <td>{$value.seller_name} {$value.seller_surname}</td>
                     <td>{$value.price}</td>
+                    <td>{$value.priceKdv}</td>
                     <td>{$value.komm}</td>
+                    <td>{$value.kommKdv}</td>
                     <td>{$value.total_price}</td>
                 </tr>
                 {/loop}

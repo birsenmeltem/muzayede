@@ -183,23 +183,25 @@ class Parasut {
         ];
 
 
-        $params['data']['relationships']['details']['data'][] = [
-            'id' => '',
-            'type' => 'sales_invoice_details',
-            'attributes' => [
-                'quantity' => 1,
-                'unit_price' => $data['product']['price'],
-                'vat_rate' => 18,
-            ],
-            'relationships' => [
-                'product' => [
-                    'data' => [
-                        'id' => '40116545',
-                        'type' => 'products',
+        foreach($data['products'] as $pro) {
+            $params['data']['relationships']['details']['data'][] = [
+                'id' => '',
+                'type' => 'sales_invoice_details',
+                'attributes' => [
+                    'quantity' => $pro['quantity'],
+                    'unit_price' => $pro['price'],
+                    'vat_rate' => $pro['kdv'],
+                ],
+                'relationships' => [
+                    'product' => [
+                        'data' => [
+                            'id' => $pro['product_id'],
+                            'type' => 'products',
+                        ]
                     ]
                 ]
-            ]
-        ];
+            ];
+        }
 
 
         $url = self::ENDPOINT . $this->CompanyId . '/sales_invoices';

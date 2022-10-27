@@ -505,11 +505,44 @@ class Orders_Model extends Model
                 case '0':
 
                     $products = $this->db->from('products')->where('sale', $user_id)->where('auction_id', $auction_id)->where('status', 2)->run();
-                    foreach ($products as $pro) {
-                        $komm = (($pro['price'] * $this->settings['commission']) / 100);
+                    foreach ($products as $key => $pro) {
+                        $product = [
+                            'sku' => 'B'.$auction_id.'_'.$pro['sku'],
+                            'name' => $pro['name'],
+                            'kdv' => $pro['kdv'],
+                            'price' => $pro['price'],
+                        ];
+
+                        $product_id = $Parasut->createProduct($product);
+
+                        $data['products'][] = [
+                            'product_id' => $product_id,
+                            'quantity' => 1,
+                            'kdv' => $pro['kdv'],
+                            'price' => $pro['price'],
+                        ];
+
+                        $komm = (($pro['price'] * $auction['buy_comm']) / 100);
                         $komm_kdv = ($komm * 0.18);
-                        $comm += ($komm);
-                        $total += ($komm + $komm_kdv);
+
+                        $product = [
+                            'sku' => 'B'.$auction_id.'_'.$pro['sku'].'_K',
+                            'name' => $pro['name'].' - Komisyon',
+                            'kdv' => 18,
+                            'price' => ($komm),
+                        ];
+
+                        $product_id = $Parasut->createProduct($product);
+
+                        $data['products'][] = [
+                            'product_id' => $product_id,
+                            'quantity' => 1,
+                            'kdv' => 18,
+                            'price' => $products['price'],
+                        ];
+
+                        $data['price'] += $pro['price'] + (($pro['price'] * $pro['kdv']) / 100);
+                        $data['price'] += ($komm + $komm_kdv);
                     }
 
                     break;
@@ -517,19 +550,49 @@ class Orders_Model extends Model
 
                     $products = $this->db->from('products')->where('sale',0,'>')->where('auction_id',$auction_id)->where('seller',$user_id)->where('status',2)->run();
                     foreach($products as $pro) {
-                        $komm = (($pro['price'] * $this->settings['seller_commission']) / 100);
+
+                        $product = [
+                            'sku' => 'S'.$auction_id.'_'.$pro['sku'],
+                            'name' => $pro['name'],
+                            'kdv' => $pro['kdv'],
+                            'price' => $pro['price'],
+                        ];
+
+                        $product_id = $Parasut->createProduct($product);
+
+                        $data['products'][] = [
+                            'product_id' => $product_id,
+                            'quantity' => 1,
+                            'kdv' => $pro['kdv'],
+                            'price' => $pro['price'],
+                        ];
+
+                        $komm = (($pro['price'] * $auction['sell_comm']) / 100);
                         $komm_kdv = ($komm * 0.18);
-                        $comm += ($komm);
-                        $total += ($komm + $komm_kdv);
+
+                        $product = [
+                            'sku' => 'B'.$auction_id.'_'.$pro['sku'].'_K',
+                            'name' => $pro['name'].' - Komisyon',
+                            'kdv' => 18,
+                            'price' => ($komm),
+                        ];
+
+                        $product_id = $Parasut->createProduct($product);
+
+                        $data['products'][] = [
+                            'product_id' => $product_id,
+                            'quantity' => 1,
+                            'kdv' => 18,
+                            'price' => $products['price'],
+                        ];
+
+                        $data['price'] += $pro['price'] + (($pro['price'] * $pro['kdv']) / 100);
+                        $data['price'] += ($komm + $komm_kdv);
                     }
 
                     break;
             }
 
-
-
-            $data['product']['price'] = numbers($comm);
-            $data['price'] = numbers($total);
 
             $data['parasut_id'] = $Parasut->createInvoce($data);
             if($data['parasut_id']) {

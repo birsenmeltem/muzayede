@@ -681,7 +681,7 @@ Teknik bir arıza nedeniyle bu akşam gerçekleşecek SAHAFİYE müzayedemiz 21 
 
         $search = ['{{NAME}}', '{{CNAME}}', '{{MEZAT}}', '{{DATE}}', '{{ALICIADI}}', '{{BANKA}}', '{{HESAPNO}}', '{{SUBEADI}}', '{{SUBEKODU}}', '{{IBAN}}'];
 
-        $pdfsearch = ['{{LOGO}}', '{{CADDRESS}}', '{{CPHONE}}', '{{CMAIL}}', '{{NAME}}', '{{PHONE}}', '{{MAIL}}', '{{ADDRESS}}', '{{MEZAT}}', '{{DATE}}', '{{TOTALURUN}}', '{{SALEURUN}}', '{{PRICE}}', '{{TOTALPRICE}}', '{{COMMISSION}}', '{{COMMISSIONKDV}}', '{{SALEPRODUCTS}}', '{{PRODUCTS}}'];
+        $pdfsearch = ['{{LOGO}}', '{{CADDRESS}}', '{{CPHONE}}', '{{CMAIL}}', '{{NAME}}', '{{PHONE}}', '{{MAIL}}', '{{ADDRESS}}', '{{MEZAT}}', '{{DATE}}', '{{TOTALURUN}}', '{{SALEURUN}}', '{{PRICE}}', '{{PRICEKDV}}', '{{TOTALPRICE}}', '{{COMMISSION}}', '{{COMMISSIONKDV}}', '{{SALEPRODUCTS}}', '{{PRODUCTS}}'];
 
         $LOGO = 'data/uploads/' . $this->settings['logo'];
 
@@ -691,22 +691,25 @@ Teknik bir arıza nedeniyle bu akşam gerçekleşecek SAHAFİYE müzayedemiz 21 
                 $PROID[] = $pro['id'];
                 $SALED[$pro['sale']][] = $pro['id'];
                 $komm = (($pro['price'] * $auc['buy_comm']) / 100);
-                //$komm_kdv = ($komm * 0.18);
+                $komm_kdv = ($komm * 0.18);
+                $kdv = ($pro['price'] * $pro['kdv'] / 100);
 
                 $buyers[$pro['sale']]['products'][] = [
                     'sku' => $pro['sku'],
                     'name' => $pro['name'],
                     'price' => $pro['price'],
+                    'priceKdv' => $kdv,
                     'old_price' => $pro['old_price'],
                     'comm' => numbers($komm),
                     'comm_kdv' => numbers($komm_kdv),
-                    'gain' => numbers($pro['price'] + (numbers($komm + $komm_kdv))),
+                    'gain' => numbers($pro['price'] + $kdv + (numbers($komm + $komm_kdv))),
                 ];
 
                 $buyers[$pro['sale']]['price'][] = numbers($pro['price']);
+                $buyers[$pro['sale']]['priceKdv'][] = numbers($kdv);
                 $buyers[$pro['sale']]['commission'][] = numbers($komm);
                 $buyers[$pro['sale']]['commissionkdv'][] = numbers($komm_kdv);
-                $buyers[$pro['sale']]['totalprice'][] = numbers($pro['price'] + (numbers($komm + $komm_kdv)));
+                $buyers[$pro['sale']]['totalprice'][] = numbers($pro['price'] + $kdv + (numbers($komm + $komm_kdv)));
             }
 
 
@@ -730,6 +733,7 @@ Teknik bir arıza nedeniyle bu akşam gerçekleşecek SAHAFİYE müzayedemiz 21 
                         <td title="">' . $p['name'] . '</td>
                         <td align="right">' . numbers_dot($p['old_price']) . '</td>
                         <td align="right">' . numbers_dot($p['price']) . '</td>
+                        <td align="right">' . numbers_dot($p['priceKdv']) . '</td>
                         <td align="right">' . numbers_dot($p['comm']) . '</td>
                         <td align="right">' . numbers_dot($p['comm_kdv']) . '</td>
                         <td align="right">' . numbers_dot($p['gain']) . '</td>
@@ -760,6 +764,7 @@ Teknik bir arıza nedeniyle bu akşam gerçekleşecek SAHAFİYE müzayedemiz 21 
                     (count($values['peys']) + count($SALED[$buyer_id])),
                     count($values['products']),
                     numbers_dot(array_sum($values['price'])),
+                    numbers_dot(array_sum($values['priceKdv'])),
                     numbers_dot(array_sum($values['totalprice'])),
                     numbers_dot(array_sum($values['commission'])),
                     numbers_dot(array_sum($values['commissionkdv'])),
@@ -843,12 +848,15 @@ Teknik bir arıza nedeniyle bu akşam gerçekleşecek SAHAFİYE müzayedemiz 21 
             $products = $this->db->from('products')->where('sale',0,'>')->where('auction_id',$auc['id'])->where('status',2)->run();
             foreach($products as $pro) {
                 $komm = (($pro['price'] * $auc['sell_comm']) / 100);
-               // $komm_kdv = ($komm * 0.18);
+                $komm_kdv = ($komm * 0.18);
+
+                $kdv = ($pro['price'] * $pro['kdv'] / 100);
 
                 $sellers[$pro['seller']]['products'][] = [
                     'sku' => $pro['sku'],
                     'name' => $pro['name'],
                     'price' => $pro['price'],
+                    'priceKdv' => $kdv,
                     'old_price' => $pro['old_price'],
                     'comm' => numbers($komm),
                     'comm_kdv' => numbers($komm_kdv),

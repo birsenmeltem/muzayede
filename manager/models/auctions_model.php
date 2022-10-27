@@ -174,6 +174,9 @@ class Auctions_Model extends Model
                             'kdv' => 18,
                             'currency_id' => 1,
                         ];
+                        if(in_array($tmp['category_id'],[7,8])) {
+                            $tmp['kdv'] = 0;
+                        }
                         $values = [
                             'name' => trim($tmp['name']),
                             'shortdetail' => trim($tmp['shortdetail']),
